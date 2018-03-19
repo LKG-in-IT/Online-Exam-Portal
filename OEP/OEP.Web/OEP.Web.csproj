@@ -12,4 +12,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OEP.Core\OEP.Core.csproj" />
+    <ProjectReference Include="..\OEP.Data\OEP.Data.csproj" />
+    <ProjectReference Include="..\OEP.Resources\OEP.Resources.csproj" />
+    <ProjectReference Include="..\OEP.Services\OEP.Services.csproj" />
+  </ItemGroup>
+
 </Project>
