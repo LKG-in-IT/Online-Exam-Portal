@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OEP.Core.DomainModels;
+using OEP.Data.Configuration;
 
 namespace OEP.Data
 {
@@ -39,7 +40,7 @@ namespace OEP.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            EfConfig.ConfigureEf(modelBuilder);
+            modelBuilder.Configurations.Add(new TestConfiguration());
         }
 
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity

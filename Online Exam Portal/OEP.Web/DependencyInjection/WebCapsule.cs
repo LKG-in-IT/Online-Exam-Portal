@@ -20,7 +20,7 @@ namespace OEP.Web.DependencyInjection
             builder.RegisterFilterProvider();
 
             const string nameOrConnectionString = "name=OepDbConnection";
-            builder.Register<DbContext>(b =>
+            builder.Register<IEntitiesContext>(b =>
             {
                 var context = new OepDbContext(nameOrConnectionString);
                 return context;

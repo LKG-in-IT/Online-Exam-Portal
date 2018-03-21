@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbInitializer.cs" />
-    <Compile Include="EfConfig.cs" />
+    <Compile Include="Configuration\TestConfiguration.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
