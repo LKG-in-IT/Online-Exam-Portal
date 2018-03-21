@@ -1,0 +1,5 @@
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Core\bin\Debug\OEP.Core.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Core\bin\Debug\OEP.Core.pdb
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Core\obj\Debug\OEP.Core.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Core\obj\Debug\OEP.Core.pdb
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Core\obj\Debug\OEP.Core.csprojResolveAssemblyReference.cache

@@ -1,0 +1,12 @@
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\obj\Debug\OEP.Data.csprojResolveAssemblyReference.cache
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\OEP.Data.dll.config
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\OEP.Data.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\OEP.Data.pdb
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\EntityFramework.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\OEP.Core.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\OEP.Core.pdb
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\EntityFramework.xml
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\obj\Debug\OEP.Data.dll
+E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Data\obj\Debug\OEP.Data.pdb

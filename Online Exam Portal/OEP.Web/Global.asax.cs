@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using OEP.Web.DependencyInjection;
 
 namespace OEP.Web
 {
@@ -17,7 +18,16 @@ namespace OEP.Web
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            var config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
+
+            //WebApiConfig.Register(config);
+
+            new WebCapsule().Initialise(config);
+
+            //app.UseWebApi(config);
         }
     }
 }
