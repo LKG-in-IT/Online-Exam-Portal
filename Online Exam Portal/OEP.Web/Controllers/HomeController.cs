@@ -25,11 +25,11 @@ namespace OEP.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var testObj=new Test() {Name = "ee"};
+           /* var testObj=new Test() {Name = "ee"};
             _objService.Add(testObj);
             var obj = new Test2() { Name = "dddddddddddddddd" };
             _objService2.Add(obj);
-            _objService2.UnitOfWorkSaveChanges();
+            _objService2.UnitOfWorkSaveChanges();*/
             return View();
         }
     }
