@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OEP.Core.Data;
 using OEP.Core.DomainModels;
+using OEP.Core.DomainModels.Test;
 
 namespace OEP.Core.Services
 {
@@ -15,8 +16,11 @@ namespace OEP.Core.Services
         PaginatedList<TEntity> GetAll(int pageIndex, int pageSize);
         PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy = OrderBy.Ascending);
         PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties);
+     
         TEntity GetById(int id);
         void Add(TEntity entity);
+
+        void UnitOfWorkSaveChanges();
         void Update(TEntity entity);
         void Delete(TEntity entity);
         Task<List<TEntity>> GetAllAsync();

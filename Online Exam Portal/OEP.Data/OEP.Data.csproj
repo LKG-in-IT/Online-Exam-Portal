@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbInitializer.cs" />
+    <Compile Include="Configuration\Test2Configuration.cs" />
     <Compile Include="Configuration\TestConfiguration.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="OepDbContext.cs" />

@@ -46,6 +46,7 @@
     <Compile Include="Data\Repository\IUnitOfWork.cs" />
     <Compile Include="DomainModels\BaseEntity.cs" />
     <Compile Include="DomainModels\PaginatedList.cs" />
+    <Compile Include="DomainModels\Test2\Test2.cs" />
     <Compile Include="DomainModels\Test\Test.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />

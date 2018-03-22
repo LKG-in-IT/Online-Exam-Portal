@@ -41,6 +41,7 @@ namespace OEP.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new TestConfiguration());
+            modelBuilder.Configurations.Add(new Test2Configuration());
         }
 
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
@@ -76,9 +77,23 @@ namespace OEP.Data
 
         public int Commit()
         {
-            var saveChanges = SaveChanges();
-            _transaction.Commit();
-            return saveChanges;
+            try
+            {
+                BeginTransaction();
+                var saveChanges = SaveChanges();
+                _transaction.Commit();
+
+                return saveChanges;
+            }
+            catch (Exception)
+            {
+                Rollback();
+                throw;
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         public void Rollback()
@@ -86,11 +101,25 @@ namespace OEP.Data
             _transaction.Rollback();
         }
 
-        public Task<int> CommitAsync()
+        public async Task<int> CommitAsync()
         {
-            var saveChangesAsync = SaveChangesAsync();
-            _transaction.Commit();
-            return saveChangesAsync;
+            try
+            {
+                BeginTransaction();
+                var saveChangesAsync = await SaveChangesAsync();
+                _transaction.Commit();
+
+                return saveChangesAsync;
+            }
+            catch (Exception)
+            {
+                Rollback();
+                throw;
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         private void UpdateEntityState<TEntity>(TEntity entity, EntityState entityState) where TEntity : BaseEntity

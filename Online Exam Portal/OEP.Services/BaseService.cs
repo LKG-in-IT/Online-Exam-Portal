@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OEP.Core.Data;
 using OEP.Core.Data.Repository;
 using OEP.Core.DomainModels;
+using OEP.Core.DomainModels.Test;
 using OEP.Core.Services;
 
 namespace OEP.Services
@@ -14,12 +15,22 @@ namespace OEP.Services
     public class BaseService<TEntity> : IService<TEntity> where TEntity : BaseEntity
     {
         public IUnitOfWork UnitOfWork { get; private set; }
+
+        IUnitOfWork IService.UnitOfWork
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private readonly IRepository<TEntity> _repository;
         private bool _disposed;
 
         public BaseService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
+            
             _repository = UnitOfWork.Repository<TEntity>();
         }
 
@@ -50,19 +61,22 @@ namespace OEP.Services
 
         public void Add(TEntity entity)
         {
-            _repository.Insert(entity);
-            UnitOfWork.SaveChanges();
+            _repository.Insert(entity);           
         }
+
 
         public void Update(TEntity entity)
         {
             _repository.Update(entity);
-            UnitOfWork.SaveChanges();
         }
 
         public void Delete(TEntity entity)
         {
             _repository.Delete(entity);
+        }
+
+        public void UnitOfWorkSaveChanges()
+        {
             UnitOfWork.SaveChanges();
         }
 
@@ -123,5 +137,27 @@ namespace OEP.Services
             }
             _disposed = true;
         }
+
+        List<TEntity> IService<TEntity>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy)
+        {
+            throw new NotImplementedException();
+        }
+
+        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }
