@@ -1,5 +1,0 @@
-E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Resources\bin\Debug\OEP.Resources.dll
-E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Resources\bin\Debug\OEP.Resources.pdb
-E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Resources\obj\Debug\OEP.Resources.csprojResolveAssemblyReference.cache
-E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Resources\obj\Debug\OEP.Resources.dll
-E:\projects\Doing\#Online-Exam-Portal\Online Exam Portal\OEP.Resources\obj\Debug\OEP.Resources.pdb
