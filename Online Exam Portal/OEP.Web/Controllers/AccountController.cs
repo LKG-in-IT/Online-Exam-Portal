@@ -4,14 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace OEP.Web.Areas.Admin.Controllers
+namespace OEP.Web.Controllers
 {
-
-    [Authorize]
-    public class HomeController : Controller
+    public class AccountController : Controller
     {
-        // GET: Admin/Home
-        public ActionResult Index()
+        // GET: Account
+        public ActionResult Login()
         {
             return View();
         }
