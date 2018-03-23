@@ -45,6 +45,11 @@ namespace OEP.Data
             }
         }
 
+        public static OepDbContext Create()
+        {
+            return new OepDbContext(nameOrConnectionString: "OepDbConnection");
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

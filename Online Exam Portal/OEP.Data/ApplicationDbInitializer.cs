@@ -2,8 +2,6 @@
 using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using OEP.Core.DomainModels.Identity;
-using OEP.Data.IdentityConfig;
 
 namespace OEP.Data
 {

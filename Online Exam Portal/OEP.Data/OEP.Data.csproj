@@ -86,11 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbInitializer.cs" />
-    <Compile Include="IdentityConfig\IdentityConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
-    <Compile Include="Migrations\201803230533418_Initial.cs" />
-    <Compile Include="Migrations\201803230533418_Initial.Designer.cs">
-      <DependentUpon>201803230533418_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201803231150481_InitialOne.cs" />
+    <Compile Include="Migrations\201803231150481_InitialOne.Designer.cs">
+      <DependentUpon>201803231150481_InitialOne.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
@@ -112,8 +111,8 @@
     <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803230533418_Initial.resx">
-      <DependentUpon>201803230533418_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803231150481_InitialOne.resx">
+      <DependentUpon>201803231150481_InitialOne.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
