@@ -8,17 +8,25 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using OEP.Core.DomainModels;
-using OEP.Data.Configuration;
+using OEP.Core.DomainModels.Identity;
 
 namespace OEP.Data
 {
-    public class OepDbContext:DbContext,IEntitiesContext
+    public class OepDbContext:IdentityDbContext<ApplicationUser>,IEntitiesContext
     {
         private ObjectContext _objectContext;
         private DbTransaction _transaction;
         private static readonly object Lock = new object();
         private static bool _databaseInitialized;
+
+        public OepDbContext()
+            : base("OepDbConnection")
+        {
+
+        }
+
         public OepDbContext(string nameOrConnectionString):base(nameOrConnectionString)
         {
             if (_databaseInitialized)
@@ -40,8 +48,6 @@ namespace OEP.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Configurations.Add(new TestConfiguration());
-            modelBuilder.Configurations.Add(new Test2Configuration());
         }
 
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
