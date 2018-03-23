@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using OEP.Core.Data;
 using OEP.Core.Data.Repository;
 using OEP.Core.DomainModels;
-using OEP.Core.DomainModels.Test;
 using OEP.Core.Services;
 
 namespace OEP.Services
