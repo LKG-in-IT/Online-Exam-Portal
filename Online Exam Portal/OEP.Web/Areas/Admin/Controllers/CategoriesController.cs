@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
-using OEP.Core.DomainModels.Category;
+using OEP.Core.DomainModels.CategoryModel;
 using OEP.Core.Services;
 
 namespace OEP.Web.Areas.Admin.Controllers

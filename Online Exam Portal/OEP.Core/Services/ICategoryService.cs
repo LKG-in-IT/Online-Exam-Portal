@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OEP.Core.DomainModels.Category;
+using OEP.Core.DomainModels.CategoryModel;
 
 namespace OEP.Core.Services
 {
