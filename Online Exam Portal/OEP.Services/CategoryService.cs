@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OEP.Core.Data.Repository;
-using OEP.Core.DomainModels;
-using OEP.Core.Services;
 using OEP.Core.DomainModels.CategoryModel;
+using OEP.Core.Services;
 
 namespace OEP.Services
 {

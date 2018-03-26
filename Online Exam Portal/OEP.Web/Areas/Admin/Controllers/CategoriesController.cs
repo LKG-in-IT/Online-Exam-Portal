@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
 using OEP.Core.DomainModels.CategoryModel;
 using OEP.Core.Services;
 
@@ -53,6 +56,10 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.CreatedDate=DateTime.Now;
+                category.UpdatedDate=DateTime.Now;
+                var userId= System.Web.HttpContext.Current.User.Identity.GetUserId();
+                category.UserId = userId;
                 await _categoryService.AddAsync(category);
                 _categoryService.UnitOfWorkSaveChanges();
                 return RedirectToAction("Index");

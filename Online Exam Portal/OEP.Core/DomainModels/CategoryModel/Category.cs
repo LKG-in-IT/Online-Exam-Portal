@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OEP.Core.DomainModels.Category
+namespace OEP.Core.DomainModels.CategoryModel
 {
     public class Category:BaseEntity
     {
