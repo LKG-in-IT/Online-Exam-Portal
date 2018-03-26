@@ -9,9 +9,9 @@ namespace OEP.Web.Areas.Admin.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly IService<Category> _categoryService;
+        private readonly ICategoryService _categoryService;
        
-        public CategoriesController(IService<Category> categoryService)
+        public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
@@ -122,10 +122,11 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             if (disposing)
             {
-               // db.Dispose();
-               _categoryService.Dispose();
+                // db.Dispose();
+                _categoryService.Dispose();
             }
             base.Dispose(disposing);
         }
+
     }
 }

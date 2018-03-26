@@ -13,10 +13,10 @@ namespace OEP.Web.DependencyInjection.Modules
         protected override void Load(ContainerBuilder builder)
         {
             // Register the MVC Controllers
-            builder.RegisterControllers(Assembly.Load("OEP.Web"));
-            builder.RegisterControllers(Assembly.Load("OEP.Web.Areas.Admin"));
+            //builder.RegisterControllers(Assembly.Load("OEP.Web"));
+            //builder.RegisterControllers(Assembly.Load("OEP.Web.Areas.Admin"));
 
-
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
         }
     }
 }
