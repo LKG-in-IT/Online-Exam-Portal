@@ -64,7 +64,6 @@
     <Compile Include="DomainModels\CategoryModel\Category.cs" />
     <Compile Include="DomainModels\Identity\IdentityModels.cs" />
     <Compile Include="DomainModels\PaginatedList.cs" />
-    <Compile Include="DomainModels\SubCategory.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
