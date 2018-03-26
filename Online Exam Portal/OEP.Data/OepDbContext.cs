@@ -170,7 +170,6 @@ namespace OEP.Data
             }
             base.Dispose(disposing);
         }
-
-        public System.Data.Entity.DbSet<OEP.Core.DomainModels.Category.Category> Categories { get; set; }
+        
     }
 }
