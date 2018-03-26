@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OEP.Services
+namespace OEP.Core.DomainModels.Category
 {
-    public class TestService
+    public class Category:BaseEntity
     {
+        public string Name { get; set; }
     }
 }

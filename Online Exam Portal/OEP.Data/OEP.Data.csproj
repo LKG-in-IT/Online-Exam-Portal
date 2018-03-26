@@ -86,10 +86,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbInitializer.cs" />
+    <Compile Include="Configuration\CategoryConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.Designer.cs">
       <DependentUpon>201803231150481_InitialOne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803260627446_Category.cs" />
+    <Compile Include="Migrations\201803260627446_Category.Designer.cs">
+      <DependentUpon>201803260627446_Category.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
@@ -107,12 +112,13 @@
       <Name>OEP.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803231150481_InitialOne.resx">
       <DependentUpon>201803231150481_InitialOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803260627446_Category.resx">
+      <DependentUpon>201803260627446_Category.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

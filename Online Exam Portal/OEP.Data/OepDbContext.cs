@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OEP.Core.DomainModels;
 using OEP.Core.DomainModels.Identity;
+using OEP.Data.Configuration;
 
 namespace OEP.Data
 {
@@ -52,6 +53,7 @@ namespace OEP.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new CategoryConfig());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -168,5 +170,7 @@ namespace OEP.Data
             }
             base.Dispose(disposing);
         }
+
+        public System.Data.Entity.DbSet<OEP.Core.DomainModels.Category.Category> Categories { get; set; }
     }
 }

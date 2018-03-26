@@ -14,6 +14,9 @@ namespace OEP.Web.DependencyInjection.Modules
         {
             // Register the MVC Controllers
             builder.RegisterControllers(Assembly.Load("OEP.Web"));
+            builder.RegisterControllers(Assembly.Load("OEP.Web.Areas.Admin"));
+
+
         }
     }
 }
