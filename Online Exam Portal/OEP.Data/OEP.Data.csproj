@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201803260627446_Category.Designer.cs">
       <DependentUpon>201803260627446_Category.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803261358590_CategoryNew.cs" />
+    <Compile Include="Migrations\201803261358590_CategoryNew.Designer.cs">
+      <DependentUpon>201803261358590_CategoryNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803260627446_Category.resx">
       <DependentUpon>201803260627446_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803261358590_CategoryNew.resx">
+      <DependentUpon>201803261358590_CategoryNew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
