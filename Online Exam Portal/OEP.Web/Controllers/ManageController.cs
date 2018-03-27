@@ -10,7 +10,7 @@ using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User,Faculty,Admin")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace OEP.Web.Controllers
 {
-    [Authorize(Roles = "User,Faculty")]
+    [Authorize(Roles = "User,Faculty,Admin")]
     public class HomeController : Controller
     {
         public ActionResult Index()
