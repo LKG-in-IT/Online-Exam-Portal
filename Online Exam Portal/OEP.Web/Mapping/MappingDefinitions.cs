@@ -20,6 +20,9 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<YearResource, YearDetails>();
                 m.CreateMap<YearDetails, YearResource>();
+
+                m.CreateMap<EducationTypeResource, EducationType>();
+                m.CreateMap<EducationType, EducationTypeResource>();
             });
         }
     }
