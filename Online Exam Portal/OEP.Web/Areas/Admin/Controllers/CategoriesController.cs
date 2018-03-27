@@ -10,6 +10,7 @@ using OEP.Core.Services;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -92,7 +93,13 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.UpdateAsync(category);
+                var extcategory = await _categoryService.GetByIdAsync(Convert.ToInt32(category.Id));
+                extcategory.Name = category.Name;
+                extcategory.Status = category.Status;
+                extcategory.UpdatedDate = DateTime.Now;
+                var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                extcategory.UserId = userId;
+                await _categoryService.UpdateAsync(extcategory);
                 _categoryService.UnitOfWorkSaveChanges();
                 return RedirectToAction("Index");
             }
