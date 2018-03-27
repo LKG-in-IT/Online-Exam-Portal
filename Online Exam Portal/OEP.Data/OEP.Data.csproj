@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbInitializer.cs" />
+    <Compile Include="Configuration\EducationConfig.cs" />
     <Compile Include="Configuration\CategoryConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.cs" />
@@ -99,6 +100,10 @@
     <Compile Include="Migrations\201803261358590_CategoryNew.cs" />
     <Compile Include="Migrations\201803261358590_CategoryNew.Designer.cs">
       <DependentUpon>201803261358590_CategoryNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803270937374_EducationDetails.cs" />
+    <Compile Include="Migrations\201803270937374_EducationDetails.Designer.cs">
+      <DependentUpon>201803270937374_EducationDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
@@ -126,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803261358590_CategoryNew.resx">
       <DependentUpon>201803261358590_CategoryNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803270937374_EducationDetails.resx">
+      <DependentUpon>201803270937374_EducationDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

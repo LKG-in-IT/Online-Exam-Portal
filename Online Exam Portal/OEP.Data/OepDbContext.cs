@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OEP.Core.DomainModels;
+using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.DomainModels.Identity;
 using OEP.Data.Configuration;
 
@@ -54,6 +55,9 @@ namespace OEP.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CategoryConfig());
+            modelBuilder.Configurations.Add(new EducationConfig());
+            modelBuilder.Configurations.Add(new EducationYearConfig());
+            modelBuilder.Configurations.Add(new EducationDetailsConfig());
             base.OnModelCreating(modelBuilder);
         }
 

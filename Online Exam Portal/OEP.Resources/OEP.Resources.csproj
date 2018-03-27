@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Admin\BaseResource.cs" />
     <Compile Include="Admin\CategoryResource.cs" />
+    <Compile Include="Admin\YearResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

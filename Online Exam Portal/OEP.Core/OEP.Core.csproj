@@ -62,6 +62,9 @@
     <Compile Include="Data\Repository\IUnitOfWork.cs" />
     <Compile Include="DomainModels\BaseEntity.cs" />
     <Compile Include="DomainModels\CategoryModel\Category.cs" />
+    <Compile Include="DomainModels\EducationModels\EducationDetails.cs" />
+    <Compile Include="DomainModels\EducationModels\EducationType.cs" />
+    <Compile Include="DomainModels\EducationModels\YearDetails.cs" />
     <Compile Include="DomainModels\Identity\IdentityModels.cs" />
     <Compile Include="DomainModels\PaginatedList.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IService%271.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IYearService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
