@@ -2,6 +2,7 @@
 using Microsoft.Owin;
 using OEP.Web.DependencyInjection;
 using Owin;
+using OEP.Web.Mapping;
 
 [assembly: OwinStartupAttribute(typeof(OEP.Web.Startup))]
 namespace OEP.Web
@@ -12,9 +13,9 @@ namespace OEP.Web
         {
             ConfigureAuth(app);
 
+
             //Mapping
-           // var mappingDefinitions = new MappingDefinitions();
-           // mappingDefinitions.Initialise();
+            MappingDefinitions.CreateMap();
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();

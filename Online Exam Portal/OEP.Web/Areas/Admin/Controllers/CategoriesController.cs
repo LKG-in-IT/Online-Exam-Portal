@@ -7,6 +7,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using OEP.Core.DomainModels.CategoryModel;
 using OEP.Core.Services;
+using OEP.Resources.Admin;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -24,7 +27,9 @@ namespace OEP.Web.Areas.Admin.Controllers
         // GET: Admin/Categories
         public async Task<ActionResult> Index()
         {
-            return View(await _categoryService.GetAllAsync());
+            var categoryList = await _categoryService.GetAllAsync();
+            var categoryResourceList= Mapper.Map<List<Category>, List<CategoryResource>>(categoryList);
+            return View(categoryResourceList);
         }
 
         // GET: Admin/Categories/Details/5
@@ -39,7 +44,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            var categoryResource = Mapper.Map<Category, CategoryResource>(category);
+            return View(categoryResource);
         }
 
         // GET: Admin/Categories/Create
@@ -53,10 +59,11 @@ namespace OEP.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Status")] Category category)
+        public async Task<ActionResult> Create(CategoryResource categoryResource)
         {
             if (ModelState.IsValid)
             {
+                var category=Mapper.Map<CategoryResource, Category>(categoryResource);
                 category.CreatedDate=DateTime.Now;
                 category.UpdatedDate=DateTime.Now;
                 var userId= System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -66,7 +73,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(categoryResource);
         }
 
         // GET: Admin/Categories/Edit/5
@@ -81,7 +88,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            var categoryResource = Mapper.Map<Category, CategoryResource>(category);
+            return View(categoryResource);
         }
 
         // POST: Admin/Categories/Edit/5
@@ -89,21 +97,21 @@ namespace OEP.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Status")] Category category)
+        public async Task<ActionResult> Edit(CategoryResource categoryResource)
         {
             if (ModelState.IsValid)
             {
-                var extcategory = await _categoryService.GetByIdAsync(Convert.ToInt32(category.Id));
-                extcategory.Name = category.Name;
-                extcategory.Status = category.Status;
-                extcategory.UpdatedDate = DateTime.Now;
+                var exstcategory = await _categoryService.GetByIdAsync(Convert.ToInt32(categoryResource.Id));
+                exstcategory.Name = categoryResource.Name;
+                exstcategory.Status = categoryResource.Status;
+                exstcategory.UpdatedDate = DateTime.Now;
                 var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                extcategory.UserId = userId;
-                await _categoryService.UpdateAsync(extcategory);
-                _categoryService.UnitOfWorkSaveChanges();
+                exstcategory.UserId = userId;
+                await _categoryService.UpdateAsync(exstcategory);
+                _categoryService.UnitOfWorkSaveChanges();                
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(categoryResource);
         }
 
         // GET: Admin/Categories/Delete/5
@@ -118,7 +126,9 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            var categoryResource = Mapper.Map<Category, CategoryResource>(category);
+
+            return View(categoryResource);
         }
 
         // POST: Admin/Categories/Delete/5
@@ -141,6 +151,6 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-
+        
     }
 }
