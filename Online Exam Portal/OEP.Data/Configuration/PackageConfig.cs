@@ -1,5 +1,6 @@
 ﻿using OEP.Core.DomainModels.CategoryModel;
 using OEP.Core.DomainModels.PackageModel;
+using OEP.Core.DomainModels.PackageSelectedModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Data.Configuration
 {
+    
   public  class PackageConfig : EntityTypeConfiguration<Package>
     {
         public PackageConfig()
@@ -19,5 +21,19 @@ namespace OEP.Data.Configuration
             
            
         }
+
+    }
+
+    public class PackageSelectedConfig : EntityTypeConfiguration<PackageSelected>
+    {
+        public PackageSelectedConfig()
+        {
+            ToTable("PackageSelected");
+            HasKey(a => a.Id);
+      
+
+
+        }
+
     }
 }

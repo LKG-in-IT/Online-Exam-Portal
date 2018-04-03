@@ -70,6 +70,7 @@
     <Compile Include="DomainModels\ExamModels\ExamType.cs" />
     <Compile Include="DomainModels\Identity\IdentityModels.cs" />
     <Compile Include="DomainModels\PackageModel\PackageDetails.cs" />
+    <Compile Include="DomainModels\PackageSelectedModels\PackageSelected.cs" />
     <Compile Include="DomainModels\PaginatedList.cs" />
     <Compile Include="DomainModels\QuestionModel\Questions.cs" />
     <Compile Include="DomainModels\SubCategoryModel\SubCategory.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Services\IExamQuestionService.cs" />
     <Compile Include="Services\IExamservice.cs" />
     <Compile Include="Services\IExamTypeService.cs" />
+    <Compile Include="Services\IPackageSelectedService.cs" />
     <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IQuestionService.cs" />
     <Compile Include="Services\IService%271.cs" />

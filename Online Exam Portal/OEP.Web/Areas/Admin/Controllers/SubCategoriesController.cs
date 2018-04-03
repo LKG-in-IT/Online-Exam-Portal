@@ -56,7 +56,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         public ActionResult Create()
         {
             var categorylist = _CategoryService.GetAllAsync();
-            ViewBag.CategoryId = new SelectList(categorylist.Result, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i=>i.Status==true), "Id", "Name");
             return View();
         }
 
@@ -82,7 +82,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
 
             var categorylist = _CategoryService.GetAllAsync();
-            ViewBag.CategoryId = new SelectList(categorylist.Result, "Id", "Name", subCategoryresource.CategoryID);
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name", subCategoryresource.CategoryID);
             return View(subCategoryresource);
         }
 
@@ -100,7 +100,8 @@ namespace OEP.Web.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             var SubcategoryResource = Mapper.Map<SubCategory, SubCategoryResource>(subCategory);
-            ViewBag.CategoryId = new SelectList(_CategoryService.GetAllAsync().Result, "Id", "Name",subCategory.CategoryId);
+            var categorylist = _CategoryService.GetAllAsync();
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name",subCategory.CategoryId);
             return View(SubcategoryResource);
         }
 
@@ -126,8 +127,10 @@ namespace OEP.Web.Areas.Admin.Controllers
                 _subcategoryService.UnitOfWorkSaveChanges();
                 return RedirectToAction("Index");
             }
-       
-            ViewBag.CategoryId = new SelectList(_CategoryService.GetAllAsync().Result, "Id", "Name", exstsubcategory.CategoryId);
+            var categorylist = _CategoryService.GetAllAsync();
+
+
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i=>i.Status==true), "Id", "Name", exstsubcategory.CategoryId);
             return View(exstsubcategory);
         }
 

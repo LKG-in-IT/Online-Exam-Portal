@@ -133,6 +133,10 @@
     <Compile Include="Migrations\201803300957405_ExamQuestions.Designer.cs">
       <DependentUpon>201803300957405_ExamQuestions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804030714400_PackageSelected.cs" />
+    <Compile Include="Migrations\201804030714400_PackageSelected.Designer.cs">
+      <DependentUpon>201804030714400_PackageSelected.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803300957405_ExamQuestions.resx">
       <DependentUpon>201803300957405_ExamQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804030714400_PackageSelected.resx">
+      <DependentUpon>201804030714400_PackageSelected.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

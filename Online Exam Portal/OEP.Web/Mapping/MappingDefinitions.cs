@@ -10,6 +10,7 @@ using OEP.Core.DomainModels.SubCategoryModel;
 using OEP.Core.DomainModels.PackageModel;
 using OEP.Core.DomainModels.QuestionModel;
 using OEP.Core.DomainModels.ExamModels;
+using OEP.Core.DomainModels.PackageSelectedModels;
 
 namespace OEP.Web.Mapping
 {
@@ -45,6 +46,9 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<ExamQuestionResource, ExamQuestion>();
                 m.CreateMap<ExamQuestion, ExamQuestionResource>();
+
+                m.CreateMap<PackageSelectedResource, PackageSelected>();
+                m.CreateMap<PackageSelected, PackageSelectedResource>();
             });
         }
     }

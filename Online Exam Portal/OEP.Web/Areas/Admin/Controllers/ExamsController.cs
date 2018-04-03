@@ -61,8 +61,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             var examtype =await _examTypeService.GetAllAsync();
             var subcategory = await _subCategoryService.GetAllAsync();
 
-            ViewBag.ExamtypeId = new SelectList(examtype, "Id", "Name");
-            ViewBag.SubcategoryId = new SelectList(subcategory, "Id", "Name");
+            ViewBag.ExamtypeId = new SelectList(examtype.Where(i=>i.Status==true), "Id", "Name");
+            ViewBag.SubcategoryId = new SelectList(subcategory.Where(i => i.Status == true), "Id", "Name");
             return View();
         }
 
@@ -88,8 +88,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
             var examtype = _examTypeService.GetAll();
             var subcategory = _subCategoryService.GetAll();
-            ViewBag.ExamtypeId = new SelectList(examtype, "Id", "Name", examresource.Examtypeid);
-            ViewBag.SubcategoryId = new SelectList(subcategory, "Id", "Name", examresource.SubcategoryId);
+            ViewBag.ExamtypeId = new SelectList(examtype.Where(i => i.Status == true), "Id", "Name", examresource.Examtypeid);
+            ViewBag.SubcategoryId = new SelectList(subcategory.Where(i => i.Status == true), "Id", "Name", examresource.SubcategoryId);
             return View(examresource);
         }
 
@@ -109,8 +109,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             var examtype =await _examTypeService.GetAllAsync();
             var subcategory =await  _subCategoryService.GetAllAsync();
 
-            ViewBag.ExamtypeId = new SelectList(examtype, "Id", "Name", examResource.Examtypeid);
-            ViewBag.SubcategoryId = new SelectList(subcategory, "Id", "Name", examResource.SubcategoryId);
+            ViewBag.ExamtypeId = new SelectList(examtype.Where(i => i.Status == true), "Id", "Name", examResource.Examtypeid);
+            ViewBag.SubcategoryId = new SelectList(subcategory.Where(i => i.Status == true), "Id", "Name", examResource.SubcategoryId);
             return View(examResource);
         }
 
@@ -142,8 +142,8 @@ namespace OEP.Web.Areas.Admin.Controllers
 
             var examtype =  _examTypeService.GetAllAsync();
             var subcategory = _subCategoryService.GetAllAsync();
-            ViewBag.ExamtypeId = new SelectList(examtype.Result, "Id", "Name", examResource.Examtypeid);
-            ViewBag.SubcategoryId = new SelectList(subcategory.Result, "Id", "Name", examResource.SubcategoryId);
+            ViewBag.ExamtypeId = new SelectList(examtype.Result.Where(i => i.Status == true), "Id", "Name", examResource.Examtypeid);
+            ViewBag.SubcategoryId = new SelectList(subcategory.Result.Where(i => i.Status == true), "Id", "Name", examResource.SubcategoryId);
             return View(examResource);
         }
 

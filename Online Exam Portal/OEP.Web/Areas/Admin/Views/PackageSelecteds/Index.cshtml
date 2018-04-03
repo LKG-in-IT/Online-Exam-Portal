@@ -1,0 +1,57 @@
+﻿@model IEnumerable<OEP.Resources.Admin.PackageSelectedResource>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Package.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datefrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dateto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+    
+     
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Package.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datefrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dateto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+        
+         
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

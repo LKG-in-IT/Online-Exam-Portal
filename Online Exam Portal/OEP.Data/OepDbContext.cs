@@ -64,6 +64,7 @@ namespace OEP.Data
             modelBuilder.Configurations.Add(new ExamTypeConfig());
             modelBuilder.Configurations.Add(new ExamQuestionConfig());
             modelBuilder.Configurations.Add(new QuestionsConfig());
+            modelBuilder.Configurations.Add(new PackageSelectedConfig());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -181,6 +182,8 @@ namespace OEP.Data
             base.Dispose(disposing);
         }
 
-      
+        public System.Data.Entity.DbSet<OEP.Core.DomainModels.PackageSelectedModels.PackageSelected> PackageSelecteds { get; set; }
+
+        public System.Data.Entity.DbSet<OEP.Core.DomainModels.PackageModel.Package> Packages { get; set; }
     }
 }
