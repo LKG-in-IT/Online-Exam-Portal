@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.EducationModels
 {
-    public class YearDetails:BaseEntity
+    public class YearDetails: CommonDetailsEntity
     {
         public string Year { get; set; }
 

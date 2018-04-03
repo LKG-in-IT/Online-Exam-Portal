@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -17,6 +18,12 @@ namespace OEP.Core.DomainModels.Identity
             return userIdentity;
         }
 
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+        public string Gender { get; set; }
+
+        public DateTime DatOfBirth { get; set; }
 
     }
     

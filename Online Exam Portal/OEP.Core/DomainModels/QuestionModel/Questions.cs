@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.QuestionModel
 {
-    public class Questions:BaseEntity
+    public class Questions: CommonDetailsEntity
     {
         public string Question { get; set; }
         public string OptionA { get; set; }

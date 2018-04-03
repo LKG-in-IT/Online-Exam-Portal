@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.PackageModel
 {
-   public class Package:BaseEntity
+   public class Package: CommonDetailsEntity
     {
         public string Name { get; set; }
         public string Details { get; set; }

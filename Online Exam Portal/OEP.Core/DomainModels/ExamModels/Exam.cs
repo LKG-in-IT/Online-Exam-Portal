@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OEP.Core.DomainModels.ExamModels
 {
-    public  class Exam:BaseEntity
+    public  class Exam: CommonDetailsEntity
     {
         public string Name { get; set; }
         public int ExamtypeId { get; set; }

@@ -137,6 +137,18 @@
     <Compile Include="Migrations\201804030714400_PackageSelected.Designer.cs">
       <DependentUpon>201804030714400_PackageSelected.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804031141087_UserDetails.cs" />
+    <Compile Include="Migrations\201804031141087_UserDetails.Designer.cs">
+      <DependentUpon>201804031141087_UserDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804031150181_UserEducationDetails.cs" />
+    <Compile Include="Migrations\201804031150181_UserEducationDetails.Designer.cs">
+      <DependentUpon>201804031150181_UserEducationDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804031204089_UserEducationDetailsOne.cs" />
+    <Compile Include="Migrations\201804031204089_UserEducationDetailsOne.Designer.cs">
+      <DependentUpon>201804031204089_UserEducationDetailsOne.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -187,6 +199,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804030714400_PackageSelected.resx">
       <DependentUpon>201804030714400_PackageSelected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031141087_UserDetails.resx">
+      <DependentUpon>201804031141087_UserDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031150181_UserEducationDetails.resx">
+      <DependentUpon>201804031150181_UserEducationDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031204089_UserEducationDetailsOne.resx">
+      <DependentUpon>201804031204089_UserEducationDetailsOne.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

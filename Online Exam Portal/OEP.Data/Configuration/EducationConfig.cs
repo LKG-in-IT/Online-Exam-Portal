@@ -39,4 +39,15 @@ namespace OEP.Data.Configuration
             Property(x => x.EducationTypeId).IsRequired();
         }
     }
+
+
+    public class UserEducationDetailsConfig : EntityTypeConfiguration<UserEducationDetails>
+    {
+        public UserEducationDetailsConfig()
+        {
+            ToTable("UserEducationDetails");
+            HasKey(a => a.Id);
+            Property(x => x.ApplicationUserId).IsRequired();
+        }
+    }
 }

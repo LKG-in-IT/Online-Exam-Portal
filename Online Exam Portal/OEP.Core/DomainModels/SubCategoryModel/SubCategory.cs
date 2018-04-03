@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.SubCategoryModel
 {
- public   class SubCategory:BaseEntity
+ public   class SubCategory: CommonDetailsEntity
     {
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]

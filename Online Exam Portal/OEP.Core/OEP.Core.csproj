@@ -64,6 +64,7 @@
     <Compile Include="DomainModels\CategoryModel\Category.cs" />
     <Compile Include="DomainModels\EducationModels\EducationDetails.cs" />
     <Compile Include="DomainModels\EducationModels\EducationType.cs" />
+    <Compile Include="DomainModels\EducationModels\UserEducationDetails.cs" />
     <Compile Include="DomainModels\EducationModels\YearDetails.cs" />
     <Compile Include="DomainModels\ExamModels\Exam.cs" />
     <Compile Include="DomainModels\ExamModels\ExamQuestion.cs" />

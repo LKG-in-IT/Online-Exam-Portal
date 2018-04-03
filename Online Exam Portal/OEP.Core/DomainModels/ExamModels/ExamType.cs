@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.ExamModels
 {
-   public class ExamType:BaseEntity
+   public class ExamType: CommonDetailsEntity
     {
         public string  Name  { get; set; }
 

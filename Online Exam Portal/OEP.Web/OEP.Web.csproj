@@ -203,7 +203,6 @@
     <Compile Include="Areas\Admin\Controllers\ExamTypesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackagesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PackageSelectedsController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuestionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\YearController.cs" />
@@ -604,11 +603,7 @@
     <Content Include="Areas\Admin\Views\ExamQuestions\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\PackageSelecteds\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\PackageSelecteds\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\PackageSelecteds\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\PackageSelecteds\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\PackageSelecteds\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamQuestions\Create - Copy.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

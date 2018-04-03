@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.EducationModels
 {
-    public class EducationDetails:BaseEntity
+    public class EducationDetails: CommonDetailsEntity
     {
         public int EducationTypeId { get; set; }
 

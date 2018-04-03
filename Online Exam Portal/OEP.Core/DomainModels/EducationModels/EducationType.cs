@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.EducationModels
 {
-    public class EducationType:BaseEntity
+    public class EducationType: CommonDetailsEntity
     {
         public string Name { get; set; }
         public virtual ICollection<EducationDetails> EducationDetailsModel { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.ExamModels
 {
-   public class ExamQuestion:BaseEntity
+   public class ExamQuestion: CommonDetailsEntity
     {
      
         public int ExamId { get; set; }

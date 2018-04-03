@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.DomainModels.CategoryModel
 {
-    public class Category:BaseEntity
+    public class Category: CommonDetailsEntity
     {
         public string Name { get; set; }
     }
