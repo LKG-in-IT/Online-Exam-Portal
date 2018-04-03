@@ -43,8 +43,20 @@
     <Compile Include="Admin\BaseResource.cs" />
     <Compile Include="Admin\CategoryResource.cs" />
     <Compile Include="Admin\EducationTypeResource.cs" />
+    <Compile Include="Admin\ExamQuestionResource.cs" />
+    <Compile Include="Admin\ExamResource.cs" />
+    <Compile Include="Admin\ExamTypeResource.cs" />
+    <Compile Include="Admin\PackageResource.cs" />
+    <Compile Include="Admin\QuestionsResource.cs" />
+    <Compile Include="Admin\SubCategoryResource.cs" />
     <Compile Include="Admin\YearResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OEP.Core\OEP.Core.csproj">
+      <Project>{8900CF77-7F18-481A-BC34-C3D4024FFCEE}</Project>
+      <Name>OEP.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

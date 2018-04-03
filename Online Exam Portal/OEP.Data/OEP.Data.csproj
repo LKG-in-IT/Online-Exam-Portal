@@ -88,6 +88,10 @@
     <Compile Include="ApplicationDbInitializer.cs" />
     <Compile Include="Configuration\EducationConfig.cs" />
     <Compile Include="Configuration\CategoryConfig.cs" />
+    <Compile Include="Configuration\ExamConfig.cs" />
+    <Compile Include="Configuration\PackageConfig.cs" />
+    <Compile Include="Configuration\QuestionsConfig.cs" />
+    <Compile Include="Configuration\SubCAtegoryConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.Designer.cs">
@@ -104,6 +108,30 @@
     <Compile Include="Migrations\201803270937374_EducationDetails.cs" />
     <Compile Include="Migrations\201803270937374_EducationDetails.Designer.cs">
       <DependentUpon>201803270937374_EducationDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803280526209_SubCategory.cs" />
+    <Compile Include="Migrations\201803280526209_SubCategory.Designer.cs">
+      <DependentUpon>201803280526209_SubCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803280853275_Package.cs" />
+    <Compile Include="Migrations\201803280853275_Package.Designer.cs">
+      <DependentUpon>201803280853275_Package.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803281228162_Questions.cs" />
+    <Compile Include="Migrations\201803281228162_Questions.Designer.cs">
+      <DependentUpon>201803281228162_Questions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803290513043_Examtype.cs" />
+    <Compile Include="Migrations\201803290513043_Examtype.Designer.cs">
+      <DependentUpon>201803290513043_Examtype.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803300518179_Exam.cs" />
+    <Compile Include="Migrations\201803300518179_Exam.Designer.cs">
+      <DependentUpon>201803300518179_Exam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803300957405_ExamQuestions.cs" />
+    <Compile Include="Migrations\201803300957405_ExamQuestions.Designer.cs">
+      <DependentUpon>201803300957405_ExamQuestions.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
@@ -134,6 +162,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803270937374_EducationDetails.resx">
       <DependentUpon>201803270937374_EducationDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803280526209_SubCategory.resx">
+      <DependentUpon>201803280526209_SubCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803280853275_Package.resx">
+      <DependentUpon>201803280853275_Package.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803281228162_Questions.resx">
+      <DependentUpon>201803281228162_Questions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803290513043_Examtype.resx">
+      <DependentUpon>201803290513043_Examtype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803300518179_Exam.resx">
+      <DependentUpon>201803300518179_Exam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803300957405_ExamQuestions.resx">
+      <DependentUpon>201803300957405_ExamQuestions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

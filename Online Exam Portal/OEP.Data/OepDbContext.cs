@@ -55,9 +55,15 @@ namespace OEP.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CategoryConfig());
+            modelBuilder.Configurations.Add(new SubCAtegoryConfig());
             modelBuilder.Configurations.Add(new EducationConfig());
             modelBuilder.Configurations.Add(new EducationYearConfig());
             modelBuilder.Configurations.Add(new EducationDetailsConfig());
+            modelBuilder.Configurations.Add(new PackageConfig());
+            modelBuilder.Configurations.Add(new ExamConfig());
+            modelBuilder.Configurations.Add(new ExamTypeConfig());
+            modelBuilder.Configurations.Add(new ExamQuestionConfig());
+            modelBuilder.Configurations.Add(new QuestionsConfig());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -174,6 +180,7 @@ namespace OEP.Data
             }
             base.Dispose(disposing);
         }
-        
+
+      
     }
 }

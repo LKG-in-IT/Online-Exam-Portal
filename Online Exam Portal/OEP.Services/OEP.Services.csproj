@@ -41,8 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryService.cs" />
+    <Compile Include="ExamQuestionService.cs" />
+    <Compile Include="ExamService.cs" />
+    <Compile Include="ExamTypeService.cs" />
+    <Compile Include="PackageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="QuestionService.cs" />
+    <Compile Include="SubCategoryService.cs" />
     <Compile Include="YearService.cs" />
   </ItemGroup>
   <ItemGroup>

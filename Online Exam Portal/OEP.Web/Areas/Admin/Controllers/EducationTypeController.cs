@@ -16,6 +16,7 @@ using OEP.Resources.Admin;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class EducationTypeController : Controller
     {
         private readonly IService<EducationType> _educationTypeService;

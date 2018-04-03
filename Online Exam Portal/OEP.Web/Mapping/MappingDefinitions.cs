@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OEP.Core.DomainModels.EducationModels;
+using OEP.Core.DomainModels.SubCategoryModel;
+using OEP.Core.DomainModels.PackageModel;
+using OEP.Core.DomainModels.QuestionModel;
+using OEP.Core.DomainModels.ExamModels;
 
 namespace OEP.Web.Mapping
 {
@@ -23,6 +27,24 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<EducationTypeResource, EducationType>();
                 m.CreateMap<EducationType, EducationTypeResource>();
+
+                m.CreateMap<SubCategory, SubCategoryResource>();
+                m.CreateMap<SubCategoryResource, SubCategory>();
+
+                m.CreateMap<PackageResource, Package>();
+                m.CreateMap<Package, PackageResource>();
+
+                m.CreateMap<QuestionsResource, Questions>();
+                m.CreateMap<Questions, QuestionsResource>();
+
+                m.CreateMap<ExamTypeResource, ExamType>();
+                m.CreateMap<ExamType, ExamTypeResource>();
+
+                m.CreateMap<ExamResource, Exam>();
+                m.CreateMap<Exam, ExamResource>();
+
+                m.CreateMap<ExamQuestionResource, ExamQuestion>();
+                m.CreateMap<ExamQuestion, ExamQuestionResource>();
             });
         }
     }

@@ -9,5 +9,6 @@ namespace OEP.Core.Services
 {
     public interface IYearService:IService<YearDetails>
     {
+
     }
 }

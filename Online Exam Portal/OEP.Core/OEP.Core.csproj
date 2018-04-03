@@ -65,14 +65,26 @@
     <Compile Include="DomainModels\EducationModels\EducationDetails.cs" />
     <Compile Include="DomainModels\EducationModels\EducationType.cs" />
     <Compile Include="DomainModels\EducationModels\YearDetails.cs" />
+    <Compile Include="DomainModels\ExamModels\Exam.cs" />
+    <Compile Include="DomainModels\ExamModels\ExamQuestion.cs" />
+    <Compile Include="DomainModels\ExamModels\ExamType.cs" />
     <Compile Include="DomainModels\Identity\IdentityModels.cs" />
+    <Compile Include="DomainModels\PackageModel\PackageDetails.cs" />
     <Compile Include="DomainModels\PaginatedList.cs" />
+    <Compile Include="DomainModels\QuestionModel\Questions.cs" />
+    <Compile Include="DomainModels\SubCategoryModel\SubCategory.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\IExamQuestionService.cs" />
+    <Compile Include="Services\IExamservice.cs" />
+    <Compile Include="Services\IExamTypeService.cs" />
+    <Compile Include="Services\IPackageService.cs" />
+    <Compile Include="Services\IQuestionService.cs" />
     <Compile Include="Services\IService%271.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\ISubCategoryService.cs" />
     <Compile Include="Services\IYearService.cs" />
   </ItemGroup>
   <ItemGroup>
