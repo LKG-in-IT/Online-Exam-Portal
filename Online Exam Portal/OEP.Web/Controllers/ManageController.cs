@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using OEP.Core.DomainModels.Identity;
 using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
@@ -48,6 +49,25 @@ namespace OEP.Web.Controllers
             {
                 _userManager = value;
             }
+        }
+        public async Task<ActionResult> UserProfile()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<ActionResult> UserProfile(ApplicationUser applicationUser)
+        {
+            var Userprofile = await UserManager.FindByIdAsync(applicationUser.Id);
+            Userprofile.Name = applicationUser.Name;
+            Userprofile.Gender = applicationUser.Gender;
+            Userprofile.DatOfBirth = applicationUser.DatOfBirth;
+            Userprofile.Address = applicationUser.Address;
+
+            var result =  await UserManager.UpdateAsync(Userprofile);
+            return RedirectToAction("Index");
+
         }
 
         //
