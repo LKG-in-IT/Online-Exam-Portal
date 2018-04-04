@@ -206,7 +206,6 @@
     <Compile Include="Areas\Admin\Controllers\QuestionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\YearController.cs" />
-    <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -343,6 +342,12 @@
     <Content Include="Areas\Admin\Assets\plugins\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Areas\Admin\Assets\plugins\daterangepicker\daterangepicker-bs3.css" />
     <Content Include="Areas\Admin\Assets\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\easy-autocomplete.css" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\easy-autocomplete.min.css" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\easy-autocomplete.themes.css" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\easy-autocomplete.themes.min.css" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\jquery.easy-autocomplete.js" />
+    <Content Include="Areas\Admin\Assets\plugins\easy-autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="Areas\Admin\Assets\plugins\fastclick\fastclick.js" />
     <Content Include="Areas\Admin\Assets\plugins\fastclick\fastclick.min.js" />
     <Content Include="Areas\Admin\Assets\plugins\iCheck\all.css" />
@@ -605,7 +610,6 @@
     <Content Include="Areas\Admin\Views\ExamQuestions\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\Create - Copy.cshtml" />
-    <Content Include="Areas\User\Views\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -656,9 +660,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\User\Controllers\" />
-    <Folder Include="Areas\User\Models\" />
-    <Folder Include="Areas\User\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

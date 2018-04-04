@@ -22,13 +22,15 @@ namespace OEP.Web.Areas.Admin.Controllers
         private readonly IExamQuestionService _examQuestionService;
         private readonly IQuestionService _questionService;
         private readonly IExamservice _examservice;
+        private readonly IService<ExamType> _examTypeservice;
 
-        public ExamQuestionsController(IExamQuestionService examQuestionService, IQuestionService questionService, IExamservice examservice)
+        public ExamQuestionsController(IExamQuestionService examQuestionService, IQuestionService questionService, IExamservice examservice, IService<ExamType> examTypeservice)
         {
 
             _examQuestionService = examQuestionService;
             _questionService = questionService;
             _examservice=examservice;
+            _examTypeservice = examTypeservice;
         }
 
         // GET: Admin/ExamQuestions
@@ -57,17 +59,48 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/ExamQuestions/Create
-        public async Task< ActionResult >Create()
+        public async Task<ViewResult> Create()
         {
-            ViewBag.ExamId =new SelectList( await _examservice.GetAllAsync(), "Id", "Name");
-            ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question");
-            return View();
+            var model=new ExamQuestionResource();
+            var x = await _examTypeservice.GetAllAsync();
+            model.SelectListItemExamType =x.Select(type=>new SelectListItem
+            {
+                Value = type.Id.ToString(),
+                Text = type.Name.ToString() 
+                //,Selected=type.Id.Equals(3)
+            });
+           // ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question");
+            return View(model);
         }
 
-        // POST: Admin/ExamQuestions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        // GET: Admin/ExamQuestions/GetExam
+        public async Task<ActionResult> GetExam(string examTypeId)
+        {
+            int typeId;
+            IEnumerable<SelectListItem> exams = new List<SelectListItem>();
+            if (!string.IsNullOrEmpty(examTypeId))
+            {
+                typeId = Convert.ToInt32(examTypeId);
+                var x = await _examservice.GetAllAsync();
+
+                exams = x.Where(t=>t.ExamtypeId== typeId).Select(type => new SelectListItem
+                {
+                    Value = type.Id.ToString(),
+                    Text = type.Name.ToString()
+                    //,Selected=type.Id.Equals(3)
+                });
+            }
+            return Json(exams, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+    // POST: Admin/ExamQuestions/Create
+    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+    // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create( ExamQuestionResource examQuestionResource)
         {
