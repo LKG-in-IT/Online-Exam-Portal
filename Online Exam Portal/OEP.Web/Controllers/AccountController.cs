@@ -152,10 +152,23 @@ namespace OEP.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser
+                {
+                    
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Gender = model.Gender,
+                    Address = model.Address,
+                    DatOfBirth = Convert.ToDateTime(model.DatOfBirth),
+                    PhoneNumber = model.PhoneNumber
+                };
+                var result = await UserManager.CreateAsync(user, model.Password);                
                 if (result.Succeeded)
                 {
+                    user = await UserManager.FindByEmailAsync(user.Email);
+                    UserManager.AddToRole(user.Id, "User");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

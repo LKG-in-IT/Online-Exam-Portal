@@ -65,6 +65,30 @@ namespace OEP.Web.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name ="Name")]
+
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Required]
+        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        public string DatOfBirth { get; set; }
+
+        [Required]
+        [Display(Name = "PhoneNumber")]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

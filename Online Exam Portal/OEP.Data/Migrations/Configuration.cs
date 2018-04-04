@@ -40,6 +40,7 @@ namespace OEP.Data.Migrations
             itemsUSers[0] = "admin@test.com";
             itemsUSers[1] = "user@test.com";
             itemsUSers[2] = "faculty@test.com";
+         
 
             foreach (var item in itemsUSers)
             {
@@ -53,7 +54,8 @@ namespace OEP.Data.Migrations
                     if (item == "admin@test.com")
                     {
                         manager.AddToRole(user.Id, "Admin");
-                    }
+                        
+                            }
                     if (item == "user@test.com")
                     {
                         manager.AddToRole(user.Id, "User");
@@ -62,6 +64,7 @@ namespace OEP.Data.Migrations
                     {
                         manager.AddToRole(user.Id, "Faculty");
                     }
+                  
                 }
             }
            
