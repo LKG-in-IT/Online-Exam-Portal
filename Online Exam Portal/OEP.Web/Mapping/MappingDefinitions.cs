@@ -47,10 +47,13 @@ namespace OEP.Web.Mapping
                 m.CreateMap<ExamQuestionResource, ExamQuestion>();
                 m.CreateMap<ExamQuestion, ExamQuestionResource>();
 
+
                 m.CreateMap<PackageSelectedResource, PackageSelected>();
                 m.CreateMap<PackageSelected, PackageSelectedResource>();
 
                 m.CreateMap<Questions, QuestionAutoCompleteResource > ();
+
+
             });
         }
     }

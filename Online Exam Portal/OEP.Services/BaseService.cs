@@ -139,22 +139,22 @@ namespace OEP.Services
 
         List<TEntity> IService<TEntity>.GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
 
         PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            return _repository.GetAll(pageIndex,pageSize);
         }
 
         PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy)
         {
-            throw new NotImplementedException();
+            return _repository.GetAll(pageIndex,pageSize,keySelector,orderBy);
         }
 
         PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            return _repository.GetAll(pageIndex, pageSize, keySelector, predicate, orderBy,includeProperties);
         }
 
        

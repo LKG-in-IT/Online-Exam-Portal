@@ -1,11 +1,11 @@
-﻿@model OEP.Resources.Admin.ExamQuestionResource
+﻿@model OEP.Resources.Admin.ExamQuestionViewModel
     @using  System.Web.Optimization
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Add or Remove Question for @Model.ExamName</h2>
 
 <div class="form-group">
     <label class="control-label col-md-2">Choose Question</label>
@@ -21,7 +21,7 @@
 </div>
 
 <div id="table-container">
-    
+    @Html.Partial("ExamQuestionsList",Model.ExamQuestionResourceList)
 </div>
 
 
@@ -32,7 +32,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-           
+
             var selectedItem = {};
             /**/
             var options = {
@@ -81,16 +81,16 @@
                 var selectedText = $("#txtquestions").val();
                 if (selectedText !== undefined && selectedText !== "") {
                     var examQuestionResource = {};
-                    examQuestionResource.ExamId = @ViewBag.ExamId;
+                    examQuestionResource.ExamId = @Model.ExamId;
                     examQuestionResource.QuestionId = selectedItem.Id;
                     $.post("/Admin/ExamQuestions/Create", examQuestionResource, function(partialViewResult){
                         $("#table-container").html(partialViewResult);
-                        
+
                     });
                     console.log(selectedItem);
                     $("#txtquestions").val('');
                 }
-                // 
+                //
             });
         });
     </script>

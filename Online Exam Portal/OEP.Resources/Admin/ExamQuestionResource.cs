@@ -15,6 +15,7 @@ namespace OEP.Resources.Admin
         
         public int QuestionId { get; set; }
       
+        public QuestionsResource Questions { get; set; }
     
     }
 }

@@ -50,15 +50,13 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ExamId = id;
-            /*ExamQuestion examQuestion =await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
-            if (examQuestion == null)
-            {
-                return HttpNotFound();
-            }
-            var examQuestionsResource = Mapper.Map<ExamQuestion, ExamQuestionResource>(examQuestion);*/
+            ExamQuestionViewModel examQuestionViewModel=new ExamQuestionViewModel();
+            examQuestionViewModel.ExamId = exam.Id;
+            examQuestionViewModel.ExamName = exam.Name;
+            var examQuestion = await _examQuestionService.GetAllIncludingAsync(x=>x.Questions);
+            examQuestionViewModel.ExamQuestionResourceList = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(examQuestion);
 
-            return View();
+            return View(examQuestionViewModel);
         }
 
       
@@ -92,17 +90,23 @@ namespace OEP.Web.Areas.Admin.Controllers
                 await _examQuestionService.AddAsync(examQuestion);
                 _examQuestionService.UnitOfWorkSaveChanges();
 
-                var exmaQuestionList = await _examQuestionService.GetAllAsync();
-                var examQuestionListResource = Mapper.Map<List<ExamQuestion>,List<ExamQuestionResource> >(exmaQuestionList);
-                string ret = PartialView("~/Areas/Admin/Views/ExamQuestions/ExamQuestionsList.cshtml",examQuestionListResource).RenderToString();
+                var ret = await ConvertListToString();
 
                 return ret;
             }
             return "Error";
         }
 
-        
-
+        private async Task<string> ConvertListToString()
+        {
+            var exmaQuestionList = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
+            var examQuestionListResource = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(exmaQuestionList);
+                // convert examquestion model to resource
+            string ret =
+                PartialView("~/Areas/Admin/Views/ExamQuestions/ExamQuestionsList.cshtml", examQuestionListResource)
+                    .RenderToString();
+            return ret;
+        }
 
 
         protected override void Dispose(bool disposing)

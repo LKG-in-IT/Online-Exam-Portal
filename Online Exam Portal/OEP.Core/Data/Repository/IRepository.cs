@@ -29,5 +29,15 @@ namespace OEP.Core.Data.Repository
         Task<TEntity> GetSingleAsync(int id);
         Task<TEntity> GetSingleIncludingAsync(int id, params Expression<Func<TEntity, object>>[] includeProperties);
         Task<List<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets a table
+        /// </summary>
+        IQueryable<TEntity> Table { get; }
+
+        /// <summary>
+        /// Gets a table with "no tracking" enabled (EF feature) Use it only when you load record(s) only for read-only operations
+        /// </summary>
+        IQueryable<TEntity> TableNoTracking { get; }
     }
 }

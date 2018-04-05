@@ -152,6 +152,25 @@ namespace OEP.Data.Repo
             return entities;
         }
 
+        #region Properties
+
+        /// <summary>
+        /// Gets a table
+        /// </summary>
+        public virtual IQueryable<TEntity> Table => Entities;
+
+        /// <summary>
+        /// Gets a table with "no tracking" enabled (EF feature) Use it only when you load record(s) only for read-only operations
+        /// </summary>
+        public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
+
+        /// <summary>
+        /// Entities
+        /// </summary>
+        protected virtual IDbSet<TEntity> Entities => _dbEntitySet;
+
+        #endregion
+
         public void Dispose()
         {
             Dispose(true);
