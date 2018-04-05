@@ -11,5 +11,6 @@ namespace OEP.Core.Services
     public interface IExamQuestionService : IService<ExamQuestion>
     {
         Task<List<ExamQuestion>> GetAllIncludingAsync(params Expression<Func<ExamQuestion, object>>[] includeProperties);
+        
     }
 }

@@ -122,6 +122,16 @@ namespace OEP.Services
             return UnitOfWork.SaveChangesAsync();
         }
 
+        public Task<List<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _repository.FindByAsync(predicate);
+        }
+
+        public List<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _repository.FindBy(predicate);
+        }
+
         public void Dispose()
         {
             Dispose(true);

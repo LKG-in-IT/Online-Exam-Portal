@@ -83,8 +83,13 @@
                     var examQuestionResource = {};
                     examQuestionResource.ExamId = @Model.ExamId;
                     examQuestionResource.QuestionId = selectedItem.Id;
-                    $.post("/Admin/ExamQuestions/Create", examQuestionResource, function(partialViewResult){
-                        $("#table-container").html(partialViewResult);
+                    $.post("/Admin/ExamQuestions/Create", examQuestionResource, function(data) {
+                        var responseObj = JSON.parse(data);
+                        if (responseObj.Status === "Success") {
+                            $("#table-container").html(responseObj.Result);
+                        }else if (responseObj.Status === "Exist") {
+                            alert(responseObj.Message);
+                        }
 
                     });
                     console.log(selectedItem);
@@ -92,6 +97,22 @@
                 }
                 //
             });
+
+            $(document).on('click', '#deleteQuestion', function(e) {
+                e.preventDefault();
+                $.post($(this).attr('href'), function(response) {
+                    debugger
+                    var responseObj = JSON.parse(response);
+                    if (responseObj.Status === "Success") {
+                        $("#table-container").html(responseObj.Result);
+                    }else if (responseObj.Status === "NotExist") {
+                        alert(responseObj.Message);
+                    }
+
+                });
+            });
+
+           
         });
     </script>
 }

@@ -30,5 +30,9 @@ namespace OEP.Core.Services
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
+
+        Task<List<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate);
+
+        List<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
     }
 }

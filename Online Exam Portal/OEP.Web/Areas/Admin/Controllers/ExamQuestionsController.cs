@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using OEP.Core.DomainModels.ExamModels;
 using OEP.Data;
@@ -16,12 +17,13 @@ using OEP.Core.Services;
 using OEP.Resources.Admin;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using OEP.Core.DomainModels.QuestionModel;
 using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class ExamQuestionsController : Controller
     {
         private readonly IExamQuestionService _examQuestionService;
@@ -33,7 +35,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
             _examQuestionService = examQuestionService;
             _questionService = questionService;
-            _examservice=examservice;
+            _examservice = examservice;
         }
 
 
@@ -50,24 +52,24 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ExamQuestionViewModel examQuestionViewModel=new ExamQuestionViewModel();
+            ExamQuestionViewModel examQuestionViewModel = new ExamQuestionViewModel();
             examQuestionViewModel.ExamId = exam.Id;
             examQuestionViewModel.ExamName = exam.Name;
-            var examQuestion = await _examQuestionService.GetAllIncludingAsync(x=>x.Questions);
+            var examQuestion = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
             examQuestionViewModel.ExamQuestionResourceList = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(examQuestion);
 
             return View(examQuestionViewModel);
         }
 
-      
+
 
         [HttpGet]
         // GET: Admin/ExamQuestions/GetQuestions
         public async Task<ActionResult> GetQuestions(string phrase)
         {
             var questions = await _questionService.GetAllAsync();
-            questions = questions.Where(x => x.Question.Contains(phrase)&& x.Status).ToList();
-            var questionRes=Mapper.Map<List<Questions>, List<QuestionAutoCompleteResource>>(questions);
+            questions = questions.Where(x => x.Question.Contains(phrase) && x.Status).ToList();
+            var questionRes = Mapper.Map<List<Questions>, List<QuestionAutoCompleteResource>>(questions);
             return Json(questionRes, JsonRequestBehavior.AllowGet);
         }
 
@@ -81,27 +83,56 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var examQuestion = Mapper.Map<ExamQuestionResource, ExamQuestion>(examQuestionResource);
-                examQuestion.CreatedDate = DateTime.Now;
-                examQuestion.UpdatedDate = DateTime.Now;
-                var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                examQuestion.UserId = userId;
-                examQuestion.Status = true;
-                await _examQuestionService.AddAsync(examQuestion);
-                _examQuestionService.UnitOfWorkSaveChanges();
+                var examQuestionExist =
+                    _examQuestionService.FindByAsync(
+                        x => x.ExamId == examQuestionResource.ExamId && x.QuestionId == examQuestionResource.QuestionId);
 
-                var ret = await ConvertListToString();
+                if (examQuestionExist.Result == null || !examQuestionExist.Result.Any())
+                {
+                    var examQuestion = Mapper.Map<ExamQuestionResource, ExamQuestion>(examQuestionResource);
+                    examQuestion.CreatedDate = DateTime.Now;
+                    examQuestion.UpdatedDate = DateTime.Now;
+                    var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                    examQuestion.UserId = userId;
+                    examQuestion.Status = true;
+                    await _examQuestionService.AddAsync(examQuestion);
+                    _examQuestionService.UnitOfWorkSaveChanges();
 
-                return ret;
+                    var partialViewHtmlString = await ConvertListToString();
+                    var response = JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = partialViewHtmlString });
+                    return response;
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Exist", Message = "The Question is already added!", Result = "" });
+                }
             }
-            return "Error";
+            return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
+        }
+
+        
+        [HttpPost]
+        public async Task<string> Delete(int? id)
+        {
+            if (id != null)
+            {
+                var examQuestionExist =await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
+                if (examQuestionExist != null)
+                {
+                    await _examQuestionService.DeleteAsync(examQuestionExist);
+                    var partialViewHtmlString = await ConvertListToString();
+                    return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = partialViewHtmlString });
+                }
+                return  JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "NotExist", Message = "The Item doesn't exist!", Result = "" });
+            }
+            return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
         }
 
         private async Task<string> ConvertListToString()
         {
             var exmaQuestionList = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
             var examQuestionListResource = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(exmaQuestionList);
-                // convert examquestion model to resource
+            // convert examquestion model to resource
             string ret =
                 PartialView("~/Areas/Admin/Views/ExamQuestions/ExamQuestionsList.cshtml", examQuestionListResource)
                     .RenderToString();
