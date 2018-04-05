@@ -8,57 +8,91 @@
 <h2>Create</h2>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.SelectListItemExamType, "Exam Type", htmlAttributes: new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.ExamTypeId, Model.SelectListItemExamType, "-Select-", htmlAttributes: new {@class = "form-control",@id = "ddlExamType" })
+    <label class="control-label col-md-2">Choose Question</label>
+    <div class="col-md-8">
+        <input id="txtquestions" class="form-control"/>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-danger" id="clear-input">Clear</button>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-success" id="add-item">Add</button>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.SelectListItemExam, "Exam", htmlAttributes: new {@class = "control-label col-md-2"})
-    <div class="col-md-10" id="examContainer">
-        @Html.DropDownListFor(x => x.SelectListItemExam, new List<SelectListItem>(), "-Select-", htmlAttributes: new {@class = "form-control", @id = "ddlExam"})
-    </div>
+<div id="table-container">
+    
 </div>
-
-<input id="basics" />
 
 
 @section Scripts {
-    <link href="~/Areas/Admin/Assets/plugins/easy-autocomplete/easy-autocomplete.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Assets/plugins/easy-autocomplete/easy-autocomplete.css" rel="stylesheet"/>
     <script src="~/Areas/Admin/Assets/plugins/easy-autocomplete/jquery.easy-autocomplete.js"></script>
     <script src="~/Areas/Admin/Assets/plugins/easy-autocomplete/jquery.easy-autocomplete.min.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#ddlExamType').change(function () {
-            $.ajax({
-                type: "post",
-                url: "/Admin/ExamQuestions/GetExam",
-                data: { examTypeId: $('#ddlExamType').val() },
-                datatype: "json",
-                traditional: true,
-                success: function (data) {
-                    var examList = "<select id='ddlExam' class = 'form-control'>";
-                    examList = examList + '<option value="">--Select--</option>';
-                    for (var i = 0; i < data.length; i++)
-                    {
-                        examList = examList + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+        $(document).ready(function() {
+           
+            var selectedItem = {};
+            /**/
+            var options = {
+                url: function(phrase) {
+                    return "/Admin/ExamQuestions/GetQuestions?phrase=" + phrase + "";
+                },
+
+                getValue: "Question",
+                placeholder: "Type here to search questions and Use Add button to add it to list",
+
+                list: {
+                    match: {
+                        enabled: true
+                    },
+                    maxNumberOfElements: 10,
+                    showAnimation: {
+                        type: "fade", //normal|slide|fade
+                        time: 400,
+                        callback: function() {}
+                    },
+
+                    hideAnimation: {
+                        type: "slide", //normal|slide|fade
+                        time: 400,
+                        callback: function() {}
+                    },
+                    onClickEvent: function() {
+                        var index = $("#txtquestions").getSelectedItemIndex();
+                        selectedItem = $("#txtquestions").getItemData(index);
+                        //console.log($("#txtquestions").getItemData(index));
                     }
-                    examList = examList + '</select>';
-                    $('#examContainer').html(examList);
+                },
+
+                theme: "square"
+            };
+
+            $("#txtquestions").easyAutocomplete(options);
+
+            /**/
+
+            $('#clear-input').click(function() {
+                $("#txtquestions").val('');
+            });
+
+            $('#add-item').click(function() {
+                var selectedText = $("#txtquestions").val();
+                if (selectedText !== undefined && selectedText !== "") {
+                    var examQuestionResource = {};
+                    examQuestionResource.ExamId = @ViewBag.ExamId;
+                    examQuestionResource.QuestionId = selectedItem.Id;
+                    $.post("/Admin/ExamQuestions/Create", examQuestionResource, function(partialViewResult){
+                        $("#table-container").html(partialViewResult);
+                        
+                    });
+                    console.log(selectedItem);
+                    $("#txtquestions").val('');
                 }
+                // 
             });
         });
-
-
-        /**/
-        var options = {
-            data: ["blue", "green", "pink", "red", "yellow"]
-        };
-
-        $("#basics").easyAutocomplete(options);
-    });
-</script>  
+    </script>
 }
 

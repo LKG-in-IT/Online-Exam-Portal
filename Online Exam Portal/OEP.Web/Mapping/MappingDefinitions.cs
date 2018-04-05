@@ -49,6 +49,8 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<PackageSelectedResource, PackageSelected>();
                 m.CreateMap<PackageSelected, PackageSelectedResource>();
+
+                m.CreateMap<Questions, QuestionAutoCompleteResource > ();
             });
         }
     }

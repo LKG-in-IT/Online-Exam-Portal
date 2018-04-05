@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using OEP.Core.DomainModels.ExamModels;
 using OEP.Data;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using OEP.Core.DomainModels.QuestionModel;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -22,87 +27,59 @@ namespace OEP.Web.Areas.Admin.Controllers
         private readonly IExamQuestionService _examQuestionService;
         private readonly IQuestionService _questionService;
         private readonly IExamservice _examservice;
-        private readonly IService<ExamType> _examTypeservice;
 
-        public ExamQuestionsController(IExamQuestionService examQuestionService, IQuestionService questionService, IExamservice examservice, IService<ExamType> examTypeservice)
+        public ExamQuestionsController(IExamQuestionService examQuestionService, IQuestionService questionService, IExamservice examservice)
         {
 
             _examQuestionService = examQuestionService;
             _questionService = questionService;
             _examservice=examservice;
-            _examTypeservice = examTypeservice;
         }
 
-        // GET: Admin/ExamQuestions
-        public async Task<ActionResult> Index()
-        {
-            var examQuestions = await _examQuestionService.GetAllAsync();
-            var examQuestionsResource = Mapper.Map<List< ExamQuestion>,List< ExamQuestionResource>>(examQuestions);
-            return View(examQuestionsResource);
-        }
 
-        // GET: Admin/ExamQuestions/Details/5
-        public async Task<ActionResult> Details(int? id)
+
+        // GET: Admin/ExamQuestions/Create/5
+        public async Task<ActionResult> Create(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ExamQuestion examQuestion =await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
+            var exam = await _examservice.GetByIdAsync(Convert.ToInt32(id));
+            if (exam == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ExamId = id;
+            /*ExamQuestion examQuestion =await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
             if (examQuestion == null)
             {
                 return HttpNotFound();
             }
-            var examQuestionsResource = Mapper.Map<ExamQuestion, ExamQuestionResource>(examQuestion);
+            var examQuestionsResource = Mapper.Map<ExamQuestion, ExamQuestionResource>(examQuestion);*/
 
-            return View(examQuestionsResource);
+            return View();
         }
 
-        // GET: Admin/ExamQuestions/Create
-        public async Task<ViewResult> Create()
+      
+
+        [HttpGet]
+        // GET: Admin/ExamQuestions/GetQuestions
+        public async Task<ActionResult> GetQuestions(string phrase)
         {
-            var model=new ExamQuestionResource();
-            var x = await _examTypeservice.GetAllAsync();
-            model.SelectListItemExamType =x.Select(type=>new SelectListItem
-            {
-                Value = type.Id.ToString(),
-                Text = type.Name.ToString() 
-                //,Selected=type.Id.Equals(3)
-            });
-           // ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question");
-            return View(model);
+            var questions = await _questionService.GetAllAsync();
+            questions = questions.Where(x => x.Question.Contains(phrase)&& x.Status).ToList();
+            var questionRes=Mapper.Map<List<Questions>, List<QuestionAutoCompleteResource>>(questions);
+            return Json(questionRes, JsonRequestBehavior.AllowGet);
         }
 
+
+
+        // POST: Admin/ExamQuestions/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        // GET: Admin/ExamQuestions/GetExam
-        public async Task<ActionResult> GetExam(string examTypeId)
-        {
-            int typeId;
-            IEnumerable<SelectListItem> exams = new List<SelectListItem>();
-            if (!string.IsNullOrEmpty(examTypeId))
-            {
-                typeId = Convert.ToInt32(examTypeId);
-                var x = await _examservice.GetAllAsync();
-
-                exams = x.Where(t=>t.ExamtypeId== typeId).Select(type => new SelectListItem
-                {
-                    Value = type.Id.ToString(),
-                    Text = type.Name.ToString()
-                    //,Selected=type.Id.Equals(3)
-                });
-            }
-            return Json(exams, JsonRequestBehavior.AllowGet);
-
-        }
-
-
-
-    // POST: Admin/ExamQuestions/Create
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create( ExamQuestionResource examQuestionResource)
+        public async Task<string> Create(ExamQuestionResource examQuestionResource)
         {
             if (ModelState.IsValid)
             {
@@ -111,89 +88,22 @@ namespace OEP.Web.Areas.Admin.Controllers
                 examQuestion.UpdatedDate = DateTime.Now;
                 var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 examQuestion.UserId = userId;
+                examQuestion.Status = true;
                 await _examQuestionService.AddAsync(examQuestion);
                 _examQuestionService.UnitOfWorkSaveChanges();
 
+                var exmaQuestionList = await _examQuestionService.GetAllAsync();
+                var examQuestionListResource = Mapper.Map<List<ExamQuestion>,List<ExamQuestionResource> >(exmaQuestionList);
+                string ret = PartialView("~/Areas/Admin/Views/ExamQuestions/ExamQuestionsList.cshtml",examQuestionListResource).RenderToString();
 
-             
-                return RedirectToAction("Index");
+                return ret;
             }
-
-            ViewBag.ExamId = new SelectList (await _examservice.GetAllAsync(), "Id", "Name", examQuestionResource.ExamId);
-            ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question", examQuestionResource.QuestionId);
-            return View(examQuestionResource);
+            return "Error";
         }
 
-        // GET: Admin/ExamQuestions/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ExamQuestion examQuestion = await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
-            if (examQuestion == null)
-            {
-                return HttpNotFound();
-            }
-            var examQuestionResource = Mapper.Map<ExamQuestion, ExamQuestionResource>(examQuestion);
-            ViewBag.ExamId = new SelectList(await _examservice.GetAllAsync(), "Id", "Name", examQuestionResource.ExamId);
-            ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question", examQuestionResource.QuestionId);
-            return View(examQuestionResource);
-        }
+        
 
-        // POST: Admin/ExamQuestions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit( ExamQuestionResource examQuestionResource)
-        {
-            if (ModelState.IsValid)
-            {
-                var exstexamQuestion = await _examQuestionService.GetByIdAsync(examQuestionResource.Id);
-                exstexamQuestion.QuestionId = examQuestionResource.QuestionId;
-                exstexamQuestion.ExamId = examQuestionResource.ExamId;
-                var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                exstexamQuestion.UpdatedDate = DateTime.Now;
-                await _examQuestionService.UpdateAsync(exstexamQuestion);
-                _examQuestionService.UnitOfWorkSaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ExamId = new SelectList(await _examservice.GetAllAsync(), "Id", "Name", examQuestionResource.ExamId);
-            ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question", examQuestionResource.QuestionId);
-            return View(examQuestionResource);
-        }
 
-        // GET: Admin/ExamQuestions/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ExamQuestion examQuestion = await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
-            if (examQuestion == null)
-            {
-                return HttpNotFound();
-            }
-            var examQuestionResource = Mapper.Map<ExamQuestion, ExamQuestionResource>(examQuestion);
-            ViewBag.ExamId = new SelectList(await _examservice.GetAllAsync(), "Id", "Name", examQuestionResource.ExamId);
-            ViewBag.QuestionId = new SelectList(await _questionService.GetAllAsync(), "Id", "Question", examQuestionResource.QuestionId);
-            return View(examQuestionResource);
-        }
-
-        // POST: Admin/ExamQuestions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            ExamQuestion examQuestion = await _examQuestionService.GetByIdAsync(id);
-            await _examQuestionService.DeleteAsync(examQuestion);
-            _examQuestionService.UnitOfWorkSaveChanges();
-           
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

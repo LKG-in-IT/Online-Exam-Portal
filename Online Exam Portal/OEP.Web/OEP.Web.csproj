@@ -217,6 +217,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ViewExtensions.cs" />
     <Compile Include="Mapping\MappingDefinitions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -605,11 +606,7 @@
     <Content Include="Areas\Admin\Views\Exams\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Exams\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\Create - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamQuestions\ExamQuestionsList.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
