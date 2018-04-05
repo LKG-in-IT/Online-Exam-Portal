@@ -37,17 +37,11 @@ namespace OEP.Data.Configuration
             HasKey(a => a.Id);
             Property(u => u.InstituteName).HasMaxLength(1000);
             Property(x => x.EducationTypeId).IsRequired();
+            Property(x => x.ApplicationUserID).IsRequired();
+
+
         }
     }
 
 
-    public class UserEducationDetailsConfig : EntityTypeConfiguration<UserEducationDetails>
-    {
-        public UserEducationDetailsConfig()
-        {
-            ToTable("UserEducationDetails");
-            HasKey(a => a.Id);
-            Property(x => x.ApplicationUserId).IsRequired();
-        }
-    }
 }

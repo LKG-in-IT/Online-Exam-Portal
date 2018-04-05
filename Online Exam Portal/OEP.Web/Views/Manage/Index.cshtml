@@ -12,7 +12,10 @@
 <div>
     <h4>Change your account settings</h4>
     <hr />
-    <div id="partialView">
+    <div id="partialViewProfile" class="row">
+
+    </div>
+    <div id="partialViewEducationType" class="row">
 
     </div>
     <dl class="dl-horizontal">
@@ -95,7 +98,8 @@
     <script type="text/jscript">
         $(document).ready(function () {
             
-            $("#partialView").load("/Manage/UserProfile/");
+            $("#partialViewProfile").load("/Manage/UserProfile/");
+            $("#partialViewEducationType").load("/Manage/EducationDetails/");
 
 
         });

@@ -7,13 +7,13 @@ namespace OEP.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UserEducationDetails : IMigrationMetadata
+    public sealed partial class EducationDetailsone : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserEducationDetails));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EducationDetailsone));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804031150181_UserEducationDetails"; }
+            get { return "201804041148595_EducationDetailsone"; }
         }
         
         string IMigrationMetadata.Source

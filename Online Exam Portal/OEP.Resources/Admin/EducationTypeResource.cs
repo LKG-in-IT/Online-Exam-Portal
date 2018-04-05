@@ -2,6 +2,7 @@
 {
     public class EducationTypeResource:BaseResource
     {
+
         public string Name { get; set; }
     }
 }

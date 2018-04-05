@@ -53,6 +53,9 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<Questions, QuestionAutoCompleteResource > ();
 
+                m.CreateMap<EducationDetailsResource, EducationDetails>();
+                m.CreateMap<EducationDetails, EducationDetailsResource>();
+
 
             });
         }

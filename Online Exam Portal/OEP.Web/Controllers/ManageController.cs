@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.DomainModels.Identity;
+using OEP.Core.Services;
+using OEP.Resources.Admin;
 using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
@@ -16,15 +21,23 @@ namespace OEP.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IService<EducationType> _educationTypeService;
+        private readonly IService<YearDetails> _YearDetailsService;
+        private readonly IService<EducationDetails> _EducationDetailsService;
 
-        public ManageController()
+
+        public ManageController(IService<EducationType> educationTypeService, IService<YearDetails> YearDetailsService, IService<EducationDetails> EducationDetailsService)
         {
+            _educationTypeService = educationTypeService;
+            _YearDetailsService = YearDetailsService;
+            _EducationDetailsService = EducationDetailsService;
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+
         }
 
         public ApplicationSignInManager SignInManager
@@ -33,9 +46,9 @@ namespace OEP.Web.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -50,8 +63,74 @@ namespace OEP.Web.Controllers
                 _userManager = value;
             }
         }
+
+        public async Task<ActionResult> EducationDetails()
+        {
+            var typelist = await _educationTypeService.GetAllAsync();
+            ViewBag.EducationTypeId = new SelectList(typelist.Where(i => i.Status == true), "Id", "Name");
+
+            var yearlist = await _YearDetailsService.GetAllAsync();
+            ViewBag.YearFromId = new SelectList(yearlist.Where(i => i.Status == true), "Id", "Year");
+            var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+
+            //var count = _EducationDetailsService.GetAll().Where(i => i.ApplicationUserID == userid).Count();
+            //if (count > 0)
+            //{
+            //  //  EducationDetails exsteducationlist =await _EducationDetailsService.GetAllAsync(x=>x.UserId==userid);
+
+            //    var educationDetailsResource = Mapper.Map<EducationDetails, EducationDetailsResource>(exsteducationlist);
+
+            //    return View();
+
+
+            //}
+
+            return View();
+        }
+        [HttpPost]
+        public JsonResult AddEducationDetails(EducationDetailsResource educationDetailsResource)
+        {
+            if (ModelState.IsValid)
+            {
+                var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+                var educationdetails = Mapper.Map<EducationDetailsResource, EducationDetails>(educationDetailsResource);
+                educationdetails.EducationTypeId = educationDetailsResource.EducationTypeId;
+                educationdetails.InstituteName = educationDetailsResource.InstituteName;
+                educationdetails.YearFromId = educationDetailsResource.YearFromId;
+                educationdetails.CreatedDate = DateTime.Now;
+                educationdetails.UpdatedDate = DateTime.Now;
+                educationdetails.UserId = userid;
+                educationdetails.YearToId = educationDetailsResource.YearToId;
+                educationdetails.ApplicationUserID = userid;
+                educationdetails.Status = true;
+
+                _EducationDetailsService.Add(educationdetails);
+                _EducationDetailsService.UnitOfWorkSaveChanges();
+                return Json("Success");
+            }
+
+
+            return Json("Error");
+
+        }
+        public ActionResult EducationDetailsList()
+        {
+            var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+
+            var exsteducationlist = _EducationDetailsService.GetAll().Where(i => i.UserId == userid).ToList();
+
+            ViewData["exsteducationlist"] = exsteducationlist;
+            return View();
+
+        }
+
         public async Task<ActionResult> UserProfile()
         {
+
+
             var userId = User.Identity.GetUserId();
             var user = await UserManager.FindByIdAsync(userId);
             return View(user);
@@ -65,7 +144,7 @@ namespace OEP.Web.Controllers
             Userprofile.DatOfBirth = applicationUser.DatOfBirth;
             Userprofile.Address = applicationUser.Address;
 
-            var result =  await UserManager.UpdateAsync(Userprofile);
+            var result = await UserManager.UpdateAsync(Userprofile);
             return RedirectToAction("Index");
 
         }
@@ -353,7 +432,7 @@ namespace OEP.Web.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -404,6 +483,6 @@ namespace OEP.Web.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
