@@ -32,16 +32,19 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         public ExamQuestionsController(IExamQuestionService examQuestionService, IQuestionService questionService, IExamservice examservice)
         {
-
             _examQuestionService = examQuestionService;
             _questionService = questionService;
             _examservice = examservice;
         }
 
 
-
-        // GET: Admin/ExamQuestions/Create/5
-        public async Task<ActionResult> Create(int? id)
+        /// <summary>
+        /// Add Questions for Exam. We are adding questions for each exam
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // GET: Admin/ExamQuestions/AddQuestions/5
+        public async Task<ActionResult> AddQuestions(int? id)
         {
             if (id == null)
             {
@@ -50,7 +53,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             var exam = await _examservice.GetByIdAsync(Convert.ToInt32(id));
             if (exam == null)
             {
-                return HttpNotFound();
+                return RedirectToRoute(new {controller="Exams",action="Index",area="Admin"});
             }
             ExamQuestionViewModel examQuestionViewModel = new ExamQuestionViewModel();
             examQuestionViewModel.ExamId = exam.Id;
@@ -62,7 +65,11 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
 
-
+        /// <summary>
+        /// get questions for auto complete textbox.
+        /// </summary>
+        /// <param name="phrase">text for search</param>
+        /// <returns></returns>
         [HttpGet]
         // GET: Admin/ExamQuestions/GetQuestions
         public async Task<ActionResult> GetQuestions(string phrase)
@@ -74,12 +81,14 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
 
-
-        // POST: Admin/ExamQuestions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// add question after user choose question from autocomplete and click add button
+        /// </summary>
+        /// <param name="examQuestionResource"></param>
+        /// <returns></returns>
+        // POST: Admin/ExamQuestions/AddQuestions
         [HttpPost]
-        public async Task<string> Create(ExamQuestionResource examQuestionResource)
+        public async Task<string> AddQuestions(ExamQuestionResource examQuestionResource)
         {
             if (ModelState.IsValid)
             {
@@ -111,8 +120,13 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         
+        /// <summary>
+        /// Delete Question from list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<string> Delete(int? id)
+        public async Task<string> DeleteQuestion(int? id)
         {
             if (id != null)
             {
@@ -128,6 +142,10 @@ namespace OEP.Web.Areas.Admin.Controllers
             return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
         }
 
+        /// <summary>
+        /// Convert partial view result to string. We are using an extension method for this
+        /// </summary>
+        /// <returns></returns>
         private async Task<string> ConvertListToString()
         {
             var exmaQuestionList = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
