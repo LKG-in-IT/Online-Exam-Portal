@@ -93,7 +93,7 @@ namespace OEP.Web.Controllers
                 educationdetails.UpdatedDate = DateTime.Now;
                 educationdetails.UserId = userid;
                 educationdetails.YearToId = educationDetailsResource.YearToId;
-                educationdetails.ApplicationUserID = userid;
+                educationdetails.ApplicationUserId = userid;
                 educationdetails.Status = true;
 
               await  _EducationDetailsService.AddAsync(educationdetails);
@@ -146,7 +146,7 @@ namespace OEP.Web.Controllers
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
      
 
-            var res = _EducationDetailsService.FindByAsync(i => i.ApplicationUserID == userid);
+            var res = _EducationDetailsService.FindByAsync(i => i.ApplicationUserId == userid);
             if (res.Result.Any())
             {
 
