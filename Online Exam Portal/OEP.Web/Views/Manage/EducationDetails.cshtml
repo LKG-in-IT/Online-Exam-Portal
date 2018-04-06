@@ -7,18 +7,9 @@
 {
     @Html.AntiForgeryToken()
 
-    @{ 
-        
-        List<OEP.Resources.Admin.EducationDetailsResource> a = ViewBag.d;
-     
-        foreach (OEP.Resources.Admin.EducationDetailsResource item in a)
-        {
-            if(item.u)
-        }
-    }
+   
     <div class="form-horizontal">
-        <fieldset>
-            <legend>Education Details</legend>
+      
 
             <div class="form-group">
                 <div class="col-md-3">
@@ -44,41 +35,68 @@
                 </div>
                 <div class="col-md-2">
 
-                    <input type="button" id="btnadd" class="btn btn-success" value="ADD" />
+                    <input type="button" name="0" id="btnadd" class="btn btn-success" value="Add" />
+                    <input type="button" name="0" id="btncancel" class="btn btn-danger" value="Cancel" />
 
                 </div>
             </div>
 
-            <div class="form-group" id="Educationdetailstable">
-
-            </div>
+           
 
 
-        </fieldset>
+       
 
     </div>
 }
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
-    $("#btnadd").click(function () {
+  
+ 
+    $('#partialViewEducationType').on('click', '#btncancel', function () {
         debugger;
+        $('#partialViewEducationType').empty();
+        $("#btnaddnew").show();
+    });
+    $("#btnadd").click(function () {
+
+
+        debugger;
+
         var educationType = $("#EducationTypeId").val();
         var institute = $("#Institute").val();
         var from = $("#from").val();
-
+        var eid = $("#btnadd").attr("name");
         var to = $("#to").val();
-        var educationDetailsResource={};
+        var educationDetailsResource = {};
+        educationDetailsResource.id = eid;
         educationDetailsResource.EducationTypeId = educationType;
         educationDetailsResource.InstituteName = institute;
         educationDetailsResource.YearFromId = from;
         educationDetailsResource.YearToId = to;
 
+        var operation = $("#btnadd").val();
 
+        if (operation == "Add") {
         $.post("/Manage/AddEducationDetails/", { educationDetailsResource }, function (data) {
 
-            $("#Educationdetailstable").load("/Manage/EducationDetailsList");
-        });
+            $("#Educationdetailstable").html('');
 
+            $("#partialViewEducationType").html('');
+            $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+            $("#partialViewEducationType").load("/Manage/EducationDetails/");
+        });
+        }
+        if (operation == "Update") {
+            $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
+
+                $("#Educationdetailstable").html('');
+
+                $("#partialViewEducationType").html('');
+                $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                $("#partialViewEducationType").load("/Manage/EducationDetails/");
+
+            });
+        }
     });
    
 </script>

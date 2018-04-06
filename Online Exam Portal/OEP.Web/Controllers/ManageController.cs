@@ -74,22 +74,12 @@ namespace OEP.Web.Controllers
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
 
-            //var count = _EducationDetailsService.GetAll().Where(i => i.ApplicationUserID == userid).Count();
-            //if (count > 0)
-            //{
-            //  //  EducationDetails exsteducationlist =await _EducationDetailsService.GetAllAsync(x=>x.UserId==userid);
-
-            //    var educationDetailsResource = Mapper.Map<EducationDetails, EducationDetailsResource>(exsteducationlist);
-
-            //    return View();
-
-
-            //}
+          
 
             return View();
         }
         [HttpPost]
-        public JsonResult AddEducationDetails(EducationDetailsResource educationDetailsResource)
+        public async Task< JsonResult> AddEducationDetails(EducationDetailsResource educationDetailsResource)
         {
             if (ModelState.IsValid)
             {
@@ -103,10 +93,10 @@ namespace OEP.Web.Controllers
                 educationdetails.UpdatedDate = DateTime.Now;
                 educationdetails.UserId = userid;
                 educationdetails.YearToId = educationDetailsResource.YearToId;
-                educationdetails.ApplicationUserId = userid;
+                educationdetails.ApplicationUserID = userid;
                 educationdetails.Status = true;
 
-                _EducationDetailsService.Add(educationdetails);
+              await  _EducationDetailsService.AddAsync(educationdetails);
                 _EducationDetailsService.UnitOfWorkSaveChanges();
                 return Json("Success");
             }
@@ -115,17 +105,65 @@ namespace OEP.Web.Controllers
             return Json("Error");
 
         }
-        public ActionResult EducationDetailsList()
+
+        [HttpPost]
+        public async Task< JsonResult> EditEducationDetails(EducationDetailsResource educationDetailsResource)
         {
-            var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var educationdetails = await _EducationDetailsService.GetByIdAsync(educationDetailsResource.Id);
+            if (ModelState.IsValid)
+            {
+                var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+              
+                educationdetails.EducationTypeId = educationDetailsResource.EducationTypeId;
+                educationdetails.InstituteName = educationDetailsResource.InstituteName;
+                educationdetails.YearFromId = educationDetailsResource.YearFromId;
+
+                educationdetails.UpdatedDate = DateTime.Now;
+                educationdetails.UserId = userid;
+                educationdetails.YearToId = educationDetailsResource.YearToId;
+                educationdetails.ApplicationUserId = userid;
+                educationdetails.Status = true;
+
+              await  _EducationDetailsService.UpdateAsync(educationdetails);
+                _EducationDetailsService.UnitOfWorkSaveChanges();
+                return Json("Success");
+            }
 
 
-            var exsteducationlist = _EducationDetailsService.GetAll().Where(i => i.UserId == userid).ToList();
-
-            ViewData["exsteducationlist"] = exsteducationlist;
-            return View();
+            return Json("Error");
 
         }
+        public async Task< ActionResult> Educationdetailstable()
+        {
+
+            var typelist = await _educationTypeService.GetAllAsync();
+            ViewBag.EducationTypeId =typelist.Where(i => i.Status == true);
+           
+            var yearlist = await _YearDetailsService.GetAllAsync();
+            ViewBag.YearFromId = new SelectList(yearlist.Where(i => i.Status == true), "Id", "Year",1);
+
+            var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+     
+
+            var res = _EducationDetailsService.FindByAsync(i => i.ApplicationUserID == userid);
+            if (res.Result.Any())
+            {
+
+                var exsteducationlist = await _EducationDetailsService.FindByAsync(x => x.UserId == userid);
+
+                var educationDetailsResource = Mapper.Map<List<EducationDetails>, List<EducationDetailsResource>>(exsteducationlist);
+
+                return View(educationDetailsResource);
+
+
+            }
+            else
+            {
+                return View();
+            }
+        }
+       
 
         public async Task<ActionResult> UserProfile()
         {
@@ -145,6 +183,7 @@ namespace OEP.Web.Controllers
             Userprofile.Address = applicationUser.Address;
 
             var result = await UserManager.UpdateAsync(Userprofile);
+           
             return RedirectToAction("Index");
 
         }

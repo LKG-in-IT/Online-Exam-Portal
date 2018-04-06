@@ -1,0 +1,104 @@
+﻿@model IEnumerable<OEP.Resources.Admin.EducationDetailsResource>
+@using System.Web.Optimization
+@{ Layout = "";}
+<fieldset>
+    <legend>Education Details</legend>
+    <div id="partialViewEducationType" class="row">
+
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.DropDownList("EducationTypeId", new SelectList(ViewBag.EducationTypeId, "Id", "Name", item.EducationTypeId), "Please Select", htmlAttributes: new { @class = "form-control", @id = "EducationTypeId" })
+      
+                @* <select name="@("typeId"+item.Id)" id="@("typeId"+item.Id)" class="form-control"><option value="@item.EducationTypeId">@item.educationType.Name</option></select>*@
+
+            </div>
+            <div class="col-md-3">
+
+                <input type="text" value="@item.InstituteName" id="@("txtname"+item.Id)" class="form-control" placeholder="Institute Name" />
+
+            </div>
+            <div class="col-md-2">
+
+                @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "form-control", @id = "from" })
+
+
+
+
+            </div>
+            <div class="col-md-2">
+
+                @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "To", htmlAttributes: new { @class = "form-control", @id = "to" })
+
+
+
+            </div>
+            <div class="col-md-2">
+
+                <input type="button" name="@item.Id" onclick="editDetails(@item.Id)" id="btnedit" class="btn btn-info" value="Update" />
+                <input type="button" name="@item.Id" id="btndelete" onclick="deleteDetails(@item.Id)" class="btn btn-danger" value="Delete" />
+
+            </div>
+        </div>
+
+    }
+
+    <div class="form-group" style="">
+        <br />
+        <input type="button" id="btnaddnew" value="Add" class="btn btn-success" />
+    </div>
+</fieldset>
+<script>
+
+    $("#btnaddnew").click(function () {
+
+        $("#partialViewEducationType").load("/Manage/EducationDetails/");
+        $("#btnaddnew").hide();
+
+    });
+
+    function editDetails(Id) {
+
+        debugger;
+        $("#btnadd").prop('value', 'Update');
+        $("#btnadd").prop('class', 'btn btn-info');
+
+        $("#btnadd").prop('name', Id);
+        var educationtypid = $("#typeId" + Id).val();
+        var yearfrom = $("#yearfrom" + Id).val();
+        var yearto = $("#yearto" + Id).val();
+        var txtname = $("#txtname" + Id).val();
+
+        $('#EducationTypeId').find('option[value="' + educationtypid + '"]').attr('selected', 'selected');
+        $('#from').find('option[value="' + yearfrom + '"]').attr('selected', 'selected');
+        $('#to').find('option[value="' + yearto + '"]').attr('selected', 'selected');
+        $("#Institute").val(txtname);
+
+
+    }
+    function deleteDetails(Id) {
+
+        debugger;
+        $("#btnadd").prop('value', 'Delete');
+        $("#btnadd").prop('class', 'btn btn-danger');
+
+        $("#btnadd").prop('name', Id);
+        var educationtypid = $("#typeId" + Id).val();
+        var yearfrom = $("#yearfrom" + Id).val();
+        var yearto = $("#yearto" + Id).val();
+        var txtname = $("#txtname" + Id).val();
+
+        $('#EducationTypeId').find('option[value="' + educationtypid + '"]').attr('selected', 'selected');
+        $('#from').find('option[value="' + yearfrom + '"]').attr('selected', 'selected');
+        $('#to').find('option[value="' + yearto + '"]').attr('selected', 'selected');
+        $("#Institute").val(txtname);
+
+
+    }
+
+
+
+
+</script>
