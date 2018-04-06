@@ -103,7 +103,7 @@ namespace OEP.Web.Controllers
                 educationdetails.UpdatedDate = DateTime.Now;
                 educationdetails.UserId = userid;
                 educationdetails.YearToId = educationDetailsResource.YearToId;
-                educationdetails.ApplicationUserID = userid;
+                educationdetails.ApplicationUserId = userid;
                 educationdetails.Status = true;
 
                 _EducationDetailsService.Add(educationdetails);

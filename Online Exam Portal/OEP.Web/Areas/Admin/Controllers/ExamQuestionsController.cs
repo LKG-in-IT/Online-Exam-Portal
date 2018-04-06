@@ -55,7 +55,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             var exam = await _examservice.GetByIdAsync(Convert.ToInt32(id));
             if (exam == null)
             {
-                return RedirectToRoute(new {controller="Exams",action="Index",area="Admin"});
+                return RedirectToRoute(new { controller = "Exams", action = "Index", area = "Admin" });
             }
             ExamQuestionViewModel examQuestionViewModel = new ExamQuestionViewModel();
             examQuestionViewModel.ExamId = exam.Id;
@@ -82,21 +82,29 @@ namespace OEP.Web.Areas.Admin.Controllers
 
                     //Paging Size (10,20,50,100)    
                     int pageSize = length != null ? Convert.ToInt32(length) : 0;
-                    int skip = start != null && start !="0" ? Convert.ToInt32(start) : 1;
+                    int skip = start != null ? Convert.ToInt32(start) : 1;
                     int recordsTotal = 0;
 
-                    if (sortColumn == "Question")
-                    {
-                        
-                    }
-                    if (sortColumnDir == "Asc")
-                    {
+                    var examQuestion = await _examQuestionService.GetAllAsync(
+                        skip,
+                        pageSize,
 
-                    }
+                        //sorting
+                        x => sortColumn == "Question" ? x.Questions.Question : null,
 
-                    var examQuestion = await _examQuestionService.GetAllAsync(skip, pageSize, x => x.Questions.Question, x => x.ExamId == id && x.Questions.Question.Contains(searchValue),OrderBy.Ascending, x => x.Questions);
+                        //filtering
+                        x => x.ExamId == id &&
+                        searchValue != "" ? x.Questions.Question.Contains(searchValue) : x.Id != 0,
+
+                        //sort by
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending),
+
+                        //include properties
+                        x => x.Questions
+                     );
 
                     var resp = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(examQuestion);
+
                     //total number of rows count     
                     recordsTotal = examQuestion.TotalCount;
                     return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
@@ -108,7 +116,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
             return Content("Error");
         }
-        
+
 
         /// <summary>
         /// get questions for auto complete textbox.
@@ -119,10 +127,17 @@ namespace OEP.Web.Areas.Admin.Controllers
         // GET: Admin/ExamQuestions/GetQuestions
         public async Task<ActionResult> GetQuestions(string phrase)
         {
-            var questions = await _questionService.GetAllAsync();
-            questions = questions.Where(x => x.Question.Contains(phrase) && x.Status).ToList();
+            var questions = await _questionService.FindByAsync(x => x.Question.Contains(phrase) && x.Status);
             var questionRes = Mapper.Map<List<Questions>, List<QuestionAutoCompleteResource>>(questions);
-            return Json(questionRes, JsonRequestBehavior.AllowGet);
+            if (questionRes.Any())
+            {
+                return Json(questionRes, JsonRequestBehavior.AllowGet);
+            }
+            var questionAutoCompleteResourceList = new List<QuestionAutoCompleteResource>();
+            QuestionAutoCompleteResource questionAutoCompleteResource = new QuestionAutoCompleteResource() { Id = 0, Question = "No Results Found" };
+            questionAutoCompleteResourceList.Add(questionAutoCompleteResource);
+            return Json(questionAutoCompleteResourceList, JsonRequestBehavior.AllowGet);
+
         }
 
 
@@ -151,7 +166,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                     examQuestion.Status = true;
                     await _examQuestionService.AddAsync(examQuestion);
                     _examQuestionService.UnitOfWorkSaveChanges();
-                    
+
                     var response = JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = "" });
                     return response;
                 }
@@ -163,7 +178,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
         }
 
-        
+
         /// <summary>
         /// Delete Question from list
         /// </summary>
@@ -174,18 +189,18 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             if (id != null)
             {
-                var examQuestionExist =await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
+                var examQuestionExist = await _examQuestionService.GetByIdAsync(Convert.ToInt32(id));
                 if (examQuestionExist != null)
                 {
                     await _examQuestionService.DeleteAsync(examQuestionExist);
                     return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = "" });
                 }
-                return  JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "NotExist", Message = "The Item doesn't exist!", Result = "" });
+                return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "NotExist", Message = "The Item doesn't exist!", Result = "" });
             }
             return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
         }
 
-     
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

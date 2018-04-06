@@ -29,8 +29,7 @@ namespace OEP.Core.DomainModels.EducationModels
         [ForeignKey("YearToId")]
         public virtual YearDetails YearTo { get; set; }
 
-        public string ApplicationUserID { get; set; }
-        [ForeignKey("ApplicationUserID")]
+        public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
