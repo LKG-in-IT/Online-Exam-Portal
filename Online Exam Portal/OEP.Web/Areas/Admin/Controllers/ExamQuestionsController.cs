@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Net;
 using System.Text;
@@ -18,6 +19,7 @@ using OEP.Resources.Admin;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using OEP.Core.Data;
 using OEP.Core.DomainModels.QuestionModel;
 using OEP.Web.Helpers;
 
@@ -58,12 +60,55 @@ namespace OEP.Web.Areas.Admin.Controllers
             ExamQuestionViewModel examQuestionViewModel = new ExamQuestionViewModel();
             examQuestionViewModel.ExamId = exam.Id;
             examQuestionViewModel.ExamName = exam.Name;
-            var examQuestion = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
-            examQuestionViewModel.ExamQuestionResourceList = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(examQuestion);
-
             return View(examQuestionViewModel);
         }
 
+        // POST: Admin/ExamQuestions/LoadQuestions/5
+
+        public async Task<ActionResult> LoadQuestions(int id)
+        {
+            try
+            {
+                if (Request.Form != null)
+                {
+                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                    var start = Request.Form.GetValues("start").FirstOrDefault();
+                    var length = Request.Form.GetValues("length").FirstOrDefault();
+                    var sortColumn =
+                        Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null && start !="0" ? Convert.ToInt32(start) : 1;
+                    int recordsTotal = 0;
+
+                    if (sortColumn == "Question")
+                    {
+                        
+                    }
+                    if (sortColumnDir == "Asc")
+                    {
+
+                    }
+
+                    var examQuestion = await _examQuestionService.GetAllAsync(skip, pageSize, x => x.Questions.Question, x => x.ExamId == id && x.Questions.Question.Contains(searchValue),OrderBy.Ascending, x => x.Questions);
+
+                    var resp = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(examQuestion);
+                    //total number of rows count     
+                    recordsTotal = examQuestion.TotalCount;
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            return Content("Error");
+        }
+        
 
         /// <summary>
         /// get questions for auto complete textbox.
@@ -106,9 +151,8 @@ namespace OEP.Web.Areas.Admin.Controllers
                     examQuestion.Status = true;
                     await _examQuestionService.AddAsync(examQuestion);
                     _examQuestionService.UnitOfWorkSaveChanges();
-
-                    var partialViewHtmlString = await ConvertListToString();
-                    var response = JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = partialViewHtmlString });
+                    
+                    var response = JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = "" });
                     return response;
                 }
                 else
@@ -134,30 +178,14 @@ namespace OEP.Web.Areas.Admin.Controllers
                 if (examQuestionExist != null)
                 {
                     await _examQuestionService.DeleteAsync(examQuestionExist);
-                    var partialViewHtmlString = await ConvertListToString();
-                    return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = partialViewHtmlString });
+                    return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "", Result = "" });
                 }
                 return  JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "NotExist", Message = "The Item doesn't exist!", Result = "" });
             }
             return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "The enter valid details!", Result = "" });
         }
 
-        /// <summary>
-        /// Convert partial view result to string. We are using an extension method for this
-        /// </summary>
-        /// <returns></returns>
-        private async Task<string> ConvertListToString()
-        {
-            var exmaQuestionList = await _examQuestionService.GetAllIncludingAsync(x => x.Questions);
-            var examQuestionListResource = Mapper.Map<List<ExamQuestion>, List<ExamQuestionResource>>(exmaQuestionList);
-            // convert examquestion model to resource
-            string ret =
-                PartialView("~/Areas/Admin/Views/ExamQuestions/ExamQuestionsList.cshtml", examQuestionListResource)
-                    .RenderToString();
-            return ret;
-        }
-
-
+     
         protected override void Dispose(bool disposing)
         {
             if (disposing)

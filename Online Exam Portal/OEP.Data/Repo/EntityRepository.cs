@@ -34,12 +34,12 @@ namespace OEP.Data.Repo
             return GetAll(pageIndex, pageSize, x => x.Id);
         }
 
-        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy = OrderBy.Ascending)
+        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, OrderBy orderBy = OrderBy.Ascending)
         {
             return GetAll(pageIndex, pageSize, keySelector, null, orderBy);
         }
 
-        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
+        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var entities = FilterQuery(keySelector, predicate, orderBy, includeProperties);
             var total = entities.Count();// entities.Count() is different than pageSize
@@ -94,12 +94,12 @@ namespace OEP.Data.Repo
             return GetAllAsync(pageIndex, pageSize, x => x.Id);
         }
 
-        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy = OrderBy.Ascending)
+        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, OrderBy orderBy = OrderBy.Ascending)
         {
             return GetAllAsync(pageIndex, pageSize, keySelector, null, orderBy);
         }
 
-        public async Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector,
+        public async Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector,
             Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var entities = FilterQuery(keySelector, predicate, orderBy, includeProperties);
@@ -131,7 +131,7 @@ namespace OEP.Data.Repo
             return _dbEntitySet.Where(predicate).ToListAsync();
         }
 
-        private IQueryable<TEntity> FilterQuery(Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy,
+        private IQueryable<TEntity> FilterQuery(Expression<Func<TEntity, object>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy,
             Expression<Func<TEntity, object>>[] includeProperties)
         {
             var entities = IncludeProperties(includeProperties);

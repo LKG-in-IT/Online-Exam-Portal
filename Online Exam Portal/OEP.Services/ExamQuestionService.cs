@@ -22,5 +22,5 @@ namespace OEP.Services
        {
            return _examQuestionRepository.GetAllIncludingAsync(includeProperties);
        }
-    }
+   }
 }

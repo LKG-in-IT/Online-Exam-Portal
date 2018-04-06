@@ -607,7 +607,6 @@
     <Content Include="Areas\Admin\Views\Exams\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Exams\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\AddQuestions.cshtml" />
-    <Content Include="Areas\Admin\Views\ExamQuestions\ExamQuestionsList.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -1,5 +1,5 @@
 ﻿@model OEP.Resources.Admin.ExamQuestionViewModel
-    @using  System.Web.Optimization
+@using System.Web.Optimization
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
@@ -10,7 +10,7 @@
 <div class="form-group">
     <label class="control-label col-md-2">Choose Question</label>
     <div class="col-md-8">
-        <input id="txtquestions" class="form-control"/>
+        <input id="txtquestions" class="form-control" />
     </div>
     <div class="col-md-1">
         <button class="btn btn-danger" id="clear-input">Clear</button>
@@ -20,99 +20,159 @@
     </div>
 </div>
 
-<div id="table-container">
-    @Html.Partial("ExamQuestionsList",Model.ExamQuestionResourceList)
-</div>
+<br/>
+<div class="container">
+    <br />
+    <div style="width:90%; margin:0 auto;">
+        <table id="demoGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>  
 
 
 @section Scripts {
-    <link href="~/Areas/Admin/Assets/plugins/easy-autocomplete/easy-autocomplete.css" rel="stylesheet"/>
+    <link href="~/Areas/Admin/Assets/plugins/easy-autocomplete/easy-autocomplete.css" rel="stylesheet" />
     <script src="~/Areas/Admin/Assets/plugins/easy-autocomplete/jquery.easy-autocomplete.js"></script>
     <script src="~/Areas/Admin/Assets/plugins/easy-autocomplete/jquery.easy-autocomplete.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+    <script>
+
+
+        $("#demoGrid").DataTable({
+
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "pageLength": 3,
+
+            "ajax": {
+                "url": "/Admin/ExamQuestions/LoadQuestions?id=@Model.ExamId",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+            [
+            {
+                "targets": [0],
+                "searchable": false,
+                "orderable": true
+            }],
+
+            "columns": [
+                  { "data": "Questions.Question", "name": "Question", "autoWidth": true },
+                   {
+                       data: null, render: function (data, type, row) {
+                           return "<a href='#' class='btn btn-danger deleteQuestion' data-id='" + row.Id + "'  >Delete</a>";
+                       }
+                   }
+
+            ]
+
+        });
+    </script>
+
     <script type="text/javascript">
 
-        $(document).ready(function() {
+            $(document).ready(function() {
 
-            var selectedItem = {};
-            /**/
-            var options = {
-                url: function(phrase) {
-                    return "/Admin/ExamQuestions/GetQuestions?phrase=" + phrase + "";
-                },
-
-                getValue: "Question",
-                placeholder: "Type here to search questions and Use Add button to add it to list",
-
-                list: {
-                    match: {
-                        enabled: false
-                    },
-                    maxNumberOfElements: 10,
-                    showAnimation: {
-                        type: "fade", //normal|slide|fade
-                        time: 400,
-                        callback: function() {}
+                var selectedItem = {};
+                /**/
+                var options = {
+                    url: function(phrase) {
+                        return "/Admin/ExamQuestions/GetQuestions?phrase=" + phrase + "";
                     },
 
-                    hideAnimation: {
-                        type: "slide", //normal|slide|fade
-                        time: 400,
-                        callback: function() {}
+                    getValue: "Question",
+                    placeholder: "Type here to search questions and Use Add button to add it to list",
+
+                    list: {
+                        match: {
+                            enabled: false
+                        },
+                        maxNumberOfElements: 10,
+                        showAnimation: {
+                            type: "fade", //normal|slide|fade
+                            time: 400,
+                            callback: function() {}
+                        },
+
+                        hideAnimation: {
+                            type: "slide", //normal|slide|fade
+                            time: 400,
+                            callback: function() {}
+                        },
+                        onClickEvent: function() {
+                            var index = $("#txtquestions").getSelectedItemIndex();
+                            selectedItem = $("#txtquestions").getItemData(index);
+                            //console.log($("#txtquestions").getItemData(index));
+                        }
                     },
-                    onClickEvent: function() {
-                        var index = $("#txtquestions").getSelectedItemIndex();
-                        selectedItem = $("#txtquestions").getItemData(index);
-                        //console.log($("#txtquestions").getItemData(index));
+
+                    theme: "square"
+                };
+
+                $("#txtquestions").easyAutocomplete(options);
+
+                /**/
+
+                $('#clear-input').click(function() {
+                    $("#txtquestions").val('');
+                });
+
+                $('#add-item').click(function() {
+                    var selectedText = $("#txtquestions").val();
+                    if (selectedText !== undefined && selectedText !== "") {
+                        var examQuestionResource = {};
+                        examQuestionResource.ExamId = @Model.ExamId;
+                        examQuestionResource.QuestionId = selectedItem.Id;
+                        $.post("/Admin/ExamQuestions/AddQuestions", examQuestionResource, function(data) {
+                            var responseObj = JSON.parse(data);
+                            if (responseObj.Status === "Success") {
+                                var oTable = $('#demoGrid').DataTable();  
+                                oTable.draw();
+                            }else if (responseObj.Status === "Exist") {
+                                alert(responseObj.Message);
+                            }
+
+                        });
+                        console.log(selectedItem);
+                        $("#txtquestions").val('');
                     }
-                },
+                    //
+                });
 
-                theme: "square"
-            };
-
-            $("#txtquestions").easyAutocomplete(options);
-
-            /**/
-
-            $('#clear-input').click(function() {
-                $("#txtquestions").val('');
-            });
-
-            $('#add-item').click(function() {
-                var selectedText = $("#txtquestions").val();
-                if (selectedText !== undefined && selectedText !== "") {
-                    var examQuestionResource = {};
-                    examQuestionResource.ExamId = @Model.ExamId;
-                    examQuestionResource.QuestionId = selectedItem.Id;
-                    $.post("/Admin/ExamQuestions/AddQuestions", examQuestionResource, function(data) {
-                        var responseObj = JSON.parse(data);
+              
+                $(document).on('click', '.deleteQuestion', function(e) {
+                    
+                    e.preventDefault();
+                    var questionId = $(this).attr("data-id");
+                    $.post("/Admin/ExamQuestions/DeleteQuestion/"+questionId, function(response) {
+                        var responseObj = JSON.parse(response);
                         if (responseObj.Status === "Success") {
-                            $("#table-container").html(responseObj.Result);
-                        }else if (responseObj.Status === "Exist") {
+                            var oTable = $('#demoGrid').DataTable();  
+                            oTable.draw();
+                        }else if (responseObj.Status === "NotExist") {
                             alert(responseObj.Message);
                         }
 
                     });
-                    console.log(selectedItem);
-                    $("#txtquestions").val('');
-                }
-                //
-            });
-
-            $(document).on('click', '#deleteQuestion', function(e) {
-                e.preventDefault();
-                $.post($(this).attr('href'), function(response) {
-                    var responseObj = JSON.parse(response);
-                    if (responseObj.Status === "Success") {
-                        $("#table-container").html(responseObj.Result);
-                    }else if (responseObj.Status === "NotExist") {
-                        alert(responseObj.Message);
-                    }
-
                 });
-            });
 
-           
-        });
+            });
     </script>
 }
 

@@ -43,12 +43,12 @@ namespace OEP.Services
             return _repository.GetAll(pageIndex, pageSize);
         }
 
-        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy = OrderBy.Ascending)
+        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, OrderBy orderBy = OrderBy.Ascending)
         {
             return _repository.GetAll(pageIndex, pageSize, keySelector, orderBy);
         }
 
-        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
+        public PaginatedList<TEntity> GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.GetAll(pageIndex, pageSize, keySelector, predicate, orderBy, includeProperties);
         }
@@ -89,12 +89,12 @@ namespace OEP.Services
             return _repository.GetAllAsync(pageIndex, pageSize);
         }
 
-        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy = OrderBy.Ascending)
+        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, OrderBy orderBy = OrderBy.Ascending)
         {
             return _repository.GetAllAsync(pageIndex, pageSize, keySelector, orderBy);
         }
 
-        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
+        public Task<PaginatedList<TEntity>> GetAllAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.GetAllAsync(pageIndex, pageSize, keySelector, predicate, orderBy, includeProperties);
         }
@@ -157,12 +157,12 @@ namespace OEP.Services
             return _repository.GetAll(pageIndex,pageSize);
         }
 
-        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, OrderBy orderBy)
+        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, OrderBy orderBy)
         {
             return _repository.GetAll(pageIndex,pageSize,keySelector,orderBy);
         }
 
-        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, int>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
+        PaginatedList<TEntity> IService<TEntity>.GetAll(int pageIndex, int pageSize, Expression<Func<TEntity, object>> keySelector, Expression<Func<TEntity, bool>> predicate, OrderBy orderBy, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.GetAll(pageIndex, pageSize, keySelector, predicate, orderBy,includeProperties);
         }
