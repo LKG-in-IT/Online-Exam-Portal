@@ -1,18 +1,28 @@
 ﻿@model IEnumerable<OEP.Resources.Admin.EducationDetailsResource>
+
+
 @using System.Web.Optimization
-@{ Layout = "";}
+@{ Layout = "";
+
+   
+
+    }
 <fieldset>
     <legend>Education Details</legend>
-    <div id="partialViewEducationType" class="row">
+    <div class="form-horizontal">
+        <div id="partialViewEducationType" class="form-group">
 
-    </div>
-    @foreach (var item in Model)
+        </div>
+        @foreach (var item in Model)
     {
+
+
+
+
         <div class="form-group">
             <div class="col-md-3">
-                @Html.DropDownList("EducationTypeId", new SelectList(ViewBag.EducationTypeId, "Id", "Name", item.EducationTypeId), "Please Select", htmlAttributes: new { @class = "form-control", @id = "EducationTypeId" })
-      
-                @* <select name="@("typeId"+item.Id)" id="@("typeId"+item.Id)" class="form-control"><option value="@item.EducationTypeId">@item.educationType.Name</option></select>*@
+                @Html.DropDownList("EducationType", new SelectList(ViewBag.EducationTypeId, "Id", "Name", item.EducationTypeId), htmlAttributes: new { @class = "form-control ", @id = "EducationTypeId" + item.Id })
+
 
             </div>
             <div class="col-md-3">
@@ -22,7 +32,7 @@
             </div>
             <div class="col-md-2">
 
-                @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "form-control", @id = "from" })
+                @Html.DropDownList("YearFrom", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearFromId), htmlAttributes: new { @class = "form-control", @id = "from" + item.Id })
 
 
 
@@ -30,7 +40,7 @@
             </div>
             <div class="col-md-2">
 
-                @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "To", htmlAttributes: new { @class = "form-control", @id = "to" })
+                @Html.DropDownList("YearToId", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearToId), htmlAttributes: new { @class = "form-control", @id = "to" + item.Id })
 
 
 
@@ -43,14 +53,16 @@
             </div>
         </div>
 
-    }
+}
 
-    <div class="form-group" style="">
-        <br />
-        <input type="button" id="btnaddnew" value="Add" class="btn btn-success" />
+        <div class="form-group" style="">
+      
+            <input type="button" id="btnaddnew" value="Add" class="btn btn-success col-md-offset-0" />
+        </div>
     </div>
 </fieldset>
 <script>
+
 
     $("#btnaddnew").click(function () {
 
@@ -61,39 +73,58 @@
 
     function editDetails(Id) {
 
+
         debugger;
-        $("#btnadd").prop('value', 'Update');
-        $("#btnadd").prop('class', 'btn btn-info');
+        var educationType = $("#EducationTypeId" + Id).val();
+        var institute = $("#txtname" + Id).val();
+        var from = $("#from" + Id).val();
+        var eid = Id;
+        var to = $("#to" + Id).val();
+        var educationDetailsResource = {};
+        educationDetailsResource.id = eid;
+        educationDetailsResource.EducationTypeId = educationType;
+        educationDetailsResource.InstituteName = institute;
+        educationDetailsResource.YearFromId = from;
+        educationDetailsResource.YearToId = to;
 
-        $("#btnadd").prop('name', Id);
-        var educationtypid = $("#typeId" + Id).val();
-        var yearfrom = $("#yearfrom" + Id).val();
-        var yearto = $("#yearto" + Id).val();
-        var txtname = $("#txtname" + Id).val();
+        $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
 
-        $('#EducationTypeId').find('option[value="' + educationtypid + '"]').attr('selected', 'selected');
-        $('#from').find('option[value="' + yearfrom + '"]').attr('selected', 'selected');
-        $('#to').find('option[value="' + yearto + '"]').attr('selected', 'selected');
-        $("#Institute").val(txtname);
+
+            if (data == "Suceess") {
+               
+                $("#Educationdetailstable").empty();
+
+
+                $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                alert(data);
+            }
+            else {
+
+                alert("Please Check all the fields");
+            }
+
+        });
+
 
 
     }
     function deleteDetails(Id) {
 
         debugger;
-        $("#btnadd").prop('value', 'Delete');
-        $("#btnadd").prop('class', 'btn btn-danger');
+        var eid = Id;
+        var educationDetailsResource = {};
+        educationDetailsResource.id = eid;
 
-        $("#btnadd").prop('name', Id);
-        var educationtypid = $("#typeId" + Id).val();
-        var yearfrom = $("#yearfrom" + Id).val();
-        var yearto = $("#yearto" + Id).val();
-        var txtname = $("#txtname" + Id).val();
+        $.post("/Manage/DeleteEducationDetails/", { educationDetailsResource }, function (data) {
 
-        $('#EducationTypeId').find('option[value="' + educationtypid + '"]').attr('selected', 'selected');
-        $('#from').find('option[value="' + yearfrom + '"]').attr('selected', 'selected');
-        $('#to').find('option[value="' + yearto + '"]').attr('selected', 'selected');
-        $("#Institute").val(txtname);
+ 
+            $("#Educationdetailstable").html('');
+
+
+            $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+            alert(data);
+
+        });
 
 
     }

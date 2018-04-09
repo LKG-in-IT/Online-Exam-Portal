@@ -127,7 +127,26 @@ namespace OEP.Web.Controllers
 
               await  _EducationDetailsService.UpdateAsync(educationdetails);
                 _EducationDetailsService.UnitOfWorkSaveChanges();
-                return Json("Success");
+                return Json("Suceess");
+            }
+
+
+            return Json("Error");
+
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteEducationDetails(EducationDetailsResource educationDetailsResource)
+        {
+            var educationdetails = await _EducationDetailsService.GetByIdAsync(educationDetailsResource.Id);
+            if (ModelState.IsValid)
+            {
+                var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+
+                await _EducationDetailsService.DeleteAsync(educationdetails);
+                _EducationDetailsService.UnitOfWorkSaveChanges();
+                return Json("Deleted Successfully");
             }
 
 
@@ -138,10 +157,13 @@ namespace OEP.Web.Controllers
         {
 
             var typelist = await _educationTypeService.GetAllAsync();
-            ViewBag.EducationTypeId =typelist.Where(i => i.Status == true);
-           
+            ViewBag.EducationTypeId = typelist;
+
             var yearlist = await _YearDetailsService.GetAllAsync();
-            ViewBag.YearFromId = new SelectList(yearlist.Where(i => i.Status == true), "Id", "Year",1);
+            ViewBag.YearFromId = yearlist;
+
+         
+
 
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
      
@@ -151,8 +173,10 @@ namespace OEP.Web.Controllers
             {
 
                 var exsteducationlist = await _EducationDetailsService.FindByAsync(x => x.UserId == userid);
+               
 
                 var educationDetailsResource = Mapper.Map<List<EducationDetails>, List<EducationDetailsResource>>(exsteducationlist);
+               
 
                 return View(educationDetailsResource);
 
@@ -160,7 +184,8 @@ namespace OEP.Web.Controllers
             }
             else
             {
-                return View();
+
+                return View(new List<EducationDetailsResource>());
             }
         }
        
