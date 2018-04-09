@@ -2,20 +2,14 @@
     @using  System.Web.Optimization
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Exam Type";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
-
-<h2>Create</h2>
-
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ExamType</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })

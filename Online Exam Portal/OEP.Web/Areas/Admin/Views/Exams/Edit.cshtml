@@ -1,11 +1,10 @@
 ﻿@model OEP.Resources.Admin.ExamResource
 @using System.Web.Optimization
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Exam-" + Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -13,8 +12,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Exam</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 

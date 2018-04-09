@@ -2,12 +2,9 @@
 @model OEP.Resources.Admin.EducationTypeResource
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Education Type-"+Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
-
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {

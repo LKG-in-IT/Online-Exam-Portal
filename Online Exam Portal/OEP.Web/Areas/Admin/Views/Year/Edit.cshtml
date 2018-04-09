@@ -2,20 +2,16 @@
 @model OEP.Resources.Admin.YearResource
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Year "+Model.Year;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
-
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>YearResource</h4>
-        <hr />
+       
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 

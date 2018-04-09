@@ -2,7 +2,7 @@
 @model OEP.Resources.Admin.SubCategoryResource
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Sub Category - "+Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
@@ -14,8 +14,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>SubCategory</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 

@@ -1,15 +1,12 @@
 ﻿@model OEP.Resources.Admin.YearResource
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details of Year-"+Model.Year;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>YearResource</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Year)

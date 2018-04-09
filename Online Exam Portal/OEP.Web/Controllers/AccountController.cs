@@ -169,6 +169,9 @@ namespace OEP.Web.Controllers
                     user = await UserManager.FindByEmailAsync(user.Email);
                     UserManager.AddToRole(user.Id, "User");
 
+                    // Create customized claim 
+                    await UserManager.AddClaimAsync(user.Id, new Claim("NameOfUser", model.Name));
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
