@@ -9,7 +9,7 @@
     var profilePictureClaim = claimsIdentity != null ? claimsIdentity.Claims.FirstOrDefault(x => x.Type == "ProfilePicture") : null;
     var profilePictureUrl = profilePictureClaim != null && profilePictureClaim.Value!=String.Empty ? profilePictureClaim.Value : "/Uploads/male-user-profile-picture.png";
 
-    var currentUrl = HttpContext.Current.Request.Url.AbsolutePath;
+    
 
 }
 <!DOCTYPE html>
@@ -42,7 +42,7 @@
 
         <header class="main-header">
             <!-- Logo -->
-            <a href="/" class="logo"><b>Admin</b></a>
+            <a href="/" class="logo"><b>@roleOfUser</b></a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -123,42 +123,42 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@(ViewBag.SubPage=="Year" ? "active" : "")"><a href="/Admin/Year"><i class="fa fa-circle-o"></i> Year</a></li>
-                            <li class="@(ViewBag.SubPage=="EducationType" ? "active":"")"><a href="/Admin/EducationType"><i class="fa fa-circle-o"></i> Education Type</a></li>
+                            <li class="@(ViewBag.SubPage=="Year" ? "active" : "")"><a href="/Admin/Year"><i class="fa fa-calendar"></i> Year</a></li>
+                            <li class="@(ViewBag.SubPage=="EducationType" ? "active":"")"><a href="/Admin/EducationType"><i class="fa fa-file"></i> Education Type</a></li>
                            
                         </ul>
                     </li>
                     <li class="@(ViewBag.Page == "Packages" ? "active" : "")">
                         <a href="/Admin/Packages">
-                            <i class="fa fa-dashboard"></i> <span>Packages</span>
+                            <i class="fa fa-money"></i> <span>Packages</span>
                         </a>
                     </li>
                     <li class="@(ViewBag.Page=="Category"?"active":"")">
                         <a href="/Admin/Categories">
-                            <i class="fa fa-dashboard"></i> <span>Category</span>
+                            <i class="fa fa-list-alt"></i> <span>Category</span>
                         </a>
                     </li>
                     <li class="@(ViewBag.Page=="SubCategory"?"active":"")">
                         <a href="/Admin/SubCategories">
-                            <i class="fa fa-dashboard"></i> <span>SubCategories</span>
+                            <i class="fa fa-list-alt"></i> <span>SubCategories</span>
                         </a>
                     </li>
                     <li class="treeview  @((ViewBag.Page=="ExamDetails") ?"active":"")">
                         <a href="#">
-                            <i class="fa fa-files-o"></i>
+                            <i class="fa fa fa-pencil-square-o"></i>
                             <span>Exam Details</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@(ViewBag.SubPage=="ExamType" ? "active" : "")"><a href="/Admin/ExamTypes"><i class="fa fa-circle-o"></i> ExamTypes</a></li>
-                            <li class="@(ViewBag.SubPage=="Exam" ? "active":"")"><a href="/Admin/Exams"><i class="fa fa-circle-o"></i> Exams</a></li>
+                            <li class="@(ViewBag.SubPage=="ExamType" ? "active" : "")"><a href="/Admin/ExamTypes"><i class="fa fa-pencil"></i> ExamTypes</a></li>
+                            <li class="@(ViewBag.SubPage=="Exam" ? "active":"")"><a href="/Admin/Exams"><i class="fa fa-pencil"></i> Exams</a></li>
                         </ul>
                     </li>
 
                     
                     <li class="@(ViewBag.Page=="Questions"?"active":"")">
                         <a href="/Admin/Questions">
-                            <i class="fa fa-dashboard"></i> <span>Questions</span>
+                            <i class="fa fa-question-circle"></i> <span>Questions</span>
                         </a>
                     </li>
 

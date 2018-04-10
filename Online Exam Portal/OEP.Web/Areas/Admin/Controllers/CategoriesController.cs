@@ -13,10 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using OEP.Core.Data;
 using OEP.Core.DomainModels.ExamModels;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeUser(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;

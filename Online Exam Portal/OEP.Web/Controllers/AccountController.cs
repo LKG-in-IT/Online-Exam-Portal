@@ -9,11 +9,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OEP.Core.DomainModels.Identity;
+using OEP.Web.Helpers;
 using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
 {
-    [Authorize]
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -61,6 +62,7 @@ namespace OEP.Web.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
 
         //
         // POST: /Account/Login
@@ -417,6 +419,14 @@ namespace OEP.Web.Controllers
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/Unauthorized
+        [Authorize]
+        public ActionResult Unauthorized()
         {
             return View();
         }

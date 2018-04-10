@@ -14,10 +14,11 @@ using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.Services;
 using OEP.Data;
 using OEP.Resources.Admin;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [AuthorizeUser(Roles = "Admin")]
     public class EducationTypeController : Controller
     {
         private readonly IService<EducationType> _educationTypeService;

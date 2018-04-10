@@ -14,10 +14,11 @@ using OEP.Core.Services;
 using OEP.Data;
 using OEP.Resources.Admin;
 using OEP.Core.Data;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeUser(Roles = "Admin")]
     public class YearController : Controller
     {
         private readonly IYearService _yearService;

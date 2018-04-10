@@ -14,10 +14,11 @@ using AutoMapper;
 using OEP.Resources.Admin;
 using Microsoft.AspNet.Identity;
 using OEP.Core.Data;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [AuthorizeUser(Roles = "Admin")]
     public class ExamTypesController : Controller
     {
         private readonly IExamTypeService _examTypeService;

@@ -20,7 +20,7 @@ using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
 {
-    [Authorize(Roles = "User,Faculty,Admin")]
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -217,6 +217,11 @@ namespace OEP.Web.Controllers
             userprofile.DatOfBirth = applicationUser.DatOfBirth;
             userprofile.Address = applicationUser.Address;
 
+            if (string.IsNullOrEmpty(userprofile.Email))
+            {
+                userprofile.Email = userprofile.UserName;
+            }
+
             if (file!=null && file.ContentLength > 0)
             {
                 //delete existing one 
@@ -234,6 +239,10 @@ namespace OEP.Web.Controllers
                 if (fileName != null)
                 {
                     var path = Path.Combine(Server.MapPath("~/Uploads/ProfileImages"), fileName);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     file.SaveAs(path);
                     // prepare a relative path to be stored in the database and used to display later on.
                     userprofile.ProfilePicture = Url.Content(Path.Combine("~/Uploads/ProfileImages", fileName));

@@ -24,7 +24,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    @if (Request.IsAuthenticated && (User.IsInRole("Admin")|| User.IsInRole("Faculty")))
                     {
                         <li>@Html.ActionLink("Admin", "Index", "Home", new { Area = "Admin" }, new { })</li>
                     }

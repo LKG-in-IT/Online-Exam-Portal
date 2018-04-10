@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Controllers
 {
-    [Authorize(Roles = "User,Faculty,Admin")]
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class HomeController : Controller
     {
         public ActionResult Index()

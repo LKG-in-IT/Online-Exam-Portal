@@ -25,7 +25,7 @@ using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeUser(Roles = "Admin,Faculty")]
     public class ExamQuestionsController : Controller
     {
         private readonly IExamQuestionService _examQuestionService;
