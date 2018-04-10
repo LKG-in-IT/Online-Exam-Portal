@@ -31,7 +31,10 @@
             </thead>
         </table>
     </div>
-</div>  
+</div>
+
+@Html.ActionLink("Back to Exam List", "Index","Exams",new {area= "Admin" },new {@class="btn btn-dropbox"})
+
 <input type="hidden" id="exmaId" value="@Model.ExamId"/>
 
 @section Scripts {

@@ -61,6 +61,13 @@ var examGrid = $("#examGrid").DataTable({
             },
             "searchable": false,
             "orderable": false
+        },
+        {
+            data: null, render: function (data, type, row) {
+                return "<a href='/Admin/ExamQuestions/AddQuestions/" + row.Id + "' class='btn btn-dropbox addQuestions' data-id='" + row.Id + "'  >Add/Remove Questions</a>";
+            },
+            "searchable": false,
+            "orderable": false
         }
 
     ],
