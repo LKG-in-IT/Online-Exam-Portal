@@ -115,66 +115,52 @@
                
                 <ul class="sidebar-menu">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="@(currentUrl=="/Admin/Categories"||currentUrl=="/Admin/Categories/"?"active":"")">
-                        <a href="/Admin/Categories">
-                            <i class="fa fa-dashboard"></i> <span>Category</span>
-                        </a>
-                    </li>
-                    <li class="@(currentUrl=="/Admin/SubCategories"||currentUrl=="/Admin/SubCategories/"?"active":"")">
-                        <a href="/Admin/SubCategories">
-                            <i class="fa fa-dashboard"></i> <span>SubCategories</span>
-                        </a>
-                    </li>
-                    <li class="treeview  @((currentUrl=="/Admin/ExamTypes"||currentUrl=="/Admin/Year/")||(currentUrl.ToLower() == "/admin/ExamTypes" || currentUrl.ToLower() == "/admin/ExamTypes/") ?"active":"")">
-                        <a href="#">
-                            <i class="fa fa-files-o"></i>
-                            <span>Exam Details</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="@(currentUrl == "/Admin/ExamTypes" || currentUrl == "/Admin/ExamTypes/" ? "active" : "")"><a href="/Admin/ExamTypes"><i class="fa fa-circle-o"></i> ExamTypes</a></li>
-                            <li class="@(currentUrl.ToLower()=="/admin/Exams"|| currentUrl.ToLower() == "/admin/Exams/" ? "active":"")"><a href="/Admin/Exams"><i class="fa fa-circle-o"></i> Exams</a></li>
-                            
-                            @*<li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>ExamQuestions
-                <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>*@
-                        </ul>
-                    </li>
 
-                    <li class="treeview  @((currentUrl=="/Admin/Year"||currentUrl=="/Admin/Year/")||(currentUrl.ToLower() == "/admin/educationtype" || currentUrl.ToLower() == "/admin/educationtype/") ?"active":"")">
+                    <li class="treeview  @((ViewBag.Page == "EducationalDetails") ?"active":"")">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Educational Details</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@(currentUrl == "/Admin/Year" || currentUrl == "/Admin/Year/" ? "active" : "")"><a href="/Admin/Year"><i class="fa fa-circle-o"></i> Year</a></li>
-                            <li class="@(currentUrl.ToLower()=="/admin/educationtype"|| currentUrl.ToLower() == "/admin/educationtype/" ? "active":"")"><a href="/Admin/EducationType"><i class="fa fa-circle-o"></i> Education Type</a></li>
-                            @*<li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>*@
+                            <li class="@(ViewBag.SubPage=="Year" ? "active" : "")"><a href="/Admin/Year"><i class="fa fa-circle-o"></i> Year</a></li>
+                            <li class="@(ViewBag.SubPage=="EducationType" ? "active":"")"><a href="/Admin/EducationType"><i class="fa fa-circle-o"></i> Education Type</a></li>
+                           
                         </ul>
                     </li>
-                    <li class="@(currentUrl=="/Admin/Packages"||currentUrl=="/Admin/Packages/"?"active":"")">
+                    <li class="@(ViewBag.Page == "Packages" ? "active" : "")">
                         <a href="/Admin/Packages">
                             <i class="fa fa-dashboard"></i> <span>Packages</span>
                         </a>
                     </li>
-                    <li class="@(currentUrl=="/Admin/PackageSelecteds"||currentUrl=="/Admin/PackageSelecteds/"?"active":"")">
-                        <a href="/Admin/PackageSelecteds">
-                            <i class="fa fa-dashboard"></i> <span>PackageSelected</span>
+                    <li class="@(ViewBag.Page=="Category"?"active":"")">
+                        <a href="/Admin/Categories">
+                            <i class="fa fa-dashboard"></i> <span>Category</span>
                         </a>
                     </li>
-                    <li class="@(currentUrl=="/Admin/Questions"||currentUrl=="/Admin/Questions/"?"active":"")">
+                    <li class="@(ViewBag.Page=="SubCategory"?"active":"")">
+                        <a href="/Admin/SubCategories">
+                            <i class="fa fa-dashboard"></i> <span>SubCategories</span>
+                        </a>
+                    </li>
+                    <li class="treeview  @((ViewBag.Page=="ExamDetails") ?"active":"")">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i>
+                            <span>Exam Details</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@(ViewBag.SubPage=="ExamType" ? "active" : "")"><a href="/Admin/ExamTypes"><i class="fa fa-circle-o"></i> ExamTypes</a></li>
+                            <li class="@(ViewBag.SubPage=="Exam" ? "active":"")"><a href="/Admin/Exams"><i class="fa fa-circle-o"></i> Exams</a></li>
+                        </ul>
+                    </li>
+
+                    
+                    <li class="@(ViewBag.Page=="Questions"?"active":"")">
                         <a href="/Admin/Questions">
                             <i class="fa fa-dashboard"></i> <span>Questions</span>
                         </a>
                     </li>
-                    @*<li>
-            <a href="pages/widgets.html">
-                <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
-            </a>
-        </li>*@
 
                 </ul>
             </section>
