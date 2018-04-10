@@ -153,6 +153,7 @@
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\EntityRepository.cs" />
+    <Compile Include="Repo\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

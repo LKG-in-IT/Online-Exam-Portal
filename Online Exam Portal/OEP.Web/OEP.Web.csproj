@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApplicationUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\EducationTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExamQuestionsController.cs" />
@@ -622,6 +623,7 @@
     <Content Include="Areas\Admin\Views\Exams\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Exams\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\AddQuestions.cshtml" />
+    <Content Include="Areas\Admin\Views\ApplicationUsers\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
