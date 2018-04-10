@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,10 +10,12 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json;
 using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.DomainModels.Identity;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
+using OEP.Web.Helpers;
 using OEP.Web.Models;
 
 namespace OEP.Web.Controllers
@@ -193,22 +196,46 @@ namespace OEP.Web.Controllers
 
         public async Task<ActionResult> UserProfile()
         {
-
-
             var userId = User.Identity.GetUserId();
             var user = await UserManager.FindByIdAsync(userId);
             return View(user);
         }
         [HttpPost]
-        public async Task<ActionResult> UserProfile(ApplicationUser applicationUser)
+        public async Task<ActionResult> UserProfile(ApplicationUser applicationUser, HttpPostedFileBase file)
         {
-            var Userprofile = await UserManager.FindByIdAsync(applicationUser.Id);
-            Userprofile.Name = applicationUser.Name;
-            Userprofile.Gender = applicationUser.Gender;
-            Userprofile.DatOfBirth = applicationUser.DatOfBirth;
-            Userprofile.Address = applicationUser.Address;
+            var message = ManageMessageId.Error;
 
-            var result = await UserManager.UpdateAsync(Userprofile);
+            var userprofile = await UserManager.FindByIdAsync(applicationUser.Id);
+            userprofile.Name = applicationUser.Name;
+            userprofile.Gender = applicationUser.Gender;
+            userprofile.DatOfBirth = applicationUser.DatOfBirth;
+            userprofile.Address = applicationUser.Address;
+
+            if (file!=null && file.ContentLength > 0)
+            {
+                //delete existing one 
+                if (!string.IsNullOrEmpty(userprofile.ProfilePicture))
+                {
+                    var filePath = Server.MapPath(userprofile.ProfilePicture);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                        userprofile.ProfilePicture = "";
+                    }
+                }
+                // code for saving the image file to a physical location.
+                var fileName = Path.GetFileName(file.FileName);
+                if (fileName != null)
+                {
+                    var path = Path.Combine(Server.MapPath("~/Uploads/ProfileImages"), fileName);
+                    file.SaveAs(path);
+                    // prepare a relative path to be stored in the database and used to display later on.
+                    userprofile.ProfilePicture = Url.Content(Path.Combine("~/Uploads/ProfileImages", fileName));
+                }
+                
+            }
+
+            var result = await UserManager.UpdateAsync(userprofile);
             if (result.Succeeded)
             {
                 // create a new identity 
@@ -217,18 +244,52 @@ namespace OEP.Web.Controllers
                 // Remove the existing claim value of current user from database
                 if(identity.FindFirst("NameOfUser")!=null)
                     await UserManager.RemoveClaimAsync(applicationUser.Id, identity.FindFirst("NameOfUser"));
+                if (identity.FindFirst("ProfilePicture") != null)
+                    await UserManager.RemoveClaimAsync(applicationUser.Id, identity.FindFirst("ProfilePicture"));
 
                 // Update customized claim 
                 await UserManager.AddClaimAsync(applicationUser.Id, new Claim("NameOfUser", applicationUser.Name));
+                await UserManager.AddClaimAsync(applicationUser.Id, new Claim("ProfilePicture", userprofile.ProfilePicture));
+
 
                 // the claim has been updates, We need to change the cookie value for getting the updated claim
                 AuthenticationManager.SignOut(identity.AuthenticationType);
-                await SignInManager.SignInAsync(Userprofile, isPersistent: false, rememberBrowser: false);
-
-                return RedirectToAction("Index", "Home");
+                await SignInManager.SignInAsync(userprofile, isPersistent: false, rememberBrowser: false);
+                
+                return RedirectToAction("Index", new { Message = ManageMessageId.ProfileUpdated });
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { Message = message });
 
+        }
+
+        [HttpPost]
+        public async Task<string> DeleteUserProfilePicture()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var user = await UserManager.FindByIdAsync(userId);
+                if (!string.IsNullOrEmpty(user.ProfilePicture))
+                {
+                    var filePath = Server.MapPath(user.ProfilePicture);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+
+                        user.ProfilePicture = "";
+                        var result = await UserManager.UpdateAsync(user); // save profile picture path as blank
+                        if (result.Succeeded)
+                        {
+                            return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Success", Message = "The profile picture successfully removed!", Result = "" });
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "Something went wrong", Result = "" });
+            }
+            return JsonConvert.SerializeObject(new ResponseContent<string>() { Status = "Error", Message = "Something went wrong", Result = "" });
         }
 
         //
@@ -242,6 +303,7 @@ namespace OEP.Web.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ProfileUpdated ? "Your profile has been successfully updated."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -562,7 +624,8 @@ namespace OEP.Web.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            ProfileUpdated
         }
 
         #endregion

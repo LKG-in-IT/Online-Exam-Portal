@@ -171,6 +171,7 @@ namespace OEP.Web.Controllers
 
                     // Create customized claim 
                     await UserManager.AddClaimAsync(user.Id, new Claim("NameOfUser", model.Name));
+                    await UserManager.AddClaimAsync(user.Id, new Claim("ProfilePicture", ""));
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

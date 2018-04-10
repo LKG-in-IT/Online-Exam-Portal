@@ -30,6 +30,7 @@ namespace OEP.Core.DomainModels.Identity
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DatOfBirth { get; set; }
 
+        public string ProfilePicture { get; set; }
     }
     
 }

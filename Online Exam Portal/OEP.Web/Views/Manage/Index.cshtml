@@ -8,14 +8,17 @@
 
 <h2>@ViewBag.Title.</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
+@if (ViewBag.StatusMessage != string.Empty)
+{
+    <p class="text-success">@ViewBag.StatusMessage</p>
+}
 <div>
     <h4>Change your account settings</h4>
-    <hr />
+    <hr/>
     <div id="partialViewProfile" class="row">
 
     </div>
- 
+
     <div class="row" id="Educationdetailstable">
 
     </div>
@@ -95,15 +98,14 @@
         </dd>
     </dl>
 </div>
-<script src="~/Scripts/jquery-1.10.2.js"></script><script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script type="text/jscript">
+
+@section Scripts{
+<script type="text/jscript">
         $(document).ready(function () {
-
-
             $("#partialViewProfile").load("/Manage/UserProfile/");
             $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-          
-
-
         });
 </script>
+    <script src="~/Scripts/Custom/UserProfile.js"></script>
+}
+
