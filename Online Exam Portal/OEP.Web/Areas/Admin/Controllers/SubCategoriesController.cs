@@ -13,6 +13,7 @@ using OEP.Core.Services;
 using AutoMapper;
 using OEP.Resources.Admin;
 using Microsoft.AspNet.Identity;
+using OEP.Core.Data;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -28,12 +29,72 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/SubCategories
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var subCategories = await _subcategoryService.GetAllAsync();
-            var subCategorieslist = Mapper.Map<List<SubCategory>, List<SubCategoryResource>>(subCategories);
+          
 
-            return View(subCategorieslist);
+            return View();
+        }
+
+
+
+        // POST: Admin/subCategories/LoadCategories
+
+        public async Task<ActionResult> LoadSubCategories()
+        {
+            try
+            {
+                if (Request.Form != null)
+                {
+                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                    var start = Request.Form.GetValues("start").FirstOrDefault();
+                    var length = Request.Form.GetValues("length").FirstOrDefault();
+                    var sortColumn =
+                        Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null ? Convert.ToInt32(start) : 1;
+                    int recordsTotal = 0;
+
+
+                  
+                    var subcategoryList = await _subcategoryService.GetAllAsync(
+                        skip,
+                        pageSize,
+
+                        //sorting
+
+
+                        x => sortColumn == "Name" ? x.Name : (sortColumn== "CategoryName"?x.Category.Name:null),
+
+                        //filtering
+                        x => searchValue != "" ? x.Name.Contains(searchValue) : x.Id != 0,
+
+                        //sort by
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending),
+
+                          // Include Category
+                          x => x.Category
+                     );
+
+
+                  
+                    var resp = Mapper.Map<List<SubCategory>, List<SubCategoryResource>>(subcategoryList);
+
+                    //total number of rows count     
+                    recordsTotal = subcategoryList.TotalCount;
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            return Content("Error");
         }
 
         // GET: Admin/SubCategories/Details/5
@@ -56,7 +117,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         public ActionResult Create()
         {
             var categorylist = _CategoryService.GetAllAsync();
-            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i=>i.Status==true), "Id", "Name");
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name");
             return View();
         }
 
@@ -67,7 +128,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(SubCategoryResource subCategoryresource)
         {
-           
+
 
             if (ModelState.IsValid)
             {
@@ -101,7 +162,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
             var SubcategoryResource = Mapper.Map<SubCategory, SubCategoryResource>(subCategory);
             var categorylist = _CategoryService.GetAllAsync();
-            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name",subCategory.CategoryId);
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name", subCategory.CategoryId);
             return View(SubcategoryResource);
         }
 
@@ -110,9 +171,9 @@ namespace OEP.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit( SubCategoryResource SubCategoryResource)
+        public async Task<ActionResult> Edit(SubCategoryResource SubCategoryResource)
         {
-                var exstsubcategory = await _subcategoryService.GetByIdAsync(Convert.ToInt32(SubCategoryResource.Id));
+            var exstsubcategory = await _subcategoryService.GetByIdAsync(Convert.ToInt32(SubCategoryResource.Id));
 
             if (ModelState.IsValid)
             {
@@ -130,7 +191,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             var categorylist = _CategoryService.GetAllAsync();
 
 
-            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i=>i.Status==true), "Id", "Name", exstsubcategory.CategoryId);
+            ViewBag.CategoryId = new SelectList(categorylist.Result.Where(i => i.Status == true), "Id", "Name", exstsubcategory.CategoryId);
             return View(exstsubcategory);
         }
 
@@ -157,7 +218,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             SubCategory subCategory = await _subcategoryService.GetByIdAsync(Convert.ToInt32(id));
-          await  _subcategoryService.DeleteAsync(subCategory);
+            await _subcategoryService.DeleteAsync(subCategory);
             _subcategoryService.UnitOfWorkSaveChanges();
             return RedirectToAction("Index");
         }

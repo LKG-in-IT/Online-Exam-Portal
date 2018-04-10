@@ -13,6 +13,7 @@ using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.Services;
 using OEP.Data;
 using OEP.Resources.Admin;
+using OEP.Core.Data;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -27,12 +28,61 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Year
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var year = await _yearService.GetAllAsync();
-            var yearResourceList = Mapper.Map<List<YearDetails>, List<YearResource>>(year);
-            return View(yearResourceList);
+      
+            return View();
         }
+
+        //POST: Admin/Year/LoadYear
+        public async Task<ActionResult> LoadYear()
+        {
+            try
+            {
+                if (Request.Form != null)
+                {
+                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                    var start = Request.Form.GetValues("start").FirstOrDefault();
+                    var length = Request.Form.GetValues("length").FirstOrDefault();
+                    var sortColumn =
+                        Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null ? Convert.ToInt32(start) : 1;
+                    int recordsTotal = 0;
+
+                    var yearList = await _yearService.GetAllAsync(
+                        skip,
+                        pageSize,
+
+                        //sorting
+                        x => sortColumn == "Year" ? x.Year : null ,
+                        
+                        //filtering
+                        x => searchValue != "" ? x.Year.Contains(searchValue) : x.Id != 0,
+
+                        //sort by
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending)
+                     );
+
+                    var resp = Mapper.Map<List<YearDetails>, List<YearResource>>(yearList);
+
+                    //total number of rows count     
+                    recordsTotal = yearList.TotalCount;
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            return Content("Error");
+        }
+
 
         // GET: Admin/Year/Details/5
         public async Task<ActionResult> Details(int? id)

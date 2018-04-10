@@ -13,6 +13,7 @@ using OEP.Core.Services;
 using AutoMapper;
 using OEP.Resources.Admin;
 using Microsoft.AspNet.Identity;
+using OEP.Core.Data;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -26,13 +27,60 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Questions
-        public async Task<ActionResult> Index()
-        {
-            var questionslist =await _questionService.GetAllAsync();
-            var questionsResourcelist = Mapper.Map<List< Questions>,List< QuestionsResource>>(questionslist);
 
-            return View(questionsResourcelist);
+        public ActionResult Index()
+        {
+            return View();
         }
+        // POST: Admin/Questions/LoadQuestions
+        public async Task<ActionResult> LoadQuestions()
+        {
+            try
+            {
+                if (Request.Form != null)
+                {
+                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                    var start = Request.Form.GetValues("start").FirstOrDefault();
+                    var length = Request.Form.GetValues("length").FirstOrDefault();
+                    var sortColumn =
+                        Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null ? Convert.ToInt32(start) : 1;
+                    int recordsTotal = 0;
+
+                    var questionList = await _questionService.GetAllAsync(
+                        skip,
+                        pageSize,
+
+                        //sorting
+                        x => sortColumn == "Name" ? x.Question : null,
+
+                        //filtering
+                        x => searchValue != "" ? x.Question.Contains(searchValue) : x.Id != 0,
+
+                        //sort by
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending)
+                     );
+
+                    var resp = Mapper.Map<List<Questions>, List<QuestionsResource>>(questionList);
+
+                    //total number of rows count     
+                    recordsTotal = questionList.TotalCount;
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            return Content("Error");
+        }
+
 
         // GET: Admin/Questions/Details/5
         public async Task<ActionResult> Details(int? id)

@@ -14,7 +14,7 @@ namespace OEP.Resources.Admin
         public int Examtypeid { get; set; }
         public int SubcategoryId { get; set; }
         public ExamType ExamType { get; set; }
-        public SubCategory subCategory { get; set; }
+        public SubCategory SubCategory { get; set; }
         public int Passmark { get; set; }
     }
 }

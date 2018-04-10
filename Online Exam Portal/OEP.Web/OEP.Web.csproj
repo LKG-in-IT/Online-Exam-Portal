@@ -236,6 +236,7 @@
     <Content Include="Areas\Admin\Assets\dist\img\open-icon.png" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\EducationTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\CategoriesListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\ExamListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\ExamQuestions.js" />
     <Content Include="Areas\Admin\Assets\dist\css\AdminLTE.css" />
     <Content Include="Areas\Admin\Assets\dist\css\AdminLTE.min.css" />
@@ -285,6 +286,11 @@
     <Content Include="Areas\Admin\Assets\dist\img\user8-128x128.jpg" />
     <Content Include="Areas\Admin\Assets\dist\js\app.js" />
     <Content Include="Areas\Admin\Assets\dist\js\app.min.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\ExamTypeListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\PackageListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\QuestionListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\SubCategoriesListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\YearListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\dataTables.bootstrap4.min.js" />
     <Content Include="Areas\Admin\Assets\dist\js\demo.js" />
     <Content Include="Areas\Admin\Assets\dist\js\jquery.dataTables.min.js" />
@@ -665,7 +671,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Manage\UserProfile.cshtml" />
+    <Content Include="Views\Shared\UserProfile.cshtml" />
     <Content Include="Views\Manage\EducationDetails.cshtml" />
     <Content Include="Views\Manage\Educationdetailstable.cshtml" />
   </ItemGroup>

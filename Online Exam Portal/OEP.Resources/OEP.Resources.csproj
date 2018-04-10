@@ -47,6 +47,7 @@
     <Compile Include="Admin\BaseResource.cs" />
     <Compile Include="Admin\CategoryResource.cs" />
     <Compile Include="Admin\EducationDetailsResource.cs" />
+    <Compile Include="Admin\EducationDetailsViewModel.cs" />
     <Compile Include="Admin\EducationTypeResource.cs" />
     <Compile Include="Admin\ExamQuestionResource.cs" />
     <Compile Include="Admin\ExamQuestionViewModel.cs" />

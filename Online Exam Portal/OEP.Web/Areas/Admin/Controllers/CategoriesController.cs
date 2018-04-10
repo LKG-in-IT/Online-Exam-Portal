@@ -60,6 +60,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                         pageSize,
 
                         //sorting
+
                         x => sortColumn == "Name" ? x.Name : null,
 
                         //filtering

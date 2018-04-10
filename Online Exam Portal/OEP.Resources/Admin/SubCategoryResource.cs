@@ -14,6 +14,7 @@ namespace OEP.Resources.Admin
     
 
         public string Name { get; set; }
+        public CategoryResource Category { get; set; }
 
     }
 }

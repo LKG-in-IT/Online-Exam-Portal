@@ -68,6 +68,7 @@ namespace OEP.Web.Controllers
             }
         }
 
+        // Add Education Details
         public async Task<ActionResult> EducationDetails()
         {
             var typelist = await _educationTypeService.GetAllAsync();
@@ -77,11 +78,10 @@ namespace OEP.Web.Controllers
             ViewBag.YearFromId = new SelectList(yearlist.Where(i => i.Status == true), "Id", "Year");
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
-
-          
-
             return View();
         }
+
+        // Add Education Details post
         [HttpPost]
         public async Task< JsonResult> AddEducationDetails(EducationDetailsResource educationDetailsResource)
         {
@@ -109,6 +109,8 @@ namespace OEP.Web.Controllers
             return Json("Error");
 
         }
+        
+        //Edit Education Details
 
         [HttpPost]
         public async Task< JsonResult> EditEducationDetails(EducationDetailsResource educationDetailsResource)
@@ -139,6 +141,8 @@ namespace OEP.Web.Controllers
 
         }
 
+        //Delete Education Details
+
         [HttpPost]
         public async Task<JsonResult> DeleteEducationDetails(EducationDetailsResource educationDetailsResource)
         {
@@ -157,6 +161,8 @@ namespace OEP.Web.Controllers
             return Json("Error");
 
         }
+        //Education Details List
+
         public async Task< ActionResult> Educationdetailstable()
         {
 
@@ -166,15 +172,15 @@ namespace OEP.Web.Controllers
             var yearlist = await _YearDetailsService.GetAllAsync();
             ViewBag.YearFromId = yearlist;
 
-         
 
 
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
      
 
-            var res = _EducationDetailsService.FindByAsync(i => i.ApplicationUserId == userid);
+            var res = _EducationDetailsService.FindByAsync(i => i.ApplicationUserId == userid );
             if (res.Result.Any())
             {
+               
 
                 var exsteducationlist = await _EducationDetailsService.FindByAsync(x => x.UserId == userid);
                

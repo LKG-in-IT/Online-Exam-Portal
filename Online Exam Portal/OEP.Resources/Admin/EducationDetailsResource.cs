@@ -14,8 +14,8 @@ namespace OEP.Resources.Admin
         public int YearFromId { get; set; }
         public int YearToId { get; set; }
         public string ApplicationUserID { get; set; }
-        public EducationType educationType { get; set; }
-        public virtual YearDetails YearFrom { get; set; }
-        public virtual YearDetails YearTo { get; set; }
+        public EducationTypeResource educationType { get; set; }
+        public  YearResource YearFrom { get; set; }
+        public  YearResource YearTo { get; set; }
     }
 }
