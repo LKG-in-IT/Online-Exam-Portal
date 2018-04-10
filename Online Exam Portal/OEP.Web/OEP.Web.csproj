@@ -234,6 +234,8 @@
     <Content Include="Areas\Admin\Assets\bootstrap\js\npm.js" />
     <Content Include="Areas\Admin\Assets\dist\img\close-icon.png" />
     <Content Include="Areas\Admin\Assets\dist\img\open-icon.png" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\EducationTypeListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\CategoriesListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\ExamQuestions.js" />
     <Content Include="Areas\Admin\Assets\dist\css\AdminLTE.css" />
     <Content Include="Areas\Admin\Assets\dist\css\AdminLTE.min.css" />

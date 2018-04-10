@@ -33,7 +33,7 @@ var exmaQuestionsGrid = $("#exmaQuestionsGrid").DataTable({
            }
 
     ],
-    "order": [[1, 'asc']] // to remove order icon from fitst coloumn(0th column)
+    "order": [[1, 'asc']] // to remove order icon from first coloumn(0th column)
 
 });
 

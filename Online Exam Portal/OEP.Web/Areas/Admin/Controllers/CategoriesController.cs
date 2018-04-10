@@ -10,6 +10,9 @@ using OEP.Core.Services;
 using OEP.Resources.Admin;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
+using OEP.Core.Data;
+using OEP.Core.DomainModels.ExamModels;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -25,11 +28,59 @@ namespace OEP.Web.Areas.Admin.Controllers
 
 
         // GET: Admin/Categories
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var categoryList = await _categoryService.GetAllAsync();
-            var categoryResourceList= Mapper.Map<List<Category>, List<CategoryResource>>(categoryList);
-            return View(categoryResourceList);
+            return View();
+        }
+
+        // POST: Admin/Categories/LoadCategories
+
+        public async Task<ActionResult> LoadCategories()
+        {
+            try
+            {
+                if (Request.Form != null)
+                {
+                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                    var start = Request.Form.GetValues("start").FirstOrDefault();
+                    var length = Request.Form.GetValues("length").FirstOrDefault();
+                    var sortColumn =
+                        Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null ? Convert.ToInt32(start) : 1;
+                    int recordsTotal = 0;
+
+                    var categoryList = await _categoryService.GetAllAsync(
+                        skip,
+                        pageSize,
+
+                        //sorting
+                        x => sortColumn == "Name" ? x.Name : null,
+
+                        //filtering
+                        x=> searchValue != "" ? x.Name.Contains(searchValue) : x.Id != 0,
+
+                        //sort by
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending)
+                     );
+
+                    var resp = Mapper.Map<List<Category>, List<CategoryResource>>(categoryList);
+
+                    //total number of rows count     
+                    recordsTotal = categoryList.TotalCount;
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            return Content("Error");
         }
 
         // GET: Admin/Categories/Details/5

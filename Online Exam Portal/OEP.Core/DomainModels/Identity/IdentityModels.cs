@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,9 +25,9 @@ namespace OEP.Core.DomainModels.Identity
  
         public string Address { get; set; }
         public string Gender { get; set; }
+
         [Column(TypeName = "DateTime2")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
- 
         public DateTime DatOfBirth { get; set; }
 
     }
