@@ -31,6 +31,7 @@ namespace OEP.Core.DomainModels.Identity
         public DateTime DatOfBirth { get; set; }
 
         public string ProfilePicture { get; set; }
+
     }
     
 }

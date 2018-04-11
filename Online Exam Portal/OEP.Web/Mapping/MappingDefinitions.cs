@@ -11,6 +11,7 @@ using OEP.Core.DomainModels.PackageModel;
 using OEP.Core.DomainModels.QuestionModel;
 using OEP.Core.DomainModels.ExamModels;
 using OEP.Core.DomainModels.PackageSelectedModels;
+using OEP.Core.DomainModels.Identity;
 
 namespace OEP.Web.Mapping
 {
@@ -58,6 +59,10 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<QuestionTypeResource, QuestionType>();
                 m.CreateMap<QuestionType, QuestionTypeResource>();
+
+                m.CreateMap<ApplicationUser, ApplicationUserResource>();
+                m.CreateMap<ApplicationUserResource, ApplicationUser>();
+
 
 
             });
