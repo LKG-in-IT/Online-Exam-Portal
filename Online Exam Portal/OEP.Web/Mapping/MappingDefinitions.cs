@@ -56,6 +56,9 @@ namespace OEP.Web.Mapping
                 m.CreateMap<EducationDetailsResource, EducationDetails>();
                 m.CreateMap<EducationDetails, EducationDetailsResource>();
 
+                m.CreateMap<QuestionTypeResource, QuestionType>();
+                m.CreateMap<QuestionType, QuestionTypeResource>();
+
 
             });
         }

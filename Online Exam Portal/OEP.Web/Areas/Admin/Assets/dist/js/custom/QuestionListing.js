@@ -15,28 +15,32 @@ var QuestionsGrid = $("#questionGrid").DataTable({
     },
     "columns": [
         {
+            "data": "QuestionType.Name", "name": "QuestionType", "autoWidth": true, "searchable": true,
+            "orderable": true
+        },
+        {
             "data": "Question", "name": "Question", "autoWidth": true, "searchable": true,
             "orderable": true
         },
         {
             "data": "OptionA", "name": "OptionA", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
             "data": "OptionB", "name": "OptionB", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
             "data": "OptionC", "name": "OptionC", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
-            "data": "OptionD", "name": "OptionD", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "data": "OptionD", "name": "OptionD", "autoWidth": false, "searchable": true,
+            "orderable": false
         },
         {
-            "data": "Answer", "name": "Answer", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "data": "Answer", "name": "Answer", "autoWidth": false, "searchable": false,
+            "orderable": false
         },
         {
             "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
@@ -73,6 +77,6 @@ var QuestionsGrid = $("#questionGrid").DataTable({
         }
 
     ],
-    "order": [[0, 'asc']]
+    "order": [[1, 'asc']]
 
 });

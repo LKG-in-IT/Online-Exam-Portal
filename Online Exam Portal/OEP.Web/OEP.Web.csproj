@@ -197,6 +197,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ApplicationUsersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuestionTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\EducationTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExamQuestionsController.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Areas\Admin\Assets\bootstrap\js\npm.js" />
     <Content Include="Areas\Admin\Assets\dist\img\close-icon.png" />
     <Content Include="Areas\Admin\Assets\dist\img\open-icon.png" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\QuestionTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\EducationTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\CategoriesListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\ExamListing.js" />
@@ -626,6 +628,11 @@
     <Content Include="Areas\Admin\Views\Exams\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\AddQuestions.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\QuestionType\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\QuestionType\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\QuestionType\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\QuestionType\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\QuestionType\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

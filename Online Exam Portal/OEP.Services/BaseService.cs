@@ -132,6 +132,11 @@ namespace OEP.Services
             return _repository.FindBy(predicate);
         }
 
+        public Task<TEntity> GetSingleIncludingAsync(int id, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.GetSingleIncludingAsync(id, includeProperties);
+        }
+
         public void Dispose()
         {
             Dispose(true);

@@ -34,5 +34,7 @@ namespace OEP.Core.Services
         Task<List<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate);
 
         List<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
+
+        Task<TEntity> GetSingleIncludingAsync(int id, params Expression<Func<TEntity, object>>[] includeProperties);
     }
 }

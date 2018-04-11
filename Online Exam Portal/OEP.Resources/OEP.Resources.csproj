@@ -57,6 +57,7 @@
     <Compile Include="Admin\PackageSelectedResource.cs" />
     <Compile Include="Admin\QuestionAutoCompleteResource.cs" />
     <Compile Include="Admin\QuestionsResource.cs" />
+    <Compile Include="Admin\QuestionTypeResource.cs" />
     <Compile Include="Admin\SubCategoryResource.cs" />
     <Compile Include="Admin\YearResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

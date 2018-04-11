@@ -1,35 +1,26 @@
-﻿
-
-@using System.Web.Optimization
-
+﻿@using System.Web.Optimization
 @{
-    ViewBag.Title = "Question Listing";
+    ViewBag.Title = "QuestionType List";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
     ViewBag.Page = "Questions";
-    ViewBag.SubPage = "Questions";
+    ViewBag.SubPage = "QuestionType";
 }
+
 
 <div class="box">
     <div class="box-header">
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn-success btn" })
     </div>
     <div class="box-body">
-        <table id="questionGrid" class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0">
+        <table id="questionTypeGrid" class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0">
             <thead>
-            <tr>
-                <th>Question Type</th>
-                <th>Question</th>
-                <th>OptionA</th>
-                <th>OptionB</th>
-                <th>OptionC</th>
-                <th>OptionD</th>
-                <th>Answer</th>
-                <th>Status</th>
-
-                <th>Edit</th>
-                <th>Details</th>
-                <th>Delete</th>
-            </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Details</th>
+                    <th>Delete</th>
+                </tr>
             </thead>
         </table>
     </div>
@@ -42,5 +33,5 @@
     <script src="~/Areas/Admin/Assets/dist/js/jquery.dataTables.min.js"></script>
     <script src="~/Areas/Admin/Assets/dist/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="~/Areas/Admin/Assets/dist/js/custom/QuestionListing.js"></script>
+    <script src="~/Areas/Admin/Assets/dist/js/custom/QuestionTypeListing.js"></script>
 }

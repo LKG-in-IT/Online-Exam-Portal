@@ -22,9 +22,11 @@ namespace OEP.Web.Areas.Admin.Controllers
     public class QuestionsController : Controller
     {
         private readonly IQuestionService _questionService;
-        public QuestionsController(IQuestionService questionService)
+        private readonly IService<QuestionType> _questionTypeService;
+        public QuestionsController(IQuestionService questionService, IService<QuestionType> questionTypeService)
         {
             _questionService = questionService;
+            _questionTypeService = questionTypeService;
         }
 
         // GET: Admin/Questions
@@ -59,13 +61,15 @@ namespace OEP.Web.Areas.Admin.Controllers
                         pageSize,
 
                         //sorting
-                        x => sortColumn == "Name" ? x.Question : null,
+                        x => sortColumn == "Question" ? x.Question : (sortColumn == "QuestionType" ? x.QuestionType.Name : null),
 
                         //filtering
-                        x => searchValue != "" ? x.Question.Contains(searchValue) : x.Id != 0,
+                        x => searchValue != "" ? x.Question.Contains(searchValue) || x.OptionA.Contains(searchValue) || x.OptionB.Contains(searchValue) || x.OptionC.Contains(searchValue) || x.OptionD.Contains(searchValue) : x.Id != 0,
 
                         //sort by
-                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending)
+                        (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending),
+
+                        x=>x.QuestionType
                      );
 
                     var resp = Mapper.Map<List<Questions>, List<QuestionsResource>>(questionList);
@@ -90,7 +94,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = await _questionService.GetByIdAsync(Convert.ToInt32(id));
+            Questions questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(id), x => x.QuestionType);
             if (questions == null)
             {
                 return HttpNotFound();
@@ -102,6 +106,8 @@ namespace OEP.Web.Areas.Admin.Controllers
         // GET: Admin/Questions/Create
         public ActionResult Create()
         {
+            var questionTypeList = _questionTypeService.FindByAsync(x => x.Status);
+            ViewBag.QuestionTypeId = new SelectList(questionTypeList.Result.Where(i => i.Status == true), "Id", "Name");
             return View();
         }
 
@@ -135,12 +141,16 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = await _questionService.GetByIdAsync(Convert.ToInt32(id));
+            Questions questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(id),x=>x.QuestionType);
             if (questions == null)
             {
                 return HttpNotFound();
             }
             var questionsResource = Mapper.Map<Questions, QuestionsResource>(questions);
+
+            var questionTypeList = _questionTypeService.FindByAsync(x=>x.Status);
+            ViewBag.QuestionTypeId = new SelectList(questionTypeList.Result.Where(i => i.Status == true), "Id", "Name", questions.QuestionTypeId);
+
             return View(questionsResource);
         }
 
@@ -160,6 +170,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 exstQuestions.OptionC = questionsResource.OptionC;
                 exstQuestions.OptionD = questionsResource.OptionD;
                 exstQuestions.Answer = questionsResource.Answer;
+                exstQuestions.QuestionTypeId = questionsResource.QuestionTypeId;
                 exstQuestions.UpdatedDate = DateTime.Now;
 
                 await _questionService.UpdateAsync(exstQuestions);
@@ -177,7 +188,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = await _questionService.GetByIdAsync(Convert.ToInt32(id));
+            Questions questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(id), x => x.QuestionType);
             if (questions == null)
             {
                 return HttpNotFound();

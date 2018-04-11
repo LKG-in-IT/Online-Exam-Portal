@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OEP.Resources.Admin
 {
-  public  class QuestionsResource:BaseResource
+    public class QuestionsResource : BaseResource
     {
         public string Question { get; set; }
         public string OptionA { get; set; }
@@ -14,5 +14,9 @@ namespace OEP.Resources.Admin
         public string OptionC { get; set; }
         public string OptionD { get; set; }
         public string Answer { get; set; }
+
+
+        public int QuestionTypeId { get; set; }
+        public QuestionTypeResource QuestionType { get; set; }
     }
 }

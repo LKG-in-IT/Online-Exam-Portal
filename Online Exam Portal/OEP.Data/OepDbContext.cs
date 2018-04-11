@@ -65,6 +65,7 @@ namespace OEP.Data
             modelBuilder.Configurations.Add(new ExamQuestionConfig());
             modelBuilder.Configurations.Add(new QuestionsConfig());
             modelBuilder.Configurations.Add(new PackageSelectedConfig());
+            modelBuilder.Configurations.Add(new QuestionsTypeConfig());
 
             base.OnModelCreating(modelBuilder);
         }

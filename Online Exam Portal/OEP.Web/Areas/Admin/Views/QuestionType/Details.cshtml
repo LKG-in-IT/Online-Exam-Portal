@@ -1,0 +1,37 @@
+﻿@model OEP.Resources.Admin.QuestionTypeResource
+@using System.Web.Optimization
+
+
+@{
+    ViewBag.Title = "QuestionType Details";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    ViewBag.Page = "Questions";
+    ViewBag.SubPage = "QuestionType";
+}
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" }) |
+    @Html.ActionLink("Back to List", "Index", "Categories", new { area = "Admin" }, new { @class = "btn btn-dropbox" })
+</p>

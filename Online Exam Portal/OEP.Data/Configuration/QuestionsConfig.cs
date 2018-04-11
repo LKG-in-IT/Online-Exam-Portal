@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace OEP.Data.Configuration
 {
-    public    class QuestionsConfig: EntityTypeConfiguration<Questions>
+    public class QuestionsConfig: EntityTypeConfiguration<Questions>
     {
         public QuestionsConfig()
         {
@@ -16,8 +16,16 @@ namespace OEP.Data.Configuration
             Property(u => u.OptionD).HasMaxLength(250);
             Property(u => u.Answer).HasMaxLength(250);
 
+        }
+    }
 
-
+    public class QuestionsTypeConfig : EntityTypeConfiguration<QuestionType>
+    {
+        public QuestionsTypeConfig()
+        {
+            ToTable("QuestionType");
+            HasKey(a => a.Id);
+            Property(u => u.Name).HasMaxLength(250).IsRequired();
         }
     }
 }

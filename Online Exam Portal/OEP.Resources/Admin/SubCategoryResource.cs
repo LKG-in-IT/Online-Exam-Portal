@@ -10,9 +10,6 @@ namespace OEP.Resources.Admin
    public  class SubCategoryResource:BaseResource
     {
         public int CategoryID { get; set; }
-     
-    
-
         public string Name { get; set; }
         public CategoryResource Category { get; set; }
 
