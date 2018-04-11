@@ -38,7 +38,7 @@
 @Html.ActionLink("Back to Exam List", "Index","Exams",new {area= "Admin" },new {@class="btn btn-dropbox"})
 
 <input type="hidden" id="exmaId" value="@Model.ExamId"/>
-
+<input type="hidden" id="hfRole" value="@(User.IsInRole("Admin")?"true":"false")" />
 @section Scripts {
     <link href="~/Areas/Admin/Assets/dist/easy-autocomplete/easy-autocomplete.css" rel="stylesheet" />
     <script src="~/Areas/Admin/Assets/dist/easy-autocomplete/jquery.easy-autocomplete.js"></script>

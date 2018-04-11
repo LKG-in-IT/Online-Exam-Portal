@@ -18,7 +18,7 @@ using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [AuthorizeUser(Roles = "Admin")]
+    [AuthorizeUser(Roles = "Admin,Faculty")]
     public class ExamTypesController : Controller
     {
         private readonly IExamTypeService _examTypeService;
@@ -171,6 +171,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/ExamTypes/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             ExamType examType = await _examTypeService.GetByIdAsync(Convert.ToInt32(id));
@@ -183,6 +184,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // POST: Admin/ExamTypes/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

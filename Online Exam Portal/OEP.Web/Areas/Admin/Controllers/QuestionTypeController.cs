@@ -15,7 +15,7 @@ using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
-    [AuthorizeUser(Roles = "Admin")]
+    [AuthorizeUser(Roles = "Admin,Faculty")]
     public class QuestionTypeController : Controller
     {
         private readonly IService<QuestionType> _questionTypeService;
@@ -165,7 +165,9 @@ namespace OEP.Web.Areas.Admin.Controllers
             return View(questionTypeResource);
         }
 
+
         // GET: Admin/QuestionTypes/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,6 +185,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // POST: Admin/QuestionTypes/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

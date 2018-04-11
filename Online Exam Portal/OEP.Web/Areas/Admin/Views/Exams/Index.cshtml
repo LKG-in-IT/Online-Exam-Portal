@@ -30,7 +30,7 @@
         </table>
     </div>
 </div>
-
+<input type="hidden" id="hfRole" value="@(User.IsInRole("Admin")?"true":"false")" />
 @section Scripts {
     <link href="~/Areas/Admin/Assets/dist/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Assets/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />

@@ -19,29 +19,16 @@ var QuestionsGrid = $("#questionGrid").DataTable({
             "orderable": true
         },
         {
+            "className": 'details-control',
+            "data": null,
+            "defaultContent": '', "searchable": false, "autoWidth": true,
+            "orderable": false
+        },
+        {
             "data": "Question", "name": "Question", "autoWidth": true, "searchable": true,
             "orderable": true
         },
-        {
-            "data": "OptionA", "name": "OptionA", "autoWidth": true, "searchable": true,
-            "orderable": false
-        },
-        {
-            "data": "OptionB", "name": "OptionB", "autoWidth": true, "searchable": true,
-            "orderable": false
-        },
-        {
-            "data": "OptionC", "name": "OptionC", "autoWidth": true, "searchable": true,
-            "orderable": false
-        },
-        {
-            "data": "OptionD", "name": "OptionD", "autoWidth": false, "searchable": true,
-            "orderable": false
-        },
-        {
-            "data": "Answer", "name": "Answer", "autoWidth": false, "searchable": false,
-            "orderable": false
-        },
+       
         {
             "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
             "orderable": false,
@@ -70,13 +57,73 @@ var QuestionsGrid = $("#questionGrid").DataTable({
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/Questions/Delete/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Delete</a>";
+                var disableDeleteButton = $('#hfRole').val() === "true" ? "" : "disabled=disabled";
+                return "<a href='/Admin/Questions/Delete/" + row.Id + "' "+disableDeleteButton+" class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Delete</a>";
             },
             "searchable": false,
             "orderable": false
         }
 
     ],
-    "order": [[1, 'asc']]
+    "order": [[2, 'asc']]
 
 });
+
+/******************************************************************************************************************
+  *  Nested Row with Question Details--Start
+  *****************************************************************************************************************/
+// Add event listener for opening and closing details
+$('#questionGrid tbody').on('click', 'td.details-control', function () {
+    var tr = $(this).closest('tr');
+    var row = QuestionsGrid.row(tr);
+
+    if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    }
+    else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+    }
+});
+
+/* Formatting function for row details - */
+function format(data) {
+    // `data` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+        '<tr>' +
+            '<td class="option-items">Option One</td>' +
+            '<td class="option-spacer">:</td>' +
+            '<td>' + data.OptionA + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td class="option-items">Option Two</td>' +
+            '<td class="option-spacer">:</td>' +
+            '<td>' + data.OptionB + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td class="option-items">Option Three</td>' +
+            '<td class="option-spacer">:</td>' +
+            '<td>' + data.OptionC + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td class="option-items">Option Four</td>' +
+            '<td class="option-spacer">:</td>' +
+            '<td>' + data.OptionD + '</td>' +
+        '</tr>' +
+        '<tr class="option-answer-tr">' +
+            '<td class="option-items-answer">Answer</td>' +
+            '<td class="option-spacer">:</td>' +
+            '<td class="option-items-answer">' + data.Answer + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td style="padding-top: 10px;"><a class="btn btn-success" href="/Admin/Questions/Edit/' + data.Id + '">Edit Question</a></td>' +
+            '<td></td>' +
+        '</tr>' +
+    '</table>';
+}
+/******************************************************************************************************************
+  *  Nested Row with Question Details--End
+  *****************************************************************************************************************/

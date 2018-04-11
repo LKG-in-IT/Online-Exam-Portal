@@ -203,6 +203,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Exams/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -220,6 +221,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // POST: Admin/Exams/Delete/5
+        [AuthorizeUser(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

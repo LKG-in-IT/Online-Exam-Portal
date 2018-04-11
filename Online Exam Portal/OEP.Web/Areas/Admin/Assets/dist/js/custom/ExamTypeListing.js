@@ -45,7 +45,8 @@ var examTypeGrid = $("#examTypeGrid").DataTable({
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/ExamTypes/Delete/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Delete</a>";
+                var disableDeleteButton = $('#hfRole').val() === "true" ? "" : "disabled=disabled";
+                return "<a href='/Admin/ExamTypes/Delete/" + row.Id + "' " + disableDeleteButton + "  class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Delete</a>";
             },
             "searchable": false,
             "orderable": false

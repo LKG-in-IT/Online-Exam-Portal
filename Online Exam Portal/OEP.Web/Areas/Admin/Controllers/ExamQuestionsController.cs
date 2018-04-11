@@ -184,6 +184,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AuthorizeUser(Roles = "Admin")]
         [HttpPost]
         public async Task<string> DeleteQuestion(int? id)
         {

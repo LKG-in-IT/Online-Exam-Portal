@@ -26,7 +26,8 @@ var exmaQuestionsGrid = $("#exmaQuestionsGrid").DataTable({
           },
            {
                data: null, render: function (data, type, row) {
-                   return "<a href='#' class='btn btn-danger deleteQuestion' data-id='" + row.Id + "'  >Remove</a>";
+                   var disableDeleteButton = $('#hfRole').val() === "true" ? "" : "disabled=disabled";
+                   return "<a href='#' class='btn btn-danger deleteQuestion' " + disableDeleteButton + "  data-id='" + row.Id + "'  >Remove</a>";
                },
                "searchable": false,
                "orderable": false
@@ -130,6 +131,7 @@ $(document).ready(function () {
                 if (selectedItem !== undefined && selectedItem.Id > 0) {
                     $('#add-item').css('display', 'inline-block');
                     $('#clear-input').css('display', 'inline-block');
+                    return false;
                 }
                 selectedItem = undefined;
                 $("#txtquestions").val('');

@@ -112,11 +112,13 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
 
-               
+               @{
+                   var facultyClass = User.IsInRole("Faculty") ? "style=display:none;" : "";
+               }
                 <ul class="sidebar-menu">
                     <li class="header">MAIN NAVIGATION</li>
 
-                    <li class="treeview  @((ViewBag.Page == "EducationalDetails") ?"active":"")">
+                    <li class="treeview  @((ViewBag.Page == "EducationalDetails") ?"active":"")" @facultyClass>
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Educational Details</span>
@@ -128,17 +130,17 @@
                            
                         </ul>
                     </li>
-                    <li class="@(ViewBag.Page == "Packages" ? "active" : "")">
+                    <li class="@(ViewBag.Page == "Packages" ? "active" : "")"  @facultyClass>
                         <a href="/Admin/Packages">
                             <i class="fa fa-money"></i> <span>Packages</span>
                         </a>
                     </li>
-                    <li class="@(ViewBag.Page=="Category"?"active":"")">
+                    <li class="@(ViewBag.Page=="Category"?"active":"")"  @facultyClass>
                         <a href="/Admin/Categories">
                             <i class="fa fa-list-alt"></i> <span>Category</span>
                         </a>
                     </li>
-                    <li class="@(ViewBag.Page=="SubCategory"?"active":"")">
+                    <li class="@(ViewBag.Page=="SubCategory"?"active":"")" @facultyClass>
                         <a href="/Admin/SubCategories">
                             <i class="fa fa-list-alt"></i> <span>SubCategories</span>
                         </a>

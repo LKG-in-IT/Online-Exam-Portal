@@ -45,7 +45,8 @@ var questionTypeGrid = $("#questionTypeGrid").DataTable({
            },
            {
                data: null, render: function (data, type, row) {
-                   return "<a href='/Admin/QuestionType/Delete/" + row.Id + "' class='btn btn-danger deleteQuestionType' data-id='" + row.Id + "'  >Delete</a>";
+                   var disableDeleteButton = $('#hfRole').val() === "true" ? "" : "disabled=disabled";
+                   return "<a href='/Admin/QuestionType/Delete/" + row.Id + "' " + disableDeleteButton + " class='btn btn-danger deleteQuestionType' data-id='" + row.Id + "'  >Delete</a>";
                },
                "searchable": false,
                "orderable": false
