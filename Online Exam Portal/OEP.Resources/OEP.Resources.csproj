@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\ApplicationUserResource.cs" />
+    <Compile Include="Admin\ApplicationUserViewModel.cs" />
     <Compile Include="Admin\BaseResource.cs" />
     <Compile Include="Admin\CategoryResource.cs" />
     <Compile Include="Admin\EducationDetailsResource.cs" />

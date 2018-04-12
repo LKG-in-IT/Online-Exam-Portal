@@ -32,6 +32,9 @@ namespace OEP.Core.DomainModels.Identity
 
         public string ProfilePicture { get; set; }
 
+        [NotMapped]
+        public string Role { get; set; }
+
     }
     
 }

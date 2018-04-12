@@ -20,6 +20,7 @@ namespace OEP.Data.Repo
         public List<ApplicationUser> GetApplicationUsers()
         {
             var userList= _OepDbContext.Users.ToList();
+            
             return userList;
         }
 
@@ -34,7 +35,16 @@ namespace OEP.Data.Repo
             var entities = FilterQuery(keySelector, predicate, orderBy, includeProperties);
             var total = entities.Count();// entities.Count() is different than pageSize
             entities = entities.Paginate(pageIndex, pageSize);
-            return entities.ToPaginatedList(pageIndex, pageSize, total);
+            var userListWithoutRole = entities.ToPaginatedList(pageIndex, pageSize, total);
+            var userListWithRole = userListWithoutRole.Select(u => 
+            new ApplicationUser {   Name=u.Name,
+                                    Id=u.Id,
+                                    UserName = u.UserName,
+                                    Email = u.Email,
+                                    PhoneNumber = u.PhoneNumber,
+                                    Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
+                                    .Select(r => r.Name)) }).ToList();
+            return new PaginatedList<ApplicationUser>(userListWithRole, pageIndex, pageSize, total);
 
 
         }
@@ -50,7 +60,10 @@ namespace OEP.Data.Repo
         }
         private IQueryable<ApplicationUser> IncludeProperties(params Expression<Func<ApplicationUser, object>>[] includeProperties)
         {
+
             IQueryable<ApplicationUser> entities = _OepDbContext.Users;
+           
+
             foreach (var includeProperty in includeProperties)
             {
                 entities = entities.Include(includeProperty);
@@ -58,10 +71,7 @@ namespace OEP.Data.Repo
             return entities;
         }
 
-        //public void Insert(ApplicationUser entity)
-        //{
-        //    _OepDbContext.SetAsAdded(entity)
-        //}
+     
 
         public string Update(ApplicationUser entity)
         {
@@ -70,7 +80,7 @@ namespace OEP.Data.Repo
             user.Email = entity.Email;
             user.UserName = entity.UserName;
             user.PhoneNumber = entity.PhoneNumber;
-
+           
           int r=  _OepDbContext.SaveChanges();
             if(r>0)
             {
@@ -83,10 +93,7 @@ namespace OEP.Data.Repo
 
         }
 
-        //public void Delete(ApplicationUser entity)
-        //{
-        //    _context.SetAsDeleted(entity);
-        //}
+        
 
     }
 }

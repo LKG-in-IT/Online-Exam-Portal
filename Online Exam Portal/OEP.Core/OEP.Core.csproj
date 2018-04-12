@@ -69,6 +69,7 @@
     <Compile Include="DomainModels\ExamModels\Exam.cs" />
     <Compile Include="DomainModels\ExamModels\ExamQuestion.cs" />
     <Compile Include="DomainModels\ExamModels\ExamType.cs" />
+    <Compile Include="DomainModels\Identity\UserViewModel.cs" />
     <Compile Include="DomainModels\Identity\IdentityModels.cs" />
     <Compile Include="DomainModels\PackageModel\PackageDetails.cs" />
     <Compile Include="DomainModels\PackageSelectedModels\PackageSelected.cs" />
