@@ -35,6 +35,8 @@ namespace OEP.Core.DomainModels.Identity
         [NotMapped]
         public string Role { get; set; }
 
+        public bool Status { get; set; }
+
     }
     
 }

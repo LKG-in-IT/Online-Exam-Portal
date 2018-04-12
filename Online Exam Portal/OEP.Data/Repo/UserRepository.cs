@@ -27,7 +27,12 @@ namespace OEP.Data.Repo
 
         public ApplicationUser GetById(string id)
         {
-            return _OepDbContext.Users.Where(i => i.Id == id).FirstOrDefault();
+            var userListWithoutRole = _OepDbContext.Users.Where(i => i.Id == id).FirstOrDefault();
+      
+            var oldRoleId = userListWithoutRole.Roles.SingleOrDefault().RoleId;
+            var oldRoleName = _OepDbContext.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
+            userListWithoutRole.Role = oldRoleName;
+            return userListWithoutRole;
         }
 
         public PaginatedList<ApplicationUser> GetApplicationUsers(int pageIndex, int pageSize, Expression<Func<ApplicationUser, object>> keySelector, Expression<Func<ApplicationUser, bool>> predicate, OrderBy orderBy, params Expression<Func<ApplicationUser, object>>[] includeProperties)
@@ -36,12 +41,13 @@ namespace OEP.Data.Repo
             var total = entities.Count();// entities.Count() is different than pageSize
             entities = entities.Paginate(pageIndex, pageSize);
             var userListWithoutRole = entities.ToPaginatedList(pageIndex, pageSize, total);
-            var userListWithRole = userListWithoutRole.Select(u => 
-            new ApplicationUser {   Name=u.Name,
-                                    Id=u.Id,
-                                    UserName = u.UserName,
-                                    Email = u.Email,
-                                    PhoneNumber = u.PhoneNumber,
+            var userListWithRole = userListWithoutRole.Select(u =>
+            new ApplicationUser { Name = u.Name,
+                Id = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                Status = u.Status,
                                     Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
                                     .Select(r => r.Name)) }).ToList();
             return new PaginatedList<ApplicationUser>(userListWithRole, pageIndex, pageSize, total);
@@ -80,8 +86,8 @@ namespace OEP.Data.Repo
             user.Email = entity.Email;
             user.UserName = entity.UserName;
             user.PhoneNumber = entity.PhoneNumber;
-           
-          int r=  _OepDbContext.SaveChanges();
+          
+            int r =  _OepDbContext.SaveChanges();
             if(r>0)
             {
                 return "Success";

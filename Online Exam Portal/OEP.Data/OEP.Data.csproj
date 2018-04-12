@@ -153,6 +153,10 @@
     <Compile Include="Migrations\201804110647491_QuestionType.Designer.cs">
       <DependentUpon>201804110647491_QuestionType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804120930080_UserDetailsWithStatus.cs" />
+    <Compile Include="Migrations\201804120930080_UserDetailsWithStatus.Designer.cs">
+      <DependentUpon>201804120930080_UserDetailsWithStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -216,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804110647491_QuestionType.resx">
       <DependentUpon>201804110647491_QuestionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804120930080_UserDetailsWithStatus.resx">
+      <DependentUpon>201804120930080_UserDetailsWithStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

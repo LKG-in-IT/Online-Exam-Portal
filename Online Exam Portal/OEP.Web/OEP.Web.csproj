@@ -238,11 +238,8 @@
     <Content Include="Areas\Admin\Assets\bootstrap\js\npm.js" />
     <Content Include="Areas\Admin\Assets\dist\img\close-icon.png" />
     <Content Include="Areas\Admin\Assets\dist\img\open-icon.png" />
-
     <Content Include="Areas\Admin\Assets\dist\js\custom\QuestionTypeListing.js" />
-
     <Content Include="Areas\Admin\Assets\dist\js\custom\ApplicationUserListing.js" />
-
     <Content Include="Areas\Admin\Assets\dist\js\custom\EducationTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\CategoriesListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\ExamListing.js" />
@@ -632,16 +629,14 @@
     <Content Include="Areas\Admin\Views\Exams\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ExamQuestions\AddQuestions.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Index.cshtml" />
-
     <Content Include="Areas\Admin\Views\QuestionType\Create.cshtml" />
     <Content Include="Areas\Admin\Views\QuestionType\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\QuestionType\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QuestionType\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QuestionType\Index.cshtml" />
-
     <Content Include="Areas\Admin\Views\ApplicationUsers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Edit.cshtml" />
-
+    <Content Include="Areas\Admin\Views\ApplicationUsers\Disable.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

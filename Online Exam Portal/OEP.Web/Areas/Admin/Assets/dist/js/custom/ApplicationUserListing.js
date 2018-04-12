@@ -29,22 +29,22 @@ var userGrid = $("#userGrid").DataTable({
             "data": "UserName", "name": "UserName", "autoWidth": true, "searchable": true,
             "orderable": true
         },
-        //{
-        //    "data": "Role", "name": "Role", "autoWidth": true, "searchable": true,
-       //     "orderable": true
-        //},
-        //{
-        //    "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
-        //    "orderable": false,
-        //    render: function (data, type, row) {
-        //        if (type === 'display') {
-        //            var status = data ? 'checked' : '';
-        //            return "<input type='checkbox' " + status + " disabled  class='editor-active'>";
-        //        }
-        //        return data;
-        //    },
-        //    className: "dt-body-center"
-        //},
+        {
+            "data": "Role", "name": "Role", "autoWidth": true, "searchable": true,
+            "orderable": true
+        },
+        {
+            "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
+            "orderable": false,
+            render: function (data, type, row) {
+                if (type === 'display') {
+                    var status = data ? 'checked' : '';
+                    return "<input type='checkbox' " + status + " disabled  class='editor-active'>";
+                }
+                return data;
+            },
+            className: "dt-body-center"
+        },
         {
             data: null, render: function (data, type, row) {
                 return "<a href='/Admin/ApplicationUsers/Edit/" + row.Id + "' class='btn btn-success editCategory' data-id='" + row.Id + "'  >Edit</a>";
@@ -61,7 +61,16 @@ var userGrid = $("#userGrid").DataTable({
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/ApplicationUsers/Disable/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
+
+              
+                if (data["Status"] === false) {
+                    return "<a href='/Admin/ApplicationUsers/Disable/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Enable</a>";
+
+                }
+                else {
+                    return "<a href='/Admin/ApplicationUsers/Disable/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
+
+                }
             },
             "searchable": false,
             "orderable": false

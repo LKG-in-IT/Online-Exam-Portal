@@ -123,7 +123,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             return View(userResource);
         }
 
-        // pOST:Admin/ApplicationUser/Edit/
+        // POST:Admin/ApplicationUser/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
        public ActionResult Edit(ApplicationUserResource applicationUserResource)
@@ -144,6 +144,57 @@ namespace OEP.Web.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
              else
+                {
+                    return View(applicationUserResource);
+                }
+
+            }
+            return View();
+
+        }
+
+        public ActionResult Disable(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = _applicationUserService.GetById(id);
+
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            var userResource = Mapper.Map<ApplicationUser, ApplicationUserResource>(applicationUser);
+
+            return View(userResource);
+        }
+
+        // POST:Admin/ApplicationUser/Disable/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Disable(ApplicationUserResource applicationUserResource)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var exstuser = _applicationUserService.GetById(applicationUserResource.Id);
+            if(exstuser.Status==true)
+                {
+                    exstuser.Status = false;
+                }
+            else
+                {
+                    exstuser.Status = true;
+                }
+                string result = _applicationUserService.Update(exstuser);
+                if (result == "Success")
+                {
+
+
+                    return RedirectToAction("Index");
+                }
+                else
                 {
                     return View(applicationUserResource);
                 }
