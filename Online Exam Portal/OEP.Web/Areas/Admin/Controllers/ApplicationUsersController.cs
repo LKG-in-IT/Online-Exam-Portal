@@ -13,9 +13,11 @@ using OEP.Core.Services;
 using AutoMapper;
 using OEP.Resources.Admin;
 using OEP.Core.Data;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
+    [AuthorizeUser(Roles = "Admin")]
     public class ApplicationUsersController : Controller
     {
         private readonly IApplicationUserService _applicationUserService;
@@ -24,17 +26,17 @@ namespace OEP.Web.Areas.Admin.Controllers
         {
             _applicationUserService = applicationUserService;
         }
-        
+
         // GET: Admin/ApplicationUsers
-        public  ActionResult Index()
+        public ActionResult Index()
         {
             var appliationuser = _applicationUserService.GetApplicationUsers();
-            var appliationuserResource = Mapper.Map<List< ApplicationUser>,List< ApplicationUserResource>>(appliationuser);
+            var appliationuserResource = Mapper.Map<List<ApplicationUser>, List<ApplicationUserResource>>(appliationuser);
 
             return View(appliationuserResource);
         }
 
-        public  ActionResult LoadUsers()
+        public ActionResult LoadUsers()
         {
             try
             {
@@ -53,29 +55,30 @@ namespace OEP.Web.Areas.Admin.Controllers
                     int pageSize = length != null ? Convert.ToInt32(length) : 0;
                     int skip = start != null ? Convert.ToInt32(start) : 1;
                     int recordsTotal = 0;
+                    
 
                     var userList = _applicationUserService.GetApplicationUsers
                         (
                         skip,
-                        pageSize, 
-                        
+                        pageSize,
+
                         x => sortColumn == "Name" ? x.Name : null,
 
                         //filtering
-                        
+
                         x => searchValue != "" ? x.Name.Contains(searchValue) : x.Id != "0",
 
                         //sort by
                         (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending),
 
-                        x=>x.Roles
-                        
+                        x => x.Roles
+
                         );
-                        
-                     
+
+
 
                     var resp = Mapper.Map<List<ApplicationUser>, List<ApplicationUserResource>>(userList);
-               
+
                     //total number of rows count     
                     recordsTotal = userList.TotalCount;
                     return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = resp });
@@ -125,10 +128,10 @@ namespace OEP.Web.Areas.Admin.Controllers
         // pOST:Admin/ApplicationUser/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-       public ActionResult Edit(ApplicationUserResource applicationUserResource)
+        public ActionResult Edit(ApplicationUserResource applicationUserResource)
         {
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var exstuser = _applicationUserService.GetById(applicationUserResource.Id);
                 exstuser.Name = applicationUserResource.Name;
@@ -136,13 +139,13 @@ namespace OEP.Web.Areas.Admin.Controllers
                 exstuser.PhoneNumber = applicationUserResource.PhoneNumber;
                 exstuser.UserName = applicationUserResource.UserName;
                 string result = _applicationUserService.Update(exstuser);
-             if(result=="Success")
+                if (result == "Success")
                 {
 
 
                     return RedirectToAction("Index");
                 }
-             else
+                else
                 {
                     return View(applicationUserResource);
                 }

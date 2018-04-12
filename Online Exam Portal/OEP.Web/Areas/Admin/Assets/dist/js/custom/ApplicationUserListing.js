@@ -29,10 +29,10 @@ var userGrid = $("#userGrid").DataTable({
             "data": "UserName", "name": "UserName", "autoWidth": true, "searchable": true,
             "orderable": true
         },
-        {
-            "data": "Role", "name": "Role", "autoWidth": true, "searchable": true,
-            "orderable": true
-        },
+        //{
+        //    "data": "Role", "name": "Role", "autoWidth": true, "searchable": true,
+       //     "orderable": true
+        //},
         //{
         //    "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
         //    "orderable": false,
