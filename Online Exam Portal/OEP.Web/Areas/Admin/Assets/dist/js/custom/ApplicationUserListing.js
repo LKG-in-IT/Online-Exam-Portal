@@ -54,7 +54,7 @@ var userGrid = $("#userGrid").DataTable({
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/ApplicationUsers/Details/" + data["UserName"]+ "' class='btn btn-info detailsCategory' data-id='" + row.Id + "'  >Details</a>";
+                return "<a href='/Admin/ApplicationUsers/Details?UserName=" + data["UserName"]+ "' class='btn btn-info detailsCategory' data-id='" + row.Id + "'  >Details</a>";
             },
             "searchable": false,
             "orderable": false
@@ -64,11 +64,11 @@ var userGrid = $("#userGrid").DataTable({
 
               
                 if (data["Status"] === false) {
-                    return "<a href='/Admin/ApplicationUsers/Disable/" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Enable</a>";
+                    return "<a href='/Admin/ApplicationUsers/Disable?UserName=" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Enable</a>";
 
                 }
                 else {
-                    return "<a href='/Admin/ApplicationUsers/Disable/" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
+                    return "<a href='/Admin/ApplicationUsers/Disable?UserName=" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
 
                 }
             },

@@ -92,13 +92,14 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/ApplicationUser/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
-            if (id == null)
+            string UserName = Request.QueryString["UserName"].ToString();
+            if (UserName == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = _applicationUserService.GetById(id);
+            ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -156,13 +157,14 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         }
 
-        public ActionResult Disable(string id)
+        public ActionResult Disable()
         {
-            if (id == null)
+            string UserName = Request.QueryString["UserName"].ToString();
+            if (UserName == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = _applicationUserService.GetById(id);
+            ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
 
             if (applicationUser == null)
             {
@@ -181,7 +183,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var exstuser = _applicationUserService.GetById(applicationUserResource.Id);
+                var exstuser = _applicationUserService.GetById(applicationUserResource.UserName);
             if(exstuser.Status==true)
                 {
                     exstuser.Status = false;
@@ -203,6 +205,17 @@ namespace OEP.Web.Areas.Admin.Controllers
                 }
 
             }
+            return View();
+
+        }
+
+
+        //GET :Admin/ApplicationUser/AddRoles/
+
+        public ActionResult AddRoles()
+        {
+         
+
             return View();
 
         }
