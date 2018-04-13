@@ -10,7 +10,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ApplicationUserResource</h4>
+   
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -62,6 +62,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" })  |
+    @Html.ActionLink("Edit", "Edit", new { UserName = Model.UserName }, new { @class = "btn btn-success" })  |
     @Html.ActionLink("Back to List", "Index", "ApplicationUsers", new { area = "Admin" }, new { @class = "btn btn-dropbox" })
 </p>

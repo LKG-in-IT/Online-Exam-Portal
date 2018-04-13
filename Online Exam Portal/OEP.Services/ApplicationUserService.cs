@@ -21,9 +21,9 @@ namespace OEP.Services
             _userRepository = userRepository;
         }
 
-        public ApplicationUser GetById(string id)
+        public ApplicationUser GetById(string UserName)
         {
-           return _userRepository.GetById(id);
+           return _userRepository.GetById(UserName);
         }
         public  List<ApplicationUser> GetApplicationUsers()
         {

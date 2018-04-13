@@ -25,9 +25,9 @@ namespace OEP.Data.Repo
         }
 
 
-        public ApplicationUser GetById(string id)
+        public ApplicationUser GetById(string UserName)
         {
-            var userListWithoutRole = _OepDbContext.Users.Where(i => i.Id == id).FirstOrDefault();
+            var userListWithoutRole = _OepDbContext.Users.Where(i => i.UserName == UserName).FirstOrDefault();
       
             var oldRoleId = userListWithoutRole.Roles.SingleOrDefault().RoleId;
             var oldRoleName = _OepDbContext.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
@@ -81,7 +81,7 @@ namespace OEP.Data.Repo
 
         public string Update(ApplicationUser entity)
         {
-            ApplicationUser user = _OepDbContext.Users.Where(i => i.Id == entity.Id).FirstOrDefault();
+            ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
             user.Name = entity.Name;
             user.Email = entity.Email;
             user.UserName = entity.UserName;

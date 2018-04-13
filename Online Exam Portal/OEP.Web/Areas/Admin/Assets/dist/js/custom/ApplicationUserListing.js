@@ -19,11 +19,11 @@ var userGrid = $("#userGrid").DataTable({
         },
         {
             "data": "Email", "name": "Email", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
             "data": "PhoneNumber", "name": "PhoneNumber", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
             "data": "UserName", "name": "UserName", "autoWidth": true, "searchable": true,
@@ -31,7 +31,7 @@ var userGrid = $("#userGrid").DataTable({
         },
         {
             "data": "Role", "name": "Role", "autoWidth": true, "searchable": true,
-            "orderable": true
+            "orderable": false
         },
         {
             "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
@@ -47,14 +47,14 @@ var userGrid = $("#userGrid").DataTable({
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/ApplicationUsers/Edit/" + row.Id + "' class='btn btn-success editCategory' data-id='" + row.Id + "'  >Edit</a>";
+                return "<a href='/Admin/ApplicationUsers/Edit?UserName=" + data["UserName"] + "' class='btn btn-success editCategory' data-id='" + row.Id + "'  >Edit</a>";
             },
             "searchable": false,
             "orderable": false
         },
         {
             data: null, render: function (data, type, row) {
-                return "<a href='/Admin/ApplicationUsers/Details/" + row.Id + "' class='btn btn-info detailsCategory' data-id='" + row.Id + "'  >Details</a>";
+                return "<a href='/Admin/ApplicationUsers/Details/" + data["UserName"]+ "' class='btn btn-info detailsCategory' data-id='" + row.Id + "'  >Details</a>";
             },
             "searchable": false,
             "orderable": false
@@ -64,11 +64,11 @@ var userGrid = $("#userGrid").DataTable({
 
               
                 if (data["Status"] === false) {
-                    return "<a href='/Admin/ApplicationUsers/Disable/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Enable</a>";
+                    return "<a href='/Admin/ApplicationUsers/Disable/" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Enable</a>";
 
                 }
                 else {
-                    return "<a href='/Admin/ApplicationUsers/Disable/" + row.Id + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
+                    return "<a href='/Admin/ApplicationUsers/Disable/" + data["UserName"] + "' class='btn btn-danger deleteCategory' data-id='" + row.Id + "'  >Disable</a>";
 
                 }
             },

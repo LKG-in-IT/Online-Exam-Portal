@@ -34,6 +34,8 @@ namespace OEP.Web.Areas.Admin.Controllers
             return View(appliationuserResource);
         }
 
+
+
         public  ActionResult LoadUsers()
         {
             try
@@ -59,7 +61,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                         skip,
                         pageSize, 
                         
-                        x => sortColumn == "Name" ? x.Name : null,
+                        x => sortColumn == "Name" ? x.Name : (sortColumn=="UserName"?x.UserName:null),
 
                         //filtering
                         
@@ -106,13 +108,14 @@ namespace OEP.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/ApplicationUser/Edit/
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
-            if (id == null)
+            string UserName = Request.QueryString["UserName"].ToString();
+            if (UserName == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = _applicationUserService.GetById(id);
+            ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
 
             if (applicationUser == null)
             {
@@ -131,7 +134,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
             if(ModelState.IsValid)
             {
-                var exstuser = _applicationUserService.GetById(applicationUserResource.Id);
+                var exstuser = _applicationUserService.GetById(applicationUserResource.UserName);
                 exstuser.Name = applicationUserResource.Name;
                 exstuser.Email = applicationUserResource.Email;
                 exstuser.PhoneNumber = applicationUserResource.PhoneNumber;
