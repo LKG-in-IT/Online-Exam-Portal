@@ -41,7 +41,12 @@ namespace OEP.Services
 
             return result;
         }
-        
+      public List<RolesViewModel> GetRoles()
+        {
+            return _userRepository.GetRoles();
+        }
+
+
 
     }
 }

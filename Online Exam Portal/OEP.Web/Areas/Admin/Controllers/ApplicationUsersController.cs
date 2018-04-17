@@ -214,9 +214,24 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         public ActionResult AddRoles()
         {
-         
 
-            return View();
+            string UserName = Request.QueryString["UserName"].ToString();
+            if (UserName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
+
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            var userResource = Mapper.Map<ApplicationUser, ApplicationUserResource>(applicationUser);
+            var allroles = _applicationUserService.GetRoles().ToList();
+            ViewBag.RolesList = new SelectList(allroles, "Id", "Name");
+            return View(userResource);
+
+   
 
         }
 

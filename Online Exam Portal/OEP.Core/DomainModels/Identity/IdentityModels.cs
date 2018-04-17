@@ -36,7 +36,9 @@ namespace OEP.Core.DomainModels.Identity
         public string Role { get; set; }
 
         public bool Status { get; set; }
-
+     
+     
+    
     }
     
 }

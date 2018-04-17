@@ -28,11 +28,17 @@ namespace OEP.Data.Repo
         public ApplicationUser GetById(string UserName)
         {
             var userListWithoutRole = _OepDbContext.Users.Where(i => i.UserName == UserName).FirstOrDefault();
-      
             var oldRoleId = userListWithoutRole.Roles.SingleOrDefault().RoleId;
             var oldRoleName = _OepDbContext.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
             userListWithoutRole.Role = oldRoleName;
             return userListWithoutRole;
+        }
+
+        public List<RolesViewModel> GetRoles()
+        {
+            var Rolelist = _OepDbContext.Roles.Select(s => new RolesViewModel { Id = s.Id, Name = s.Name }).ToList();
+            return Rolelist;
+
         }
 
         public PaginatedList<ApplicationUser> GetApplicationUsers(int pageIndex, int pageSize, Expression<Func<ApplicationUser, object>> keySelector, Expression<Func<ApplicationUser, bool>> predicate, OrderBy orderBy, params Expression<Func<ApplicationUser, object>>[] includeProperties)
@@ -99,6 +105,7 @@ namespace OEP.Data.Repo
 
         }
 
+      
         
 
     }

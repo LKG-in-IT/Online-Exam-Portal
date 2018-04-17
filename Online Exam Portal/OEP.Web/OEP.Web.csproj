@@ -236,8 +236,10 @@
     <Content Include="Areas\Admin\Assets\bootstrap\js\bootstrap.js" />
     <Content Include="Areas\Admin\Assets\bootstrap\js\bootstrap.min.js" />
     <Content Include="Areas\Admin\Assets\bootstrap\js\npm.js" />
+    <Content Include="Areas\Admin\Assets\dist\css\bootstrap-multiselect.css" />
     <Content Include="Areas\Admin\Assets\dist\img\close-icon.png" />
     <Content Include="Areas\Admin\Assets\dist\img\open-icon.png" />
+    <Content Include="Areas\Admin\Assets\dist\js\bootstrap-multiselect.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\QuestionTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\ApplicationUserListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\EducationTypeListing.js" />
@@ -637,6 +639,7 @@
     <Content Include="Areas\Admin\Views\ApplicationUsers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Disable.cshtml" />
+    <Content Include="Areas\Admin\Views\ApplicationUsers\AddRoles.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

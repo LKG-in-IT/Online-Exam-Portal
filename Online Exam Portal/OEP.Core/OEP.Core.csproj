@@ -75,6 +75,7 @@
     <Compile Include="DomainModels\PaginatedList.cs" />
     <Compile Include="DomainModels\QuestionModel\Questions.cs" />
     <Compile Include="DomainModels\QuestionModel\QuestionType.cs" />
+    <Compile Include="DomainModels\RolesViewModel.cs" />
     <Compile Include="DomainModels\SubCategoryModel\SubCategory.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
