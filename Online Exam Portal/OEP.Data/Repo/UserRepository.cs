@@ -1,4 +1,6 @@
-﻿using OEP.Core.Data;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OEP.Core.Data;
 using OEP.Core.Data.Repository;
 using OEP.Core.DomainModels;
 using OEP.Core.DomainModels.Identity;
@@ -87,26 +89,55 @@ namespace OEP.Data.Repo
 
         public string Update(ApplicationUser entity)
         {
-            ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
-            user.Name = entity.Name;
-            user.Email = entity.Email;
-            user.UserName = entity.UserName;
-            user.PhoneNumber = entity.PhoneNumber;
-          
-            int r =  _OepDbContext.SaveChanges();
-            if(r>0)
+            try
             {
-                return "Success";
-            }
-            else
-            {
-                return "Error";
-            }
+                ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
+                user.Name = entity.Name;
+                user.Email = entity.Email;
+                user.UserName = entity.UserName;
+                user.PhoneNumber = entity.PhoneNumber;
 
+
+                int r = _OepDbContext.SaveChanges();
+                if (r > 0)
+                {
+                   
+
+                    return "Success";
+                }
+                else
+                {
+
+
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+        }
+        public string UpdateRole(ApplicationUser entity)
+        {
+            var user = new ApplicationUser() { UserName = entity.UserName };
+          
+
+            var roleStore = new RoleStore<IdentityRole>(_OepDbContext);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var userStore = new UserStore<ApplicationUser>(_OepDbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            userManager.AddToRole(user.Id, "User");
+            return "result";
+
+          
         }
 
-      
-        
+
+
+
 
     }
 }
