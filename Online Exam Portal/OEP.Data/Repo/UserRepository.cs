@@ -19,6 +19,7 @@ namespace OEP.Data.Repo
     {
         private readonly OepDbContext _OepDbContext=new OepDbContext();
         
+
         public List<ApplicationUser> GetApplicationUsers()
         {
             var userList= _OepDbContext.Users.ToList();
@@ -29,10 +30,22 @@ namespace OEP.Data.Repo
 
         public ApplicationUser GetById(string UserName)
         {
-            var userListWithoutRole = _OepDbContext.Users.Where(i => i.UserName == UserName).FirstOrDefault();
-            var oldRoleId = userListWithoutRole.Roles.SingleOrDefault().RoleId;
-            var oldRoleName = _OepDbContext.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
-            userListWithoutRole.Role = oldRoleName;
+
+            var userListWithRole = _OepDbContext.Users.ToList();
+            var userListWithoutRole= userListWithRole. Select(u =>
+            new ApplicationUser
+            {
+                Name = u.Name,
+                Id = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                Status = u.Status,
+                Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
+                                    .Select(r => r.Name))
+            }).ToList().Where(i => i.UserName == UserName).FirstOrDefault();
+            
+           
             return userListWithoutRole;
         }
 
@@ -119,20 +132,20 @@ namespace OEP.Data.Repo
             }
             
         }
-        public string UpdateRole(ApplicationUser entity)
+        public string UpdateRole(string username,string rolename)
         {
-            var user = new ApplicationUser() { UserName = entity.UserName };
-          
+            var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-            var roleStore = new RoleStore<IdentityRole>(_OepDbContext);
-            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
 
             var userStore = new UserStore<ApplicationUser>(_OepDbContext);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            userManager.AddToRole(user.Id, "User");
-            return "result";
+            userManager.AddToRole(user.Id, rolename);
 
-          
+            return "Changed";
+            
+
+
         }
 
 

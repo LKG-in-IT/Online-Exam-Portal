@@ -17,5 +17,6 @@ namespace OEP.Core.Services
         ApplicationUser GetById(string UserName);
         string Update(ApplicationUser entity);
         List<RolesViewModel> GetRoles();
+        string UpdateRole(string username, string rolename);
     }
 }

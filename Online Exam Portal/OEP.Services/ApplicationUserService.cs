@@ -45,7 +45,10 @@ namespace OEP.Services
         {
             return _userRepository.GetRoles();
         }
-
+        public string UpdateRole(string username, string rolename)
+        {
+            return _userRepository.UpdateRole(username,rolename);
+        }
 
 
     }

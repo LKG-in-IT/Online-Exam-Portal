@@ -237,29 +237,18 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         // POST:Admin/ApplicationUser/Edit/
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddRoles(ApplicationUserResource applicationUserResource)
+      
+        public JsonResult AddRolespost(string username,string roles,string names)
         {
-
-            if (ModelState.IsValid)
+            string[] nameslist = names.Split(',');
+            foreach (string item in nameslist)
             {
-                var exstuser = _applicationUserService.GetById(applicationUserResource.UserName);
-                var rolesselected = applicationUserResource.Role;
-          
-                string result = _applicationUserService.Update(exstuser);
-                if (result == "Success")
-                {
-
-
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return View(applicationUserResource);
-                }
-
+                _applicationUserService.UpdateRole(username, item);
             }
-            return View();
+
+
+
+            return Json("test");
 
         }
 
