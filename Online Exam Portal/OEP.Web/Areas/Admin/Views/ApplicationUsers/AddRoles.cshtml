@@ -1,9 +1,14 @@
 ﻿@model OEP.Resources.Admin.ApplicationUserResource
 @using System.Web.Optimization
+@using OEP.Core.DomainModels
 
 @{
     ViewBag.Title = "AddRoles";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    List<RolesViewModel> test = new List<RolesViewModel>();
+    string[] selected;
+
+
 }
 @Scripts.Render("~/bundles/jquery")
 <h2>AddRoles</h2>
@@ -11,6 +16,9 @@
 
 @using (Html.BeginForm())
 {
+
+    test = ViewBag.RolesList;
+    selected = ViewBag.Selectedrole;
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -34,8 +42,26 @@
         <div class="form-group">
             @Html.Label("Add Role", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Role, (IEnumerable<SelectListItem>)ViewBag.RolesList, new { @multiple = "multiple" })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+
+                <select id="Role" multiple>
+                    @foreach (var item in test)
+                    {
+
+
+                        if (selected.Contains(item.Name))
+                        {
+                            <option value="@item.Id" selected>@item.Name</option>
+
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+
+                        }
+
+
+                    }
+                </select>
             </div>
         </div>
 
@@ -43,7 +69,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" id="btnsave"  value="Save" class="btn btn-default" />
+                <input type="button" id="btnsave" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -63,8 +89,26 @@
 <!-- Initialize the plugin: Multiselect -->
 <script type="text/javascript">
     $(document).ready(function () {
+
+        debugger;
         $('#Role').multiselect();
-      
+
+        //  var options = [
+        //    { label: 'Option 1', title: 'Option 1', value: '1', selected: true },
+        //    { label: 'Option 2', title: 'Option 2', value: '2' },
+        //    { label: 'Option 3', title: 'Option 3', value: '3', selected: true },
+        //    { label: 'Option 4', title: 'Option 4', value: '4' },
+        //    { label: 'Option 5', title: 'Option 5', value: '5' },
+        //    { label: 'Option 6', title: 'Option 6', value: '6', disabled: true }
+        //];
+
+
+
+
+
+
+
+
         $("#btnsave").click(function () {
             debugger;
             var username = $("#UserName").val();
@@ -76,7 +120,13 @@
 
             $.post("/Admin/ApplicationUsers/AddRolespost/", { username: username, roles: roles, names: names }, function (data) {
 
-                alert(data);
+                if (data == "Added") {
+
+                    window.location.href = "/Admin/ApplicationUsers/Index";
+                }
+                else {
+                    alert("Please try again");
+                }
             });
 
 

@@ -49,7 +49,11 @@ namespace OEP.Services
         {
             return _userRepository.UpdateRole(username,rolename);
         }
+        public void DeleteRoles(string username)
+        {
+          _userRepository.DeleteRoles(username);
 
+        }
 
     }
 }

@@ -136,10 +136,11 @@ namespace OEP.Data.Repo
         {
             var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-
-
+            var allroles = _OepDbContext.Roles;
+         
             var userStore = new UserStore<ApplicationUser>(_OepDbContext);
             var userManager = new UserManager<ApplicationUser>(userStore);
+       
             userManager.AddToRole(user.Id, rolename);
 
             return "Changed";
@@ -148,9 +149,23 @@ namespace OEP.Data.Repo
 
         }
 
+       
+
+        public void DeleteRoles(string username)
+        {
+            var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
 
+            var allroles = _OepDbContext.Roles.Where(role => role.Users.Any(uu => uu.UserId == user.Id))
+                                    .Select(r => r.Name).ToList();
 
+            var userStore = new UserStore<ApplicationUser>(_OepDbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
 
+            foreach (var item in allroles)
+            {
+                userManager.RemoveFromRole(user.Id, item);
+            }
+        }
     }
 }

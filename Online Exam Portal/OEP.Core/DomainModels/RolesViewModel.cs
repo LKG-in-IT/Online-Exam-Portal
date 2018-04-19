@@ -10,5 +10,6 @@ namespace OEP.Core.DomainModels
     {
         public string Id { get; set; }
         public string Name { get; set; }
+
     }
 }

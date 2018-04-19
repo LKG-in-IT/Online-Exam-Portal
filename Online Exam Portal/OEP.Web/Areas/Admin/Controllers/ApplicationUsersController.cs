@@ -13,6 +13,7 @@ using OEP.Core.Services;
 using AutoMapper;
 using OEP.Resources.Admin;
 using OEP.Core.Data;
+using OEP.Core.DomainModels;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -222,13 +223,20 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
             ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
 
+            string[] selectedrole = applicationUser.Role.Split(',');
+
+            ViewBag.Selectedrole = selectedrole;
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
             var userResource = Mapper.Map<ApplicationUser, ApplicationUserResource>(applicationUser);
             var allroles = _applicationUserService.GetRoles().ToList();
-            ViewBag.RolesList = new SelectList(allroles, "Id", "Name");
+          
+
+
+
+            ViewBag.RolesList = allroles;
             return View(userResource);
 
    
@@ -241,6 +249,8 @@ namespace OEP.Web.Areas.Admin.Controllers
         public JsonResult AddRolespost(string username,string roles,string names)
         {
             string[] nameslist = names.Split(',');
+            _applicationUserService.DeleteRoles(username);
+
             foreach (string item in nameslist)
             {
                 _applicationUserService.UpdateRole(username, item);
@@ -248,7 +258,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
 
 
-            return Json("test");
+            return Json("Added");
 
         }
 
