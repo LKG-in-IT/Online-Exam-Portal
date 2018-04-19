@@ -112,7 +112,7 @@ namespace OEP.Data.Repo
                 user.Email = entity.Email;
                 user.UserName = entity.UserName;
                 user.PhoneNumber = entity.PhoneNumber;
-
+         
 
                 int r = _OepDbContext.SaveChanges();
                 if (r > 0)
@@ -169,6 +169,25 @@ namespace OEP.Data.Repo
             {
                 userManager.RemoveFromRole(user.Id, item);
             }
+        }
+        public string AddUser(ApplicationUser user)
+        {
+            var userStore = new UserStore<ApplicationUser>(_OepDbContext);
+
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var result = userManager.Create(user, "Test@123");
+            if (result.Succeeded)
+            {
+                string[] selectedRoles = user.Role.Split(',');
+
+                foreach (string item in selectedRoles)
+                {
+                    userManager.AddToRole(user.Id, item);
+                }
+              
+                return "Success";
+            }
+            return "Error";
         }
     }
 }

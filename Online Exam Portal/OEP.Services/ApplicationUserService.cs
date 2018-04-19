@@ -54,6 +54,10 @@ namespace OEP.Services
           _userRepository.DeleteRoles(username);
 
         }
-
+        public string AddUser(ApplicationUser user)
+        {
+            return _userRepository.AddUser(user);
+             
+        }
     }
 }

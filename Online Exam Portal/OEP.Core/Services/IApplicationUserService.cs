@@ -19,5 +19,6 @@ namespace OEP.Core.Services
         List<RolesViewModel> GetRoles();
         string UpdateRole(string username, string rolename);
         void DeleteRoles(string username);
+        string AddUser(ApplicationUser user);
     }
 }

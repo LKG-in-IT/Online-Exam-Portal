@@ -1,0 +1,129 @@
+﻿@model OEP.Resources.Admin.ApplicationUserResource
+@using System.Web.Optimization
+@using OEP.Core.DomainModels
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    List<RolesViewModel> test = new List<RolesViewModel>();
+    test = ViewBag.RolesList;
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="Role" name="Role" multiple>
+
+                    @foreach (var item in test)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+                </select>
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="btnsave" value="Save" class="btn btn-default" />
+
+
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Admin/Assets/dist/js/bootstrap-multiselect.js"></script>
+    <link href="~/Areas/Admin/Assets/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        debugger;
+        $('#Role').multiselect();
+        $("#btnsave").click(function () {
+
+            debugger;
+            var username = $("#Email").val();
+            var name = $("#Name").val();
+            var email = $("#Email").val();
+            var phno = $("#PhoneNumber").val();
+
+            var roles = $("select option:selected").map(function () {
+                return $(this).text();
+            }).get().join(',');
+        
+            var userDetails = {};
+
+            userDetails.UserName = username;
+            userDetails.Name = name;
+            userDetails.Email = email;
+            userDetails.PhoneNumber = phno;
+
+            userDetails.Role = roles;
+
+
+
+
+
+            $.post("/Admin/ApplicationUsers/AddUserPost/", userDetails, function (data) {
+
+                if (data == "Success") {
+
+                    window.location.href = "/Admin/ApplicationUsers/Index";
+                }
+                else {
+                    alert("Please try again");
+                }
+            });
+
+
+        });
+    });
+
+
+</script>

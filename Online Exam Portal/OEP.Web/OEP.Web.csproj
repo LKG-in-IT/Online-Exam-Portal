@@ -640,6 +640,7 @@
     <Content Include="Areas\Admin\Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\Disable.cshtml" />
     <Content Include="Areas\Admin\Views\ApplicationUsers\AddRoles.cshtml" />
+    <Content Include="Areas\Admin\Views\ApplicationUsers\AddUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

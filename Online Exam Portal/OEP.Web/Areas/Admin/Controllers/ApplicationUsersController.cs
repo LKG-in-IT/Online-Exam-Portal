@@ -14,6 +14,9 @@ using AutoMapper;
 using OEP.Resources.Admin;
 using OEP.Core.Data;
 using OEP.Core.DomainModels;
+using OEP.Web.Models;
+using OEP.Web.Helpers;
+using Microsoft.AspNet.Identity;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -182,8 +185,7 @@ namespace OEP.Web.Areas.Admin.Controllers
         public ActionResult Disable(ApplicationUserResource applicationUserResource)
         {
 
-            if (ModelState.IsValid)
-            {
+           
                 var exstuser = _applicationUserService.GetById(applicationUserResource.UserName);
             if(exstuser.Status==true)
                 {
@@ -205,8 +207,8 @@ namespace OEP.Web.Areas.Admin.Controllers
                     return View(applicationUserResource);
                 }
 
-            }
-            return View();
+           
+          
 
         }
 
@@ -262,5 +264,48 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         }
 
+        // GET: Admin/ApplicationUser/AddUser
+
+        public ActionResult AddUser()
+        {
+            var allroles = _applicationUserService.GetRoles().ToList();
+            ViewBag.RolesList = allroles;
+            return View();
+        }
+
+        // POST:Admin/ApplicationUser/AddRoles/
+        [HttpPost]
+
+        public JsonResult AddUserPost(ApplicationUserResource applicationUserResource)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+
+                    UserName = applicationUserResource.Email,
+                    Email = applicationUserResource.Email,
+                    Name = applicationUserResource.Name,
+                    Role = applicationUserResource.Role,
+                 
+                    PhoneNumber = applicationUserResource.PhoneNumber
+                };
+
+
+            
+
+                    return Json(_applicationUserService.AddUser(user));
+                }
+            return Json("error");
+
+        }
+
+        // If we got this far, something failed, redisplay form
+
+
     }
+
 }
+
