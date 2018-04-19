@@ -195,7 +195,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 {
                     exstuser.Status = true;
                 }
-                string result = _applicationUserService.Update(exstuser);
+                string result = _applicationUserService.UpdateStatus(exstuser);
                 if (result == "Success")
                 {
 

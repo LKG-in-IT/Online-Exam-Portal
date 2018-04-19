@@ -135,6 +135,42 @@ namespace OEP.Data.Repo
             }
 
         }
+        public string UpdateStatus(ApplicationUser entity)
+        {
+            try
+            {
+                ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
+
+                if (user.Status==true)
+                {
+                    user.Status = false;
+                }
+              else
+                {
+                    user.Status = true;
+                }
+
+                int r = _OepDbContext.SaveChanges();
+                if (r > 0)
+                {
+
+
+                    return "Success";
+                }
+                else
+                {
+
+
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
         public string UpdateRole(string username, string rolename)
         {
             var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();

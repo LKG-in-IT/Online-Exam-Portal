@@ -59,5 +59,9 @@ namespace OEP.Services
             return _userRepository.AddUser(user);
              
         }
+        public string UpdateStatus(ApplicationUser entity)
+        {
+            return _userRepository.UpdateStatus(entity);
+        }
     }
 }

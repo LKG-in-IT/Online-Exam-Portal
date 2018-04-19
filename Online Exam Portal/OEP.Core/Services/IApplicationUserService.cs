@@ -20,5 +20,6 @@ namespace OEP.Core.Services
         string UpdateRole(string username, string rolename);
         void DeleteRoles(string username);
         string AddUser(ApplicationUser user);
+        string UpdateStatus(ApplicationUser entity);
     }
 }
