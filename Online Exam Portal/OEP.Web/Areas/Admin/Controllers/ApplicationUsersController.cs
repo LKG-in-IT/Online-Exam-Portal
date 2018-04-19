@@ -243,7 +243,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         }
 
-        // POST:Admin/ApplicationUser/Edit/
+        // POST:Admin/ApplicationUser/AddRoles/
         [HttpPost]
       
         public JsonResult AddRolespost(string username,string roles,string names)

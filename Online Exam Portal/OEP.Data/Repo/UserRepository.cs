@@ -17,13 +17,13 @@ namespace OEP.Data.Repo
 {
     public class UserRepository : IUserRepository
     {
-        private readonly OepDbContext _OepDbContext=new OepDbContext();
-        
+        private readonly OepDbContext _OepDbContext = new OepDbContext();
+
 
         public List<ApplicationUser> GetApplicationUsers()
         {
-            var userList= _OepDbContext.Users.ToList();
-            
+            var userList = _OepDbContext.Users.ToList();
+
             return userList;
         }
 
@@ -32,7 +32,7 @@ namespace OEP.Data.Repo
         {
 
             var userListWithRole = _OepDbContext.Users.ToList();
-            var userListWithoutRole= userListWithRole. Select(u =>
+            var userListWithoutRole = userListWithRole.Select(u =>
             new ApplicationUser
             {
                 Name = u.Name,
@@ -44,8 +44,8 @@ namespace OEP.Data.Repo
                 Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
                                     .Select(r => r.Name))
             }).ToList().Where(i => i.UserName == UserName).FirstOrDefault();
-            
-           
+
+
             return userListWithoutRole;
         }
 
@@ -63,14 +63,17 @@ namespace OEP.Data.Repo
             entities = entities.Paginate(pageIndex, pageSize);
             var userListWithoutRole = entities.ToPaginatedList(pageIndex, pageSize, total);
             var userListWithRole = userListWithoutRole.Select(u =>
-            new ApplicationUser { Name = u.Name,
+            new ApplicationUser
+            {
+                Name = u.Name,
                 Id = u.Id,
                 UserName = u.UserName,
                 Email = u.Email,
                 PhoneNumber = u.PhoneNumber,
                 Status = u.Status,
-                                    Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
-                                    .Select(r => r.Name)) }).ToList();
+                Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
+                                    .Select(r => r.Name))
+            }).ToList();
             return new PaginatedList<ApplicationUser>(userListWithRole, pageIndex, pageSize, total);
 
 
@@ -89,7 +92,7 @@ namespace OEP.Data.Repo
         {
 
             IQueryable<ApplicationUser> entities = _OepDbContext.Users;
-           
+
 
             foreach (var includeProperty in includeProperties)
             {
@@ -98,7 +101,7 @@ namespace OEP.Data.Repo
             return entities;
         }
 
-     
+
 
         public string Update(ApplicationUser entity)
         {
@@ -114,7 +117,7 @@ namespace OEP.Data.Repo
                 int r = _OepDbContext.SaveChanges();
                 if (r > 0)
                 {
-                   
+
 
                     return "Success";
                 }
@@ -130,26 +133,26 @@ namespace OEP.Data.Repo
 
                 throw;
             }
-            
+
         }
-        public string UpdateRole(string username,string rolename)
+        public string UpdateRole(string username, string rolename)
         {
             var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
             var allroles = _OepDbContext.Roles;
-         
+
             var userStore = new UserStore<ApplicationUser>(_OepDbContext);
             var userManager = new UserManager<ApplicationUser>(userStore);
-       
+
             userManager.AddToRole(user.Id, rolename);
 
             return "Changed";
-            
+
 
 
         }
 
-       
+
 
         public void DeleteRoles(string username)
         {
