@@ -3,8 +3,10 @@
 @using OEP.Core.DomainModels
 
 @{
-    ViewBag.Title = "AddRoles";
+    ViewBag.Title = "Add Roles - " + Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    ViewBag.Page = "User";
+    ViewBag.SubPage = "";
     List<RolesViewModel> test = new List<RolesViewModel>();
     string[] selected;
 
@@ -22,7 +24,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>ApplicationUserResource</h4>
+      
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -69,7 +71,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" id="btnsave" value="Save" class="btn btn-default" />
+                <input type="button" id="btnsave" value="Save" class="btn btn-success" />
             </div>
         </div>
     </div>

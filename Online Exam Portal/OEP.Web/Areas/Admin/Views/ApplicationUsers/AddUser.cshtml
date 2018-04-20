@@ -2,8 +2,10 @@
 @using System.Web.Optimization
 @using OEP.Core.DomainModels
 @{
-    ViewBag.Title = "AddUser";
+    ViewBag.Title = "Add User";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    ViewBag.Page = "User";
+    ViewBag.SubPage = "";
     List<RolesViewModel> test = new List<RolesViewModel>();
     test = ViewBag.RolesList;
 }
@@ -63,7 +65,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" id="btnsave" value="Save" class="btn btn-default" />
+                <input type="button" id="btnsave" value="Save" class="btn btn-success" />
 
 
             </div>
