@@ -161,6 +161,9 @@ namespace OEP.Web.Areas.Admin.Controllers
                 exstpackage.Prize = packageResource.Prize;
                 exstpackage.Duration = packageResource.Duration;
                 exstpackage.UpdatedDate = DateTime.Now;
+               
+                    exstpackage.Status = packageResource.Status;
+                
                 await _packageService.UpdateAsync(exstpackage);
                 _packageService.UnitOfWorkSaveChanges();
                 return RedirectToAction("Index");
