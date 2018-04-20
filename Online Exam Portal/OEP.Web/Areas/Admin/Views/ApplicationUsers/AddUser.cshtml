@@ -23,7 +23,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control",@type="number" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -71,9 +71,9 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", "ApplicationUsers", new { area = "Admin" }, new { @class = "btn btn-dropbox" })
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -84,42 +84,44 @@
     $(document).ready(function () {
 
         debugger;
-        $('#Role').multiselect();
+        $("#Role").multiselect();
         $("#btnsave").click(function () {
 
-            debugger;
+
             var username = $("#Email").val();
             var name = $("#Name").val();
             var email = $("#Email").val();
-            var phno = $("#PhoneNumber").val();
+            var phoneno = $("#PhoneNumber").val();
 
             var roles = $("select option:selected").map(function () {
                 return $(this).text();
             }).get().join(',');
-        
-            var userDetails = {};
-
-            userDetails.UserName = username;
-            userDetails.Name = name;
-            userDetails.Email = email;
-            userDetails.PhoneNumber = phno;
-
-            userDetails.Role = roles;
 
 
+            if (name == '' || username == '' || email == '' || phoneno=='') {
+                alert("Please Fill all field");
+            }
+            else {
+                var userDetails = {};
 
+                userDetails.UserName = username;
+                userDetails.Name = name;
+                userDetails.Email = email;
+                userDetails.PhoneNumber = phoneno;
+                userDetails.Role = roles;
 
+                $.post("/Admin/ApplicationUsers/AddUserPost/", userDetails, function (data) {
 
-            $.post("/Admin/ApplicationUsers/AddUserPost/", userDetails, function (data) {
+                    if (data == "Success") {
 
-                if (data == "Success") {
+                        window.location.href = "/Admin/ApplicationUsers/Index";
+                    }
+                    else {
+                        alert("Please try again");
+                    }
+                });
 
-                    window.location.href = "/Admin/ApplicationUsers/Index";
-                }
-                else {
-                    alert("Please try again");
-                }
-            });
+            }
 
 
         });

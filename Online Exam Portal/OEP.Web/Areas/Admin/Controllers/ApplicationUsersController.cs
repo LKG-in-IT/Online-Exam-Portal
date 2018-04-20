@@ -273,7 +273,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             return View();
         }
 
-        // POST:Admin/ApplicationUser/AddRoles/
+        // POST:Admin/ApplicationUser/AddUserPost/
         [HttpPost]
 
         public JsonResult AddUserPost(ApplicationUserResource applicationUserResource)
@@ -302,7 +302,7 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         }
 
-        // If we got this far, something failed, redisplay form
+    
 
 
     }

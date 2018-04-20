@@ -75,9 +75,9 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", "ApplicationUsers", new { area = "Admin" }, new { @class = "btn btn-dropbox" })
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
