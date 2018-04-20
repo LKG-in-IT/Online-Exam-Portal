@@ -20,5 +20,6 @@ namespace OEP.Core.Data.Repository
         void DeleteRoles(string username);
         string AddUser(ApplicationUser user);
         string UpdateStatus(ApplicationUser entity);
+        string ResetPassword(string username);
     }
 }

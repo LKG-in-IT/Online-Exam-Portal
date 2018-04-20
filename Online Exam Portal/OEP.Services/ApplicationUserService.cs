@@ -63,5 +63,9 @@ namespace OEP.Services
         {
             return _userRepository.UpdateStatus(entity);
         }
+        public string ResetPassword(string username)
+        {
+            return _userRepository.ResetPassword(username);
+        }
     }
 }

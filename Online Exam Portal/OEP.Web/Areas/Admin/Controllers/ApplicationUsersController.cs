@@ -302,9 +302,51 @@ namespace OEP.Web.Areas.Admin.Controllers
 
         }
 
-    
 
 
+        // GET: Admin/ApplicationUser/ResetPassword
+
+        public ActionResult ResetPassword()
+        {
+            string UserName = Request.QueryString["UserName"].ToString();
+            if (UserName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = _applicationUserService.GetById(UserName);
+
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            var userResource = Mapper.Map<ApplicationUser, ApplicationUserResource>(applicationUser);
+
+            return View(userResource);
+        }
+
+        // GET: Admin/ApplicationUser/ResetPassword
+        [HttpPost]
+        public ActionResult ResetPassword(ApplicationUserResource applicationUserResource)
+        {
+
+            string result = _applicationUserService.ResetPassword(applicationUserResource.UserName);
+
+            if(result=="Changed")
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                return View(applicationUserResource);
+
+            }
+
+
+
+           
+        }
     }
 
 }

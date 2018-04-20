@@ -108,6 +108,7 @@ namespace OEP.Data.Repo
             try
             {
                 ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
+                
                 user.Name = entity.Name;
                 user.Email = entity.Email;
                 user.UserName = entity.UserName;
@@ -171,6 +172,25 @@ namespace OEP.Data.Repo
             }
 
         }
+
+        public string ResetPassword(string username)
+        {
+            var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+         
+
+            var userStore = new UserStore<ApplicationUser>(_OepDbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            String hashedNewPassword = userManager.PasswordHasher.HashPassword("Test@123");
+            userStore.SetPasswordHashAsync(user, hashedNewPassword);
+
+
+            return "Changed";
+
+
+
+        }
         public string UpdateRole(string username, string rolename)
         {
             var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
@@ -180,8 +200,10 @@ namespace OEP.Data.Repo
             var userStore = new UserStore<ApplicationUser>(_OepDbContext);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+            
+     
             userManager.AddToRole(user.Id, rolename);
-
+         
             return "Changed";
 
 
@@ -225,5 +247,7 @@ namespace OEP.Data.Repo
             }
             return "Error";
         }
+
+
     }
 }

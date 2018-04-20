@@ -17,9 +17,8 @@ namespace OEP.Resources.Admin
         [Required]
         public string Details { get; set; }
         [Required]
-        [MaxLength(12)]
-        [MinLength(1)]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Must be numeric")]
+      
+        [DataType(DataType.Currency,ErrorMessage ="Must Be Numeric")]
         public Double Prize { get; set; }
         [Required]
 

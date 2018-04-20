@@ -63,7 +63,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", "ApplicationUsers", new { area = "Admin" }, new { @class = "btn btn-dropbox" }) |  @Html.ActionLink("Add Role", "AddRoles", "ApplicationUsers", new { area = "Admin", UserName =Model.UserName}, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "Index", "ApplicationUsers", new { area = "Admin" }, new { @class = "btn btn-dropbox" }) |  @Html.ActionLink("Add Role", "AddRoles", "ApplicationUsers", new { area = "Admin", UserName = Model.UserName }, new { @class = "btn btn-warning" }) | @Html.ActionLink("Reset Password", "ResetPassword", "ApplicationUsers", new { area = "Admin", UserName = Model.UserName }, new { @class = "btn btn-danger" })
 </div>
 
 @section Scripts {

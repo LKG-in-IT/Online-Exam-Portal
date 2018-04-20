@@ -158,7 +158,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 var exstpackage = await _packageService.GetByIdAsync(packageResource.Id);
                 exstpackage.Name = packageResource.Name;
                 exstpackage.Details = packageResource.Details;
-                exstpackage.Prize = packageResource.Prize;
+                exstpackage.Prize =Convert.ToDouble( packageResource.Prize);
                 exstpackage.Duration = packageResource.Duration;
                 exstpackage.UpdatedDate = DateTime.Now;
                
