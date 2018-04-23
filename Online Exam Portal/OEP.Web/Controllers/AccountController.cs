@@ -438,7 +438,7 @@ namespace OEP.Web.Controllers
                 if (_userManager != null)
                 {
                     _userManager.Dispose();
-                    _userManager = null;
+                    _userManager = null; 
                 }
 
                 if (_signInManager != null)

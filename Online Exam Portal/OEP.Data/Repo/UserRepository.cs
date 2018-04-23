@@ -142,6 +142,7 @@ namespace OEP.Data.Repo
             {
                 ApplicationUser user = _OepDbContext.Users.Where(i => i.UserName == entity.UserName).FirstOrDefault();
 
+
                 if (user.Status==true)
                 {
                     user.Status = false;
@@ -191,6 +192,9 @@ namespace OEP.Data.Repo
 
 
         }
+
+        
+
         public string UpdateRole(string username, string rolename)
         {
             var user = _OepDbContext.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
