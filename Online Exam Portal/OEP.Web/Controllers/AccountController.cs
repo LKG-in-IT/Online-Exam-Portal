@@ -160,10 +160,10 @@ namespace OEP.Web.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     Name = model.Name,
-                    Gender = model.Gender,
-                    Address = model.Address,
-                    DatOfBirth = Convert.ToDateTime(model.DatOfBirth),
-                    PhoneNumber = model.PhoneNumber
+                   // Gender = model.Gender,
+                   // Address = model.Address,
+                    //DatOfBirth = Convert.ToDateTime(model.DatOfBirth),
+                    //PhoneNumber = model.PhoneNumber
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);                
                 if (result.Succeeded)
