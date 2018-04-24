@@ -59,8 +59,8 @@
         <section class="background-primary py-3 d-none d-sm-block">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-auto ml-md-auto order-md-2 d-none d-sm-block">
-                        <span class="fa fa-clock-o color-warning fw-800 icon-position-fix"></span>
+                    <div class="col-auto order-md-2 d-none d-sm-block" style="margin: 0 auto;">
+                        <span class="fa fa-user-circle color-warning fw-800 icon-position-fix"></span>
                         @Html.ActionLink("Admin", "Index", "Home", new { Area = "Admin" }, new {@class="ml-2 mb-0 fs--1 d-inline color-white fw-700" })
                     </div>
                 </div>
@@ -70,7 +70,7 @@
         </section>
     }
         
-        <div class="znav-white znav-container sticky-top navbar-Uviwo" id="znav-container">
+        <div class="znav-white znav-container sticky-top navbar-Uviwo" id="znav-container" style="@(ViewBag.PageName=="HomePage"?"":"border-bottom: 1px groove #bdc1cc;")">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
                     <a class="navbar-brand overflow-hidden pr-3" href="index-2.html">
