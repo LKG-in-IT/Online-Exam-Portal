@@ -25,15 +25,14 @@ namespace OEP.Web.Areas.Admin.Controllers
     public class ApplicationUsersController : Controller
     {
         private readonly IApplicationUserService _applicationUserService;
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+   
 
+       
 
-        public ApplicationUsersController(IApplicationUserService applicationUserService, ApplicationSignInManager signInManager,ApplicationUserManager userManager)
+        public ApplicationUsersController(IApplicationUserService applicationUserService)
         {
             _applicationUserService = applicationUserService;
-            SignInManager = signInManager;
-            UserManager = userManager;
+         
           
         }
         private IAuthenticationManager AuthenticationManager
@@ -44,29 +43,6 @@ namespace OEP.Web.Areas.Admin.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
         // GET: Admin/ApplicationUsers
         public  ActionResult Index()
         {
@@ -299,21 +275,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 _applicationUserService.UpdateRole(username, item);
             }
 
-            var currentuser = HttpContext.User.Identity.Name;
-
-            var user = _applicationUserService.GetApplicationUsers().Where(i => i.UserName == username).FirstOrDefault();
-            
-            if(currentuser==username)
-            {
-                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-
-              
-
-             //   var result =  SignInManager.PasswordSignInAsync(user.Email, user.PasswordHash, false, shouldLockout: true);
-
-                SignInManager.SignInAsync(user, true, true);
-
-            }
+          
 
 
             return Json("Added");

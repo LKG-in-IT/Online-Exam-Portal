@@ -73,7 +73,18 @@ namespace OEP.Data.Repo
                 Status = u.Status,
                 Role = String.Join(",", _OepDbContext.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id))
                                     .Select(r => r.Name))
-            }).ToList();
+            }). ToList();
+
+            if(userListWithoutRole!=null)
+            {
+                var usersNotInRole = userListWithRole.Where(m => !m.Role.Split(',').Contains("Admin"));
+                return new PaginatedList<ApplicationUser>(usersNotInRole, pageIndex, pageSize, total);
+
+            }
+
+
+
+
             return new PaginatedList<ApplicationUser>(userListWithRole, pageIndex, pageSize, total);
 
 
@@ -185,7 +196,7 @@ namespace OEP.Data.Repo
 
             String hashedNewPassword = userManager.PasswordHasher.HashPassword("Test@123");
             userStore.SetPasswordHashAsync(user, hashedNewPassword);
-
+       
 
             return "Changed";
 
