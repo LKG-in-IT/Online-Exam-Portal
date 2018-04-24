@@ -185,6 +185,8 @@ namespace OEP.Web.Areas.Admin.Controllers
                 exstexam.SubcategoryId = examResource.SubcategoryId;
 
                 exstexam.Passmark = examResource.Passmark;
+                exstexam.Duration = examResource.Duration;
+                exstexam.AllowReAttempts = examResource.AllowReAttempts;
                 exstexam.Status = examResource.Status;
                 var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 exstexam.UserId = userId;
@@ -192,14 +194,10 @@ namespace OEP.Web.Areas.Admin.Controllers
                 await _examservice.UpdateAsync(exstexam);
                 _examservice.UnitOfWorkSaveChanges();
 
-                return RedirectToAction("Index");
+                ViewBag.Status = "True";
+                return RedirectToAction("Edit",exstexam.Id);
             }
-
-            var examtype =  _examTypeService.GetAllAsync();
-            var subcategory = _subCategoryService.GetAllAsync();
-            ViewBag.ExamtypeId = new SelectList(examtype.Result.Where(i => i.Status == true), "Id", "Name", examResource.Examtypeid);
-            ViewBag.SubcategoryId = new SelectList(subcategory.Result.Where(i => i.Status == true), "Id", "Name", examResource.SubcategoryId);
-            return View(examResource);
+            return View();
         }
 
         // GET: Admin/Exams/Delete/5

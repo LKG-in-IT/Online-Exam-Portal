@@ -1,4 +1,5 @@
-﻿@{
+﻿@model OEP.Resources.Common.HomePageResource
+@{
     ViewBag.Title = "Home Page";
     ViewBag.PageName = "HomePage";
 }
@@ -119,46 +120,28 @@
             </div>
         </div>
         <div class="row mt-4 mt-md-5">
-            <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
-                <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"delay":0}' style="height:100px; width:100px;">
-                    <span class="icon-Bar-Chart5 fs-3 color-blueish mx-auto fw-600"></span>
-                </div>
-                <h5 class="mt-4" data-zanim='{"delay":0.1}'>Business Consulting</h5>
-                <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
-                    Solution for every business related problems, readily
-                    <br />and skillfully.
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
-                <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"trigger":"scroll"}' style="height:100px; width:100px;">
-                    <span class="icon-Clock fs-3 color-blueish mx-auto fw-600"></span>
-                </div>
-                <h5 class="mt-4" data-zanim='{"delay":0.1}'>Risk Management</h5>
-                <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
-                    Calculate every possible risk in your business, take
-                    <br />control over them.
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
-                <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"trigger":"scroll"}' style="height:100px; width:100px;">
-                    <span class="icon-Idea-2 fs-3 color-blueish mx-auto fw-600"></span>
-                </div>
-                <h5 class="mt-4" data-zanim='{"delay":0.1}'>Market Research</h5>
-                <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
-                    Know the market before taking any step, reduce
-                    <br />risks before you go.
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
-                <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"trigger":"scroll"}' style="height:100px; width:100px;">
-                    <span class="icon-Headset fs-3 color-blueish mx-auto fw-600"></span>
-                </div>
-                <h5 class="mt-4" data-zanim='{"delay":0.1}'>Quality Services</h5>
-                <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
-                    Experience unparalleled service, from beginning
-                    <br />to final construction.
-                </p>
-            </div>
+
+
+            @{
+                foreach (var package in Model.Packages)
+                {
+
+                    <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
+                        <a href="@Url.Action("Index", "Packages")" style="text-decoration: none">
+                            <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"delay":0}' style="height: 100px; width: 100px;">
+                                <span class="fa fa-usd fs-3 color-blueish mx-auto fw-600"></span>
+                            </div>
+                            <h5 class="mt-4" data-zanim='{"delay":0.1}'>@package.Name</h5>
+                            <h5 class="mt-4" data-zanim='{"delay":0.1}'>$@package.Prize</h5>
+                            <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
+                                @package.Details
+                            </p>
+                        </a>
+                    </div>
+
+                }
+            }
+
         </div>
         <!--/.row-->
     </div>

@@ -13,6 +13,10 @@ namespace OEP.Core.DomainModels.ExamModels
         public int SubcategoryId { get; set; }
         [ForeignKey("SubcategoryId")]
         public virtual SubCategory SubCategory { get; set; }
-        public int Passmark { get; set; }   
+        public int Passmark { get; set; }
+
+        public int Duration { get; set; }
+
+        public bool AllowReAttempts { get; set; }
     }
 }

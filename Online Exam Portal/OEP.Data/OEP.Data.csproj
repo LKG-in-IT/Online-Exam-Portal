@@ -157,6 +157,10 @@
     <Compile Include="Migrations\201804120930080_UserDetailsWithStatus.Designer.cs">
       <DependentUpon>201804120930080_UserDetailsWithStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804241028530_AddedDurationToExamTable.cs" />
+    <Compile Include="Migrations\201804241028530_AddedDurationToExamTable.Designer.cs">
+      <DependentUpon>201804241028530_AddedDurationToExamTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804120930080_UserDetailsWithStatus.resx">
       <DependentUpon>201804120930080_UserDetailsWithStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804241028530_AddedDurationToExamTable.resx">
+      <DependentUpon>201804241028530_AddedDurationToExamTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

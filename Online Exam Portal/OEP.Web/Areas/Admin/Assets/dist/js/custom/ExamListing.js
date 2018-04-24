@@ -29,6 +29,10 @@ var examGrid = $("#examGrid").DataTable({
             "data": "Passmark", "name": "Passmark", "autoWidth": true, "searchable": true,
             "orderable": true
         },
+         {
+             "data": "Duration", "name": "Duration", "autoWidth": true, "searchable": true,
+             "orderable": true
+         },
         {
             "data": "Status", "name": "Status", "autoWidth": false, "searchable": false,
             "orderable": false,

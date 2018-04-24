@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Controllers\PageNotFoundController.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\RepositoryCapsuleModule.cs" />
@@ -950,6 +951,8 @@
     <Content Include="Themes\tryelixir\assets\lib\iconsmind\iconsmindd41d.eot" />
     <Content Include="Themes\tryelixir\assets\lib\jquery.mb.ytplayer\dist\css\font\ytp-regular.eot" />
     <Content Include="Views\Shared\_ExternalLayout.cshtml" />
+    <Content Include="Views\Shared\_MasterLayout.cshtml" />
+    <Content Include="Views\Packages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
