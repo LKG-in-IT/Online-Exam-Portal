@@ -13,6 +13,7 @@
 
         <fieldset>
             <legend class="text-uppercase fs-0 fs-md-1">Personal Information</legend>
+            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
 
