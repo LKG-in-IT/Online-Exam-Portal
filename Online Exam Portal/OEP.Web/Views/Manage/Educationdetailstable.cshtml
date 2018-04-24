@@ -7,10 +7,10 @@
    
 
     }
-<fieldset>
-    <legend>Education Details</legend>
+<fieldset class="container">
+    <legend class="text-uppercase fs-0 fs-md-1">Education Details</legend>
     <div class="form-horizontal">
-        <div id="partialViewEducationType" class="form-group">
+        <div id="partialViewEducationType" class="row">
 
         </div>
         @foreach (var item in Model)
@@ -19,20 +19,20 @@
 
 
 
-        <div class="form-group">
-            <div class="col-md-3">
-                @Html.DropDownList("EducationType", new SelectList(ViewBag.EducationTypeId, "Id", "Name", item.EducationTypeId), htmlAttributes: new { @class = "form-control ", @id = "EducationTypeId" + item.Id })
+        <div class="row pt-2" >
+            <div class="col-md-2">
+                @Html.DropDownList("EducationType", new SelectList(ViewBag.EducationTypeId, "Id", "Name", item.EducationTypeId), htmlAttributes: new { @class = " btn  btn-outline-primary ", @id = "EducationTypeId" + item.Id })
 
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2 ">
 
-                <input type="text" value="@item.InstituteName" id="@("txtname"+item.Id)" class="form-control" placeholder="Institute Name" />
+                <input type="text" value="@item.InstituteName" id="@("txtname"+item.Id)" class="form-control " placeholder="Institute Name" />
 
             </div>
             <div class="col-md-2">
 
-                @Html.DropDownList("YearFrom", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearFromId), htmlAttributes: new { @class = "form-control", @id = "from" + item.Id })
+                @Html.DropDownList("YearFrom", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearFromId), htmlAttributes: new { @class = "btn  btn-outline-primary  ", @id = "from" + item.Id })
 
 
 
@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-2">
 
-                @Html.DropDownList("YearToId", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearToId), htmlAttributes: new { @class = "form-control", @id = "to" + item.Id })
+                @Html.DropDownList("YearToId", new SelectList(ViewBag.YearFromId, "Id", "Year", item.YearToId), htmlAttributes: new { @class = "btn  btn-outline-primary", @id = "to" + item.Id })
 
 
 
@@ -48,6 +48,9 @@
             <div class="col-md-2">
 
                 <input type="button" name="@item.Id" onclick="editDetails(@item.Id)" id="btnedit" class="btn btn-info" value="Update" />
+
+            </div>
+            <div class="col-md-2">
                 <input type="button" name="@item.Id" id="btndelete" onclick="deleteDetails(@item.Id)" class="btn btn-danger" value="Delete" />
 
             </div>
@@ -55,9 +58,9 @@
 
 }
 
-        <div class="form-group" style="">
+        <div class="row pt-2 " >
       
-            <input type="button" id="btnaddnew" value="Add" class="btn btn-success col-md-offset-0" />
+            <input type="button" id="btnaddnew" value="Add" class="btn btn-success ml-3" />
         </div>
     </div>
 </fieldset>
@@ -74,7 +77,7 @@
     function editDetails(Id) {
 
 
-        debugger;
+
         var educationType = $("#EducationTypeId" + Id).val();
         var institute = $("#txtname" + Id).val();
         var from = $("#from" + Id).val();
@@ -96,7 +99,7 @@
 
 
                 $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-                alert(data);
+                alert("Updated Succesfully");
             }
             else {
 
@@ -122,7 +125,7 @@
 
 
             $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-            alert(data);
+            alert("Deleted Succesfully");
 
         });
 

@@ -1,102 +1,105 @@
 ﻿@model OEP.Resources.Admin.EducationDetailsResource
 @using System.Web.Optimization
-@{ 
+@{
     Layout = "";
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("EducationDetails", "Manage", FormMethod.Post, new { @class = "container" }))
 {
     @Html.AntiForgeryToken()
 
-   
-    <div class="form-horizontal">
-      
 
-            <div class="form-group">
-                <div class="col-md-3">
-                    @Html.DropDownList("EducationTypeId", (IEnumerable<SelectListItem>)ViewBag.EducationTypeId, "Please Select", htmlAttributes: new { @class = "form-control" ,@id="EducationTypeId" })
-
-</div>
-                <div class="col-md-3">
-
-                    <input type="text" id="Institute" class="form-control" placeholder="Institute Name" />
-
-                </div>
-                <div class="col-md-2">
-
-                    @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "form-control" ,@id="from"})
+<div class="row">
 
 
-                </div>
-                <div class="col-md-2">
 
-                    @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId,"To", htmlAttributes: new { @class = "form-control",@id="to" })
+    <div class="col-md-2">
+        @Html.DropDownList("EducationTypeId", (IEnumerable<SelectListItem>)ViewBag.EducationTypeId, "Select", htmlAttributes: new { @class = "btn-outline-primary btn", @id = "EducationTypeId" })
+    </div>
 
-
-                </div>
-                <div class="col-md-2">
-
-                    <input type="button" name="0" id="btnadd" class="btn btn-success" value="Add" />
-                    <input type="button" name="0" id="btncancel" class="btn btn-danger" value="Cancel" />
-
-                </div>
-            </div>
-
-           
+    <div class="col-md-2">
+        <input type="text" id="Institute" class="form-control" placeholder="Institute Name" />
+    </div>
 
 
-       
+
+    <div class="col-md-2">
+        @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "from" })
 
     </div>
-}
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script>
-  
+
+
+    <div class="col-md-2">
+        @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "To", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "to" })
+
+    </div>
+
+
+
+    <div class="col-md-2">
+        <input type="button" name="0" id="btnadd" class="btn btn-success" value="Add" />
+    </div>
+    <div class="col-md-2">
+        <input type="button" name="0" id="btncancel" class="btn btn-danger" value="Cancel" />
+
+    </div>
+
+</div>
+
+
+
+
+
+
+    }
  
-    $('#partialViewEducationType').on('click', '#btncancel', function () {
-        debugger;
-        $('#partialViewEducationType').empty();
-        $("#btnaddnew").show();
-    });
-    $("#btnadd").click(function () {
+    <script>
 
 
-        debugger;
-
-        var educationType = $("#EducationTypeId").val();
-        var institute = $("#Institute").val();
-        var from = $("#from").val();
-        var eid = $("#btnadd").attr("name");
-        var to = $("#to").val();
-        var educationDetailsResource = {};
-        educationDetailsResource.id = eid;
-        educationDetailsResource.EducationTypeId = educationType;
-        educationDetailsResource.InstituteName = institute;
-        educationDetailsResource.YearFromId = from;
-        educationDetailsResource.YearToId = to;
-
-        var operation = $("#btnadd").val();
-
-        if (operation == "Add") {
-        $.post("/Manage/AddEducationDetails/", { educationDetailsResource }, function (data) {
-
-            $("#Educationdetailstable").html('');
-
-            $("#partialViewEducationType").html('');
-            $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-            $("#partialViewEducationType").load("/Manage/EducationDetails/");
+        $('#partialViewEducationType').on('click', '#btncancel', function () {
+            debugger;
+            $('#partialViewEducationType').empty();
+            $("#btnaddnew").show();
         });
-        }
-        if (operation == "Update") {
-            $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
+        $("#btnadd").click(function () {
 
-                $("#Educationdetailstable").html('');
 
-                $("#partialViewEducationType").html('');
-                $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-                $("#partialViewEducationType").load("/Manage/EducationDetails/");
+            debugger;
 
-            });
-        }
-    });
-   
-</script>
+            var educationType = $("#EducationTypeId").val();
+            var institute = $("#Institute").val();
+            var from = $("#from").val();
+            var eid = $("#btnadd").attr("name");
+            var to = $("#to").val();
+            var educationDetailsResource = {};
+            educationDetailsResource.id = eid;
+            educationDetailsResource.EducationTypeId = educationType;
+            educationDetailsResource.InstituteName = institute;
+            educationDetailsResource.YearFromId = from;
+            educationDetailsResource.YearToId = to;
+
+            var operation = $("#btnadd").val();
+
+            if (operation == "Add") {
+                $.post("/Manage/AddEducationDetails/", { educationDetailsResource }, function (data) {
+
+                    $("#Educationdetailstable").html('');
+
+                    $("#partialViewEducationType").html('');
+                    $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                    $("#partialViewEducationType").load("/Manage/EducationDetails/");
+                });
+            }
+            if (operation == "Update") {
+                $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
+
+                    $("#Educationdetailstable").html('');
+
+                    $("#partialViewEducationType").html('');
+                    $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                    $("#partialViewEducationType").load("/Manage/EducationDetails/");
+
+                });
+            }
+        });
+
+    </script>

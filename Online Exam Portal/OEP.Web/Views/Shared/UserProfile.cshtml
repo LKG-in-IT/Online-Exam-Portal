@@ -5,14 +5,14 @@
 
 }
 
-@using (Html.BeginForm("UserProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UserProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data",@class="container" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
 
         <fieldset>
-            <legend>Personal Information</legend>
+            <legend class="text-uppercase fs-0 fs-md-1">Personal Information</legend>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
 
@@ -62,7 +62,7 @@
                         <input type="button" id="removeImage" class="btn btn-danger" style="margin: 10px 0 10px 0;" value="Remove" />
                     }
 
-                    <input type="file" class="file-upload-image" name="file" id="file" onchange="loadFile(event)" />
+                    <input type="file" class="file-upload-image" style="display:inline" name="file" id="file" onchange="loadFile(event)" />
 
                 </div>
             </div>
