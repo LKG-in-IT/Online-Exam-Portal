@@ -258,13 +258,16 @@ namespace OEP.Web.Controllers
 
                 // Remove the existing claim value of current user from database
                 if(identity.FindFirst("NameOfUser")!=null)
-                    await UserManager.RemoveClaimAsync(applicationUser.Id, identity.FindFirst("NameOfUser"));
+                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("NameOfUser"));
                 if (identity.FindFirst("ProfilePicture") != null)
-                    await UserManager.RemoveClaimAsync(applicationUser.Id, identity.FindFirst("ProfilePicture"));
+                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("ProfilePicture"));
+                if (identity.FindFirst("PackageId") != null)
+                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("PackageId"));
 
                 // Update customized claim 
-                await UserManager.AddClaimAsync(applicationUser.Id, new Claim("NameOfUser", applicationUser.Name));
-                await UserManager.AddClaimAsync(applicationUser.Id, new Claim("ProfilePicture", userprofile.ProfilePicture));
+                await UserManager.AddClaimAsync(userprofile.Id, new Claim("NameOfUser", userprofile.Name));
+                await UserManager.AddClaimAsync(userprofile.Id, new Claim("ProfilePicture", userprofile.ProfilePicture));
+                await UserManager.AddClaimAsync(userprofile.Id, new Claim("PackageId", userprofile.PackageId.ToString()));
 
 
                 // the claim has been updates, We need to change the cookie value for getting the updated claim

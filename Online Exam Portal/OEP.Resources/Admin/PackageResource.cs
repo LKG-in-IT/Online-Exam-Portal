@@ -21,7 +21,7 @@ namespace OEP.Resources.Admin
         public Double Prize { get; set; }
         [Required]
 
-        public string Duration { get; set; }
+        public int Duration { get; set; }
       
 
     }

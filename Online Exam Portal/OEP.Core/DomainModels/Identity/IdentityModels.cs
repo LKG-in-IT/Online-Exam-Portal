@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using OEP.Core.DomainModels.PackageModel;
 
 namespace OEP.Core.DomainModels.Identity
 {
@@ -36,6 +37,13 @@ namespace OEP.Core.DomainModels.Identity
         public string Role { get; set; }
 
         public bool Status { get; set; }
+
+        public int PackageId { get; set; }
+
+        [ForeignKey("PackageId")]
+        public Package Package { get; set; }
+
+        public DateTime StartDate { get; set; }
      
      
     

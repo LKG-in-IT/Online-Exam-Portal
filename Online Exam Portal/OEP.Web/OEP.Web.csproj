@@ -953,6 +953,7 @@
     <Content Include="Views\Shared\_ExternalLayout.cshtml" />
     <Content Include="Views\Shared\_MasterLayout.cshtml" />
     <Content Include="Views\Packages\Index.cshtml" />
+    <Content Include="Views\Packages\Upgrade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

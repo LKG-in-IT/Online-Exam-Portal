@@ -160,7 +160,7 @@ namespace OEP.Web.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     Name = model.Name,
-                   // Gender = model.Gender,
+                    PackageId = 1,
                    // Address = model.Address,
                     //DatOfBirth = Convert.ToDateTime(model.DatOfBirth),
                     //PhoneNumber = model.PhoneNumber
@@ -174,6 +174,7 @@ namespace OEP.Web.Controllers
                     // Create customized claim 
                     await UserManager.AddClaimAsync(user.Id, new Claim("NameOfUser", model.Name));
                     await UserManager.AddClaimAsync(user.Id, new Claim("ProfilePicture", ""));
+                    await UserManager.AddClaimAsync(user.Id, new Claim("PackageId", user.PackageId.ToString()));
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

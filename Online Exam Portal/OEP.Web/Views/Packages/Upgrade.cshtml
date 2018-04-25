@@ -1,0 +1,33 @@
+﻿@model OEP.Resources.Admin.PackageResource
+@{
+    ViewBag.Title = "Upgrade";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<section class="background-white  text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+                <h3 class="color-primary fs-2 fs-lg-3">
+                    Your have selected <br /> <span style="color: #919db9;"> @( Model.Name + " (" + Model.Duration + " " + (Model.Duration == 1 ? "Month" : "Months") + ")" )</span>
+                </h3>
+                <p class="px-lg-4 mt-3">Prize : $@Model.Prize</p>
+
+                <hr class="short" data-zanim='{"from":{"opacity":0,"width":0},"to":{"opacity":1,"width":"4.20873rem"},"duration":0.8}' data-zanim-trigger="scroll" />
+            </div>
+        </div>
+        <div class="row mt-4 mt-md-5">
+            <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
+                   @using (Html.BeginForm("Confirm", "Packages", new { packageId = Model.Id}, FormMethod.Post, new {@class = "text-left mt-4", role = "form"}))
+                   {
+                       @Html.AntiForgeryToken()
+                        <button class="btn btn-primary btn-block" type="submit" style="cursor: pointer">Confirm</button>
+                   }
+            </div>
+
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</section>
+

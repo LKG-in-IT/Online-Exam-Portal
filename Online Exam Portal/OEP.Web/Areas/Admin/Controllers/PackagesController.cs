@@ -59,7 +59,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                         pageSize,
 
                         //sorting
-                        x => sortColumn == "Name" ? x.Name : (sortColumn== "Prize"?x.Prize.ToString():(sortColumn== "Duration"?x.Duration:null)),
+                        x => sortColumn == "Name" ? x.Name : (sortColumn== "Prize"?x.Prize.ToString():(sortColumn== "Duration"?x.Duration.ToString():null)),
 
                         //filtering
                         x => searchValue != "" ? x.Name.Contains(searchValue) : x.Id != 0,

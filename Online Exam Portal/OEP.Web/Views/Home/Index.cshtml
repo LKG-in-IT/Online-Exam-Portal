@@ -123,7 +123,7 @@
 
 
             @{
-                foreach (var package in Model.Packages)
+                foreach (var package in Model.Packages.Where(x=>x.Duration!=0))
                 {
 
                     <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">

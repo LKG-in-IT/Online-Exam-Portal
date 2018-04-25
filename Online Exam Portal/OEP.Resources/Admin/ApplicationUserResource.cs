@@ -28,5 +28,7 @@ namespace OEP.Resources.Admin
         public string Role { get; set; }
         public bool Status { get; set; }
 
+       public PackageResource Package { get; set; }
+
     }
 }

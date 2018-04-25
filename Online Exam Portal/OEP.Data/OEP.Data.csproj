@@ -161,6 +161,14 @@
     <Compile Include="Migrations\201804241028530_AddedDurationToExamTable.Designer.cs">
       <DependentUpon>201804241028530_AddedDurationToExamTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804241249339_AddedPackageIdToUsers.cs" />
+    <Compile Include="Migrations\201804241249339_AddedPackageIdToUsers.Designer.cs">
+      <DependentUpon>201804241249339_AddedPackageIdToUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804241333270_ChangedDurationType.cs" />
+    <Compile Include="Migrations\201804241333270_ChangedDurationType.Designer.cs">
+      <DependentUpon>201804241333270_ChangedDurationType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,6 +238,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804241028530_AddedDurationToExamTable.resx">
       <DependentUpon>201804241028530_AddedDurationToExamTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804241249339_AddedPackageIdToUsers.resx">
+      <DependentUpon>201804241249339_AddedPackageIdToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804241333270_ChangedDurationType.resx">
+      <DependentUpon>201804241333270_ChangedDurationType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,52 @@
-﻿
+﻿@model OEP.Resources.Common.PackagePageResource
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
-<h2>Packages</h2>
 
+<section class="background-white  text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+                <h3 class="color-primary fs-2 fs-lg-3">Your Current package is <br/> <span style="color: #919db9;"> @( Model.User.Package.Name + " (" + Model.User.Package.Duration + " " + (Model.User.Package.Duration == 1 ? "Month" : "Months") + ")" )</span>
+</h3>
+                @{
+                    if (Model.Expired)
+                    {
+                        <p class="px-lg-4 mt-3" style="color: #f53d3d;">Your Current package has been expired on @(Model.ExpiryDate.ToString("D")). To continue our service please upgrade your package from one of the below packages.</p>
+                    }
+                    else
+                    {
+                        <p class="px-lg-4 mt-3">To upgrade your current package, please choose your best package from one of the below packages.</p>
+                    }
+                }
+                
+                <hr class="short" data-zanim='{"from":{"opacity":0,"width":0},"to":{"opacity":1,"width":"4.20873rem"},"duration":0.8}' data-zanim-trigger="scroll" />
+            </div>
+        </div>
+        <div class="row mt-4 mt-md-5">
+            @{
+                foreach (var package in Model.Packages.Where(x=>x.Duration!=1))
+                {
+
+                    <div class="col-sm-6 col-lg-3 mt-4" data-zanim-timeline='{"delay":0.1}' data-zanim-trigger="scroll">
+                        <a href="@Url.Action("Upgrade", "Packages",new RouteValueDictionary(new {Id=package.Id}))" style="text-decoration: none">
+                            <div class="background-11 border border-color-9 radius-round mx-auto d-flex align-items-center" data-zanim='{"delay":0}' style="height: 100px; width: 100px;">
+                                <span class="fa fa-usd fs-3 color-blueish mx-auto fw-600"></span>
+                            </div>
+                            <h5 class="mt-4" data-zanim='{"delay":0.1}'>@package.Name</h5>
+                            <h5 class="mt-4" data-zanim='{"delay":0.1}'>$@package.Prize</h5>
+                            <p class="mb-0 mt-3 px-3" data-zanim='{"delay":0.2}'>
+                                @package.Details
+                            </p>
+                        </a>
+                    </div>
+                }
+            }
+
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</section>
