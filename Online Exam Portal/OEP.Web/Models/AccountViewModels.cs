@@ -69,15 +69,14 @@ namespace OEP.Web.Models
 
         public string Name { get; set; }
 
-        [Required]
+      
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        [Required]
+     
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Required]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         public string DatOfBirth { get; set; }

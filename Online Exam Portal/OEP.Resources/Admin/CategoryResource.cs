@@ -11,7 +11,7 @@ namespace OEP.Resources.Admin
     {
         [Required]
         [Display(Name = "Name")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+      
         public string Name { get; set; }        
 
     }
