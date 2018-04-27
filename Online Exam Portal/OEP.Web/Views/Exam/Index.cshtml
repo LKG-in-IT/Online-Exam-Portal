@@ -2,52 +2,135 @@
 @{
     ViewBag.Title = "Exam";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
 }
+@Scripts.Render("~/bundles/jquery")
+
 <section class="background-11" style="padding: 3.5rem 0;">
     <div class="container">
-        <div class="row align-items-stretch justify-content-center">
-            <div class="col-lg-12 mb-12 mb-lg-0">
-                <div class="h-100 px-5 py-4 background-white radius-secondary">
-                    <h5 class="mb-3">Melbourne Office</h5>121 King Street,
-                    <br>Melbourne 1200,
-                    <br>Australia
+        <div class="row background-white">
+            <div class="col-md-3">
+                @Html.DropDownList("Category", (IEnumerable<SelectListItem>)ViewBag.CategoryId, "Category", new { @class = "btn btn-outline-primary" })
+            </div>
+            <div class="col-md-3">
+                <select class="btn btn-outline-primary" id="SubCategory">
+                    <option value="0">Sub Category</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("ExamType", (IEnumerable<SelectListItem>)ViewBag.ExamTypeId, "Exam Type", new { @class = "btn btn-outline-primary" })
+
+
+            </div>
+            <div class="col-md-3 ">
+                <div class="input-group">
+
+                    <input type="text" class="form-control" id="txtsearch" name="txtsearch" placeholder="Search">
+                    <span class="input-group-addon" id="search"><i class="fa fa-search"></i></span>
+                    <input type="hidden" id="hdnskip" value="0" />
                 </div>
             </div>
-            
-            <div class="col-12 mt-4">
-                <div class="background-white p-5 h-100 radius-secondary">
-                    <h5>Write to us</h5>
-                    <form class="zform mt-3">
-                        <div class="row">
-                            <div class="col-12">
-                                <input class="form-control" type="hidden" name="to" value="user@domain.extension">
-                                <input class="form-control background-white" type="text" placeholder="Your Name" required>
-                            </div>
-                            <div class="col-12 mt-4">
-                                <input class="form-control background-white" type="email" placeholder="Email" required>
-                            </div>
-                            <div class="col-12 mt-4">
-                                <textarea class="form-control background-white" rows="11" placeholder="Enter your descriptions here..." required></textarea>
-                            </div>
-                            <div class="col-12 mt-4">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <button class="btn btn-md-lg btn-primary" type="Submit">
-                                            <span class="color-white fw-600">Send Now</span>
-                                        </button>
-                                    </div>
-                                    <div class="col">
-                                        <div class="zform-feedback"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+
+
         </div>
-        <!--/.row-->
+
+        <div class="row  background-white mt-4 " id="examlist">
+
+        </div>
+        <div class="row background-white mt-4 " id="loadmoreDiv">
+        </div>
+      
+
     </div>
-    <!--/.container-->
 </section>
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var pageSize = 6;
+        var skip = 0;
+        var total = 0;
+        $("#Category").change(function () {
+
+
+          
+            var categoryId = $("#Category").val();
+
+            $.post("/Exam/SubCategory/", { categoryId: categoryId }, function (data) {
+
+                $("#SubCategory").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#SubCategory").append("<option value=" + data[i].Id + ">" + data[i].Name + "</option>");
+                }
+            });
+        });
+        $("#SubCategory").change(function () {
+
+            skip = 0;
+            $("#examlist").empty();
+            $("#btnloadmore").remove();
+            loadExam();
+
+        });
+
+        $("#ExamType").change(function () {
+
+            skip = 0;
+            $("#examlist").empty();
+            $("#btnloadmore").remove();
+            loadExam();
+
+        });
+
+
+        $("#search").click(function () {
+            skip = 0;
+            $("#examlist").empty();
+            $("#btnloadmore").remove();
+            loadExam();
+        });
+
+        $('#loadmoreDiv').on('click', '#btnloadmore', function () {
+
+            skip += 6;
+            $("#btnloadmore").remove();
+            loadExam();
+
+            });
+
+        function loadExam() {
+
+            var subCatoryId = $("#SubCategory").val();
+            var ExamTypeId = $("#ExamType").val();
+            var KeyWord = $("#txtsearch").val();
+            var ExamResource = {};
+            ExamResource.ExamTypeId = ExamTypeId;
+            ExamResource.SubcategoryId = subCatoryId;
+            ExamResource.KeyWord = KeyWord;
+            ExamResource.skip = skip;
+            ExamResource.pageSize = pageSize;
+
+            $.post("/Exam/SearchExam/", ExamResource, function (data) {
+
+                for (var i = 0; i < data.exam.length; i++) {
+
+                    $("#examlist").append("<div class='col-md-4 pt-4 ' ><table ><tr><td>SubCAtegory :</td><td>" + data.exam[i].SubCategory.Name + "</td></tr><tr><td>Exam Type :</td><td>" + data.exam[i].ExamType.Name + "</td></tr><tr><td>Exam Name :</td><td>" + data.exam[i].Name + "</td></tr><tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr></tr><tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr><tr><td><input type='button' id='btnstartexam' value='StartExam' class='btn-info btn  pt-1' /></td></tr></table></div>");
+                }
+                if (data.totalItem >= 6) {
+
+                    $("#loadmoreDiv").append(" <input type='button' id='btnloadmore' value='ShowMore' class='btn-primary btn  ml-0' />");
+                }
+                else {
+
+                    $("#btnloadmore").remove();
+                }
+            });
+         
+
+
+        }
+    });
+
+
+</script>
