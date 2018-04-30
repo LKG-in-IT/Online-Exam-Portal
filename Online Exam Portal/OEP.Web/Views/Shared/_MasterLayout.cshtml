@@ -54,22 +54,22 @@
                 </div>
             </div>
         </div>
-    @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Faculty")))
-    {
-        <section class="background-primary py-3 d-none d-sm-block">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-auto order-md-2 d-none d-sm-block" style="margin: 0 auto;">
-                        <span class="fa fa-user-circle color-warning fw-800 icon-position-fix"></span>
-                        @Html.ActionLink("Admin", "Index", "Home", new { Area = "Admin" }, new {@class="ml-2 mb-0 fs--1 d-inline color-white fw-700" })
+        @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Faculty")))
+        {
+            <section class="background-primary py-3 d-none d-sm-block">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-auto order-md-2 d-none d-sm-block" style="margin: 0 auto;">
+                            <span class="fa fa-user-circle color-warning fw-800 icon-position-fix"></span>
+                            @Html.ActionLink("Admin", "Index", "Home", new { Area = "Admin" }, new { @class = "ml-2 mb-0 fs--1 d-inline color-white fw-700" })
+                        </div>
                     </div>
+                    <!--/.row-->
                 </div>
-                <!--/.row-->
-            </div>
-            <!--/.container-->
-        </section>
-    }
-        
+                <!--/.container-->
+            </section>
+        }
+
         <div class="znav-white znav-container sticky-top navbar-Uviwo" id="znav-container" style="@(ViewBag.PageName=="HomePage"?"":"border-bottom: 1px groove #bdc1cc;")">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
@@ -91,7 +91,7 @@
                             <li>
                                 <a href="@Url.Action("Index","Exam")">Exams</a>
                             </li>
-                           
+
                             <li>
                                 <a href="#">Materials</a>
                             </li>
@@ -101,11 +101,11 @@
                             @Html.Partial("_LoginPartial")
                         </ul>
                         @*<ul class="navbar-nav ml-lg-auto">
-                            <li>
-                                <a class="btn btn-outline-primary btn-capsule btn-sm border-2x fw-700" href="https://themewagon.com/themes/Uviwo/" target="_blank">Purchase</a>
-                            </li>
-                            
-                        </ul>*@
+                                <li>
+                                    <a class="btn btn-outline-primary btn-capsule btn-sm border-2x fw-700" href="https://themewagon.com/themes/Uviwo/" target="_blank">Purchase</a>
+                                </li>
+
+                            </ul>*@
                     </div>
                 </nav>
             </div>
@@ -253,7 +253,9 @@
     <script src="/Content/assets/lib/lightbox2/dist/js/lightbox.js"></script>
     <script src="/Content/assets/lib/flexslider/jquery.flexslider-min.js"></script>
     <script src="/Content/assets/js/core.js"></script>
-<script src="/Content/assets/js/main.js"></script>
+    <script src="/Content/assets/js/main.js"></script>
+    <script src="~/Scripts/Custom/isotope-docs.min.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

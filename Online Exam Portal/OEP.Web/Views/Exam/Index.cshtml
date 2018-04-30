@@ -34,15 +34,84 @@
 
         </div>
 
-        <div class="row  background-white mt-4 " id="examlist">
+        <div class="row  background-white mt-4 ">
+            <div class='grid isotope' id="examlist" style="min-height:600px; width:100%;">
 
+            </div>
         </div>
         <div class="row background-white mt-4 " id="loadmoreDiv">
         </div>
-      
+
 
     </div>
 </section>
+
+<style>
+    /* Start: Recommended Isotope styles */
+
+    /**** Isotope Filtering ****/
+
+    .isotope-item {
+        z-index: 2;
+    }
+
+    .isotope-hidden.isotope-item {
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /**** Isotope CSS3 transitions ****/
+
+    .isotope,
+    .isotope .isotope-item {
+        -webkit-transition-duration: 0.8s;
+        -moz-transition-duration: 0.8s;
+        -ms-transition-duration: 0.8s;
+        -o-transition-duration: 0.8s;
+        transition-duration: 0.8s;
+    }
+
+    .isotope {
+        -webkit-transition-property: height, width;
+        -moz-transition-property: height, width;
+        -ms-transition-property: height, width;
+        -o-transition-property: height, width;
+        transition-property: height, width;
+    }
+
+        .isotope .isotope-item {
+            -webkit-transition-property: -webkit-transform, opacity;
+            -moz-transition-property: -moz-transform, opacity;
+            -ms-transition-property: -ms-transform, opacity;
+            -o-transition-property: -o-transform, opacity;
+            transition-property: transform, opacity;
+        }
+
+            /**** disabling Isotope CSS3 transitions ****/
+
+            .isotope.no-transition,
+            .isotope.no-transition .isotope-item,
+            .isotope .isotope-item.no-transition {
+                -webkit-transition-duration: 0s;
+                -moz-transition-duration: 0s;
+                -ms-transition-duration: 0s;
+                -o-transition-duration: 0s;
+                transition-duration: 0s;
+            }
+
+        /* End: Recommended Isotope styles */
+
+
+
+        /* disable CSS transitions for containers with infinite scrolling*/
+        .isotope.infinite-scrolling {
+            -webkit-transition: none;
+            -moz-transition: none;
+            -ms-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+</style>
 
 <script type="text/javascript">
 
@@ -51,10 +120,13 @@
         var pageSize = 6;
         var skip = 0;
         var total = 0;
+
+
+
         $("#Category").change(function () {
 
 
-          
+
             var categoryId = $("#Category").val();
 
             $.post("/Exam/SubCategory/", { categoryId: categoryId }, function (data) {
@@ -67,10 +139,10 @@
         });
         $("#SubCategory").change(function () {
 
-            skip = 0;
-            $("#examlist").empty();
-            $("#btnloadmore").remove();
-            loadExam();
+            //skip = 0;
+            //$("#examlist").empty();
+            //$("#btnloadmore").remove();
+            //loadExam();
 
         });
 
@@ -86,18 +158,23 @@
 
         $("#search").click(function () {
             skip = 0;
-            $("#examlist").empty();
+            $("#examlist").html('');
             $("#btnloadmore").remove();
             loadExam();
+            //debugger;
+            return false;
         });
 
         $('#loadmoreDiv').on('click', '#btnloadmore', function () {
 
-            skip += 6;
+            skip += pageSize;
+       
             $("#btnloadmore").remove();
             loadExam();
+            return false;
+        });
 
-            });
+
 
         function loadExam() {
 
@@ -115,9 +192,32 @@
 
                 for (var i = 0; i < data.exam.length; i++) {
 
-                    $("#examlist").append("<div class='col-md-4 pt-4 ' ><table ><tr><td>SubCAtegory :</td><td>" + data.exam[i].SubCategory.Name + "</td></tr><tr><td>Exam Type :</td><td>" + data.exam[i].ExamType.Name + "</td></tr><tr><td>Exam Name :</td><td>" + data.exam[i].Name + "</td></tr><tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr></tr><tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr><tr><td><input type='button' id='btnstartexam' value='StartExam' class='btn-info btn  pt-1' /></td></tr></table></div>");
+
+
+                    var listItems = "<div class='col-md-4 pt-4 element-item transition ' data-category='transition'>" +
+                        "<table> " +
+                        "<tr><td>SubCAtegory :</td>" +
+                        "<td>" + data.exam[i].SubCategory.Name + "</td></tr>" +
+                        " <tr><td>Exam Type :</td><td>" + data.exam[i].ExamType.Name + "</td></tr>"+
+                        "<tr> <td>Exam Name :</td> <td>" + data.exam[i].Name + "</td></tr>" +
+                        " <tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr>" +
+                        "<tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr>" +
+                        " <tr><td><input type='button' id='btnstartexam' value='StartExam' class='btn-info btn  pt-1' /></td></tr>" +
+                        "</table ></div > ";
+
+                    $(".grid").append($(listItems)).isotope('appended', $(listItems));
+
                 }
-                if (data.totalItem >= 6) {
+                
+        
+                $('.grid').isotope({
+                    itemSelector: '.element-item',
+                    layoutMode: 'masonry',
+                });
+                $('.grid').isotope('shuffle');
+
+
+                if (data.totalItem >= pageSize) {
 
                     $("#loadmoreDiv").append(" <input type='button' id='btnloadmore' value='ShowMore' class='btn-primary btn  ml-0' />");
                 }
@@ -126,7 +226,7 @@
                     $("#btnloadmore").remove();
                 }
             });
-         
+
 
 
         }
