@@ -35,7 +35,7 @@
         </div>
 
         <div class="row  background-white mt-4 ">
-            <div class='grid isotope' id="examlist" style="min-height:600px; width:100%;">
+            <div class='grid isotope' id="examlist" style="width:100%;">
 
             </div>
         </div>
@@ -120,7 +120,7 @@
         var pageSize = 6;
         var skip = 0;
         var total = 0;
-
+        var status = false;
 
 
         $("#Category").change(function () {
@@ -132,6 +132,7 @@
             $.post("/Exam/SubCategory/", { categoryId: categoryId }, function (data) {
 
                 $("#SubCategory").empty();
+                $("#SubCategory").append("<option value='0'>Sub Category</option>");
                 for (var i = 0; i < data.length; i++) {
                     $("#SubCategory").append("<option value=" + data[i].Id + ">" + data[i].Name + "</option>");
                 }
@@ -139,17 +140,23 @@
         });
         $("#SubCategory").change(function () {
 
-            //skip = 0;
-            //$("#examlist").empty();
-            //$("#btnloadmore").remove();
-            //loadExam();
+            skip = 0;
+            if (status == true) {
+                status = false;
+            }
+            $("#examlist").html('');
+            $("#btnloadmore").remove();
+            loadExam();
 
         });
 
         $("#ExamType").change(function () {
 
             skip = 0;
-            $("#examlist").empty();
+            if (status == true) {
+                status = false;
+            }
+            $("#examlist").html('');
             $("#btnloadmore").remove();
             loadExam();
 
@@ -158,17 +165,22 @@
 
         $("#search").click(function () {
             skip = 0;
-            $("#examlist").html('');
+           
+            if (status == true) {
+                  status = false;
+            }
+            $("#examlist").empty();
             $("#btnloadmore").remove();
             loadExam();
-            //debugger;
             return false;
         });
 
         $('#loadmoreDiv').on('click', '#btnloadmore', function () {
 
             skip += pageSize;
-       
+            if (status == true) {
+                status = false;
+            }
             $("#btnloadmore").remove();
             loadExam();
             return false;
@@ -190,11 +202,12 @@
 
             $.post("/Exam/SearchExam/", ExamResource, function (data) {
 
+
                 for (var i = 0; i < data.exam.length; i++) {
 
 
 
-                    var listItems = "<div class='col-md-4 pt-4 element-item transition ' data-category='transition'>" +
+                    var $listItems = $("<div class='col-md-4 pt-4 element-item transition ' data-category='transition'>" +
                         "<table> " +
                         "<tr><td>SubCAtegory :</td>" +
                         "<td>" + data.exam[i].SubCategory.Name + "</td></tr>" +
@@ -203,18 +216,24 @@
                         " <tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr>" +
                         "<tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr>" +
                         " <tr><td><input type='button' id='btnstartexam' value='StartExam' class='btn-info btn  pt-1' /></td></tr>" +
-                        "</table ></div > ";
+                        "</table ></div > ");
 
-                    $(".grid").append($(listItems)).isotope('appended', $(listItems));
+                    $(".grid").append($listItems).isotope('appended', $listItems);
 
                 }
-                
-        
-                $('.grid').isotope({
-                    itemSelector: '.element-item',
-                    layoutMode: 'masonry',
-                });
-                $('.grid').isotope('shuffle');
+
+                if (status == false) {
+                    status = true;
+                    $('.grid').isotope({
+                        itemSelector: '.element-item',
+                        layoutMode: 'packery',
+                    });
+                   // $('.grid').isotope('shuffle');
+
+
+                }
+              
+              
 
 
                 if (data.totalItem >= pageSize) {

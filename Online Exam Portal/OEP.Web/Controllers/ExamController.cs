@@ -87,6 +87,9 @@ namespace OEP.Web.Controllers
                         //filtering
                         x => examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : (examList.SubcategoryId !="0" && examList.SubcategoryId !=null) ?x.SubcategoryId==sid :(examList.Examtypeid != "0" && examList.Examtypeid !=null?x.ExamtypeId==eid:x.Id!=0),
 
+
+
+
                         //sort by
                         OrderBy.Descending 
 
