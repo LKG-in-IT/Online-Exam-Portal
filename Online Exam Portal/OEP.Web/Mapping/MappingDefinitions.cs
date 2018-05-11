@@ -63,6 +63,11 @@ namespace OEP.Web.Mapping
                 m.CreateMap<ApplicationUser, ApplicationUserResource>();
                 m.CreateMap<ApplicationUserResource, ApplicationUser>();
 
+                m.CreateMap<Questions, QuestionsViewResource>().ForPath(x => x.options.a, z => z.MapFrom(u => u.OptionA))
+                .ForPath(x => x.options.b, z => z.MapFrom(u => u.OptionB))
+                .ForPath(x => x.options.c, z => z.MapFrom(u => u.OptionC))
+                .ForPath(x => x.options.d, z => z.MapFrom(u => u.OptionD));
+
 
 
             });

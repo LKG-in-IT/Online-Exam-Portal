@@ -60,6 +60,7 @@
     <Compile Include="Admin\PackageResource.cs" />
     <Compile Include="Admin\PackageSelectedResource.cs" />
     <Compile Include="Admin\QuestionAutoCompleteResource.cs" />
+    <Compile Include="Admin\QuestionsViewResource.cs" />
     <Compile Include="Admin\QuestionsResource.cs" />
     <Compile Include="Admin\QuestionTypeResource.cs" />
     <Compile Include="Admin\SubCategoryResource.cs" />

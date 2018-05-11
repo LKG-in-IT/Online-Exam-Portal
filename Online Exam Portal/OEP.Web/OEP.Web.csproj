@@ -957,6 +957,8 @@
     <Content Include="Views\Packages\Index.cshtml" />
     <Content Include="Views\Packages\Upgrade.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\Exam\ViewExam.cshtml" />
+    <Content Include="Views\Exam\StartExam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

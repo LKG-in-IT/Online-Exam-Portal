@@ -41,7 +41,7 @@
         </div>
         <div class="row background-white mt-4 " id="loadmoreDiv">
         </div>
-
+      
 
     </div>
 </section>
@@ -209,13 +209,15 @@
 
                     var $listItems = $("<div class='col-md-4 pt-4 element-item transition ' data-category='transition'>" +
                         "<table> " +
-                        "<tr><td>SubCAtegory :</td>" +
+                        "<tr><td>SubCategory :</td>" +
                         "<td>" + data.exam[i].SubCategory.Name + "</td></tr>" +
                         " <tr><td>Exam Type :</td><td>" + data.exam[i].ExamType.Name + "</td></tr>"+
                         "<tr> <td>Exam Name :</td> <td>" + data.exam[i].Name + "</td></tr>" +
-                        " <tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr>" +
-                        "<tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr>" +
-                        " <tr><td><input type='button' id='btnstartexam' value='StartExam' class='btn-info btn  pt-1' /></td></tr>" +
+                        //" <tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr>" +
+                        //"<tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr>" +
+                       // " <tr><td><input type='button' id='btnstartexam' name='" + data.exam[i].Id + "' value='StartExam' OnClick='StartExam(" + data.exam[i].Id +")' class='btn-info btn  pt-1' /></td></tr>" +
+                        " <tr><td> <a href='/Exam/ViewExam?ExamId=" + data.exam[i].Id + "' class='btn btn-info pt-1'>View Exam</a></td></tr>" +
+
                         "</table ></div > ");
 
                     $(".grid").append($listItems).isotope('appended', $listItems);

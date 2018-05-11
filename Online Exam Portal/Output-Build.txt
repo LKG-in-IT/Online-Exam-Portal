@@ -1,0 +1,5 @@
+﻿1>------ Build started: Project: OEP.Web, Configuration: Debug Any CPU ------
+1>  OEP.Web -> E:\Abin\OnlineExamPortal\Online Exam Portal\OEP.Web\bin\OEP.Web.dll
+2>------ Build started: Project: OEP.Web.Tests, Configuration: Debug Any CPU ------
+2>  OEP.Web.Tests -> E:\Abin\OnlineExamPortal\Online Exam Portal\OEP.Web.Tests\bin\Debug\OEP.Web.Tests.dll
+========== Build: 2 succeeded, 0 failed, 4 up-to-date, 0 skipped ==========

@@ -1,0 +1,50 @@
+﻿@model OEP.Resources.Admin.ExamResource
+
+@{
+    ViewBag.Title = "ViewExam";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<div class="container ">
+    @{
+        if (Model != null)
+        {
+            <table class="table mt-4 table-bordered table-condensed table-striped" border="1">
+                <tr>
+                    <td>Exam Name </td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>@Model.Duration</td>
+                </tr>
+                <tr>
+                    <td>No Of Question</td>
+                    <td>
+                        @ViewBag.count
+                    </td>
+                </tr>
+                <tr>
+                    <td>Passmark:</td>
+                    <td>@Model.Passmark</td>
+                </tr>
+                <tr>
+                    <td>Allow ReAttempt:</td>
+                    <td>
+                        @{string allowreattempt = Model.AllowReAttempts ? "Yes" : "No";}
+                        @allowreattempt
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @*<input type="button" id="btnstart" onclick="StartExam(@Model.Id)" value="Start Exam" class="btn btn-primary" />*@
+                        <a href="/Exam/StartExam?ExamId=@Request.QueryString[0]" class="btn btn-primary">Start Exam</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        }
+      
+    }
+</div>
+
