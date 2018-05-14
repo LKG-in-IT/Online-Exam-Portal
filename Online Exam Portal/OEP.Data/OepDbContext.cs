@@ -54,6 +54,8 @@ namespace OEP.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<OepDbContext>(null);
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new CategoryConfig());
             modelBuilder.Configurations.Add(new SubCAtegoryConfig());
             modelBuilder.Configurations.Add(new EducationConfig());
@@ -66,6 +68,7 @@ namespace OEP.Data
             modelBuilder.Configurations.Add(new QuestionsConfig());
             modelBuilder.Configurations.Add(new PackageSelectedConfig());
             modelBuilder.Configurations.Add(new QuestionsTypeConfig());
+            modelBuilder.Configurations.Add(new ResultConfig());
 
             base.OnModelCreating(modelBuilder);
         }

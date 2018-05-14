@@ -12,6 +12,7 @@ using OEP.Core.DomainModels.QuestionModel;
 using OEP.Core.DomainModels.ExamModels;
 using OEP.Core.DomainModels.PackageSelectedModels;
 using OEP.Core.DomainModels.Identity;
+using OEP.Core.DomainModels.ResultModel;
 
 namespace OEP.Web.Mapping
 {
@@ -62,6 +63,9 @@ namespace OEP.Web.Mapping
 
                 m.CreateMap<ApplicationUser, ApplicationUserResource>();
                 m.CreateMap<ApplicationUserResource, ApplicationUser>();
+
+                m.CreateMap<Result, ResultResource>();
+                m.CreateMap<ResultResource, Result>();
 
                 m.CreateMap<Questions, QuestionsViewResource>().ForPath(x => x.options.a, z => z.MapFrom(u => u.OptionA))
                 .ForPath(x => x.options.b, z => z.MapFrom(u => u.OptionB))

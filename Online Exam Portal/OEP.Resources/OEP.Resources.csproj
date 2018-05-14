@@ -63,6 +63,7 @@
     <Compile Include="Admin\QuestionsViewResource.cs" />
     <Compile Include="Admin\QuestionsResource.cs" />
     <Compile Include="Admin\QuestionTypeResource.cs" />
+    <Compile Include="Admin\ResultResource.cs" />
     <Compile Include="Admin\SubCategoryResource.cs" />
     <Compile Include="Admin\YearResource.cs" />
     <Compile Include="Common\HomePageResource.cs" />

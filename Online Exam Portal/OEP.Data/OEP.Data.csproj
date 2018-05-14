@@ -91,6 +91,7 @@
     <Compile Include="Configuration\ExamConfig.cs" />
     <Compile Include="Configuration\PackageConfig.cs" />
     <Compile Include="Configuration\QuestionsConfig.cs" />
+    <Compile Include="Configuration\ResultConfig.cs" />
     <Compile Include="Configuration\SubCAtegoryConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.cs" />
@@ -169,6 +170,10 @@
     <Compile Include="Migrations\201804241333270_ChangedDurationType.Designer.cs">
       <DependentUpon>201804241333270_ChangedDurationType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805141139176_AddedResult.cs" />
+    <Compile Include="Migrations\201805141139176_AddedResult.Designer.cs">
+      <DependentUpon>201805141139176_AddedResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804241333270_ChangedDurationType.resx">
       <DependentUpon>201804241333270_ChangedDurationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141139176_AddedResult.resx">
+      <DependentUpon>201805141139176_AddedResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

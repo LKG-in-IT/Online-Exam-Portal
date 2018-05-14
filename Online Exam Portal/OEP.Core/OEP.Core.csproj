@@ -75,6 +75,7 @@
     <Compile Include="DomainModels\PaginatedList.cs" />
     <Compile Include="DomainModels\QuestionModel\Questions.cs" />
     <Compile Include="DomainModels\QuestionModel\QuestionType.cs" />
+    <Compile Include="DomainModels\ResultModel\Result.cs" />
     <Compile Include="DomainModels\RolesViewModel.cs" />
     <Compile Include="DomainModels\SubCategoryModel\SubCategory.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Services\IPackageSelectedService.cs" />
     <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IQuestionService.cs" />
+    <Compile Include="Services\IResultService.cs" />
     <Compile Include="Services\IService%271.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\ISubCategoryService.cs" />

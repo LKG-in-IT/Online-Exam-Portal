@@ -6,6 +6,7 @@ using OEP.Core.Data;
 using OEP.Core.DomainModels.ExamModels;
 using OEP.Core.DomainModels.PackageModel;
 using OEP.Core.DomainModels.QuestionModel;
+using OEP.Core.DomainModels.ResultModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
 using System;
@@ -28,13 +29,15 @@ namespace OEP.Web.Controllers
         private readonly IExamservice _examservice;
         private readonly IQuestionService _questionService;
         private readonly IPackageService _packageService;
+        private readonly IResultService _resultService;
 
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
         ExamResource examresource;
 
-        public ExamController(ICategoryService categoryService, ISubCategoryService subCategoryService, IQuestionService questionService, IExamTypeService examTypeService, IExamQuestionService examQuestionService, IExamservice examservice, IPackageService packageService)
+        public ExamController(ICategoryService categoryService, IResultService resultService, ISubCategoryService subCategoryService, IQuestionService questionService, IExamTypeService examTypeService, IExamQuestionService examQuestionService, IExamservice examservice, IPackageService packageService)
         {
+            _resultService = resultService;
             _categoryService = categoryService;
             _subCategoryService = subCategoryService;
             _examTypeService = examTypeService;
@@ -119,7 +122,7 @@ namespace OEP.Web.Controllers
             }
 
             var examlist = await _examservice.GetAllAsync(
-                        
+
                         examList.skip,
                         examList.pageSize,
 
@@ -205,7 +208,7 @@ namespace OEP.Web.Controllers
 
             if (package != null)
             {
-
+                ViewBag.duration = _examservice.GetById(ExamId).Duration;
                 var startDate = user.StartDate;
                 var duration = package.Duration;
                 var expiryDate = startDate.AddMonths(duration);
@@ -243,7 +246,24 @@ namespace OEP.Web.Controllers
             return Json(Passmark, JsonRequestBehavior.AllowGet);
 
         }
+        // post /Exam/AddResult
+        public JsonResult AddResult(ResultResource resultresource)
+        {
 
+            var result = Mapper.Map<ResultResource, Result>(resultresource);
+            result.CreatedDate = DateTime.Now;
+            result.UpdatedDate = DateTime.Now;
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            result.UserId = userId;
+            var passmark = _examservice.GetById(resultresource.ExamId).Passmark;
+            result.ResultStatus = passmark <= resultresource.Mark ? "Pass" : "Fail";
+            result.Status = true;
+            _resultService.Add(result);
+            _resultService.UnitOfWorkSaveChanges();
+            return Json(result.ResultStatus);
+
+
+        }
 
     }
 }
