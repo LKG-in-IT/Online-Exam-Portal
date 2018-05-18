@@ -1,0 +1,107 @@
+﻿@model IEnumerable<OEP.Resources.Admin.ResultResource>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<style>
+    .cardhieght {
+        padding: 5px;
+        box-shadow: 1px 1px 8px #000000;
+        border-radius: 15px;
+        margin: 15px;
+    }
+   
+        .cardhieght img {
+            margin-top: .5rem;
+        }
+
+    .webGrid tr {
+        width: 100%;
+        float: left;
+    }
+
+    @@media (min-width: 575px) {
+        .webGrid tr {
+            width: 50%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .webGrid tr {
+            width: 33.333333%;
+        }
+    }
+</style>
+<div class="container">
+
+
+    @{
+
+
+        var grid = new WebGrid(Model, canPage: true, canSort: true, rowsPerPage: 6);
+
+        @grid.GetHtml(tableStyle: "webGrid", headerStyle: "header", alternatingRowStyle: "alt",
+                                         columns: grid.Columns(
+                                         grid.Column(header: "", format: @<text>
+                                            @{
+
+                                                <div class="cardhieght">
+                                                  
+                                                        <div class="row mt-2">
+
+                                                            <label class="ml-2 mt-2 col-md-4">ExamName </label>
+                                                            <div class="col-md-7">
+                                                                <input type="text" readonly value="@item.Exam.Name" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row  mt-2 ">
+
+                                                            <label class="mt-2 ml-2 col-md-4">PassMark</label>
+                                                            <div class="col-md-7">
+                                                                <input type="text" readonly value="@item.Exam.Passmark" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row  mt-2">
+
+                                                            <label class="mt-2 ml-2 col-md-4">Attended On </label>
+                                                            <div class="col-md-7">
+
+                                                                <input type="text" readonly value="@item.CreatedDate" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row  mt-2">
+
+                                                            <label class="mt-2 ml-2 col-md-4">Mark Scored</label>
+                                                            <div class="col-md-7">
+                                                                <input type="text" readonly value="@item.Mark" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row  mt-2">
+
+                                                            <label class="mt-2 ml-2 col-md-4">Time Taken</label>
+                                                            <div class="col-md-7">
+                                                                <input type="text" readonly value="@item.TimeTaken" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row  mt-2">
+
+                                                            <label class="mt-2 ml-2 col-md-4">Result</label>
+                                                            <div class="col-md-7">
+                                                                <input type="text" readonly value="@item.ResultStatus" class="form-control" />
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                              
+
+                                            }
+                                        </text>)
+                                             ));
+      
+
+    }
+  
+
+</div>

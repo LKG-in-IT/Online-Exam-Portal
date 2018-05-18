@@ -131,7 +131,7 @@ namespace OEP.Web.Controllers
                         x => x.Name,
 
                         //filtering
-                        x => (examList.SubcategoryId != "0" && examList.SubcategoryId != null) ? x.SubcategoryId == sid : (examList.Examtypeid != "0" && examList.Examtypeid != null ? x.ExamtypeId == eid : (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Id != 0)),
+                        x => (examList.SubcategoryId != "0" && examList.SubcategoryId != null) ? x.SubcategoryId == sid : (examList.Examtypeid != "0" && examList.Examtypeid != null ? x.ExamtypeId == eid : (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status==true)),
 
                         //sort by
                         OrderBy.Descending

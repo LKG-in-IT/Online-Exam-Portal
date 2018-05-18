@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Controllers\PageNotFoundController.cs" />
+    <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\RepositoryCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\ServiceCapsuleModule.cs" />
@@ -959,6 +960,11 @@
     <Content Include="Views\Exam\Index.cshtml" />
     <Content Include="Views\Exam\ViewExam.cshtml" />
     <Content Include="Views\Exam\StartExam.cshtml" />
+    <Content Include="Views\Result\Create.cshtml" />
+    <Content Include="Views\Result\Delete.cshtml" />
+    <Content Include="Views\Result\Details.cshtml" />
+    <Content Include="Views\Result\Edit.cshtml" />
+    <Content Include="Views\Result\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
