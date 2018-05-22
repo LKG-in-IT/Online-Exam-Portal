@@ -1,0 +1,67 @@
+﻿@model OEP.Resources.Common.ProgressReportResource
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery");
+<div class="container">
+<br />
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <!--       Chart.js Canvas Tag -->
+        <canvas id="barChart"></canvas>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+</div>
+<script src="~/Scripts/Chart.min.js"></script>
+
+<script>
+
+    var canvas = document.getElementById("barChart");
+    var ctx = canvas.getContext('2d');
+
+    // Global Options:
+    Chart.defaults.global.defaultFontColor = 'black';
+    Chart.defaults.global.defaultFontSize = 16;
+
+    var data = {
+        labels: ["Exam Attended", "Won","Failed"],
+        datasets: [
+            {
+                fill: true,
+                backgroundColor: [
+                    'lightyellow',
+                    'lightblue',
+                    'lightgreen'],
+                data: [@Model.ExamCount, @Model.Win,@Model.Fail],
+                // Notice the borderColor 
+                borderColor: ['black', 'black','black'],
+                borderWidth: [1, 1,1]
+            }
+        ]
+    };
+
+    // Notice the rotation from the documentation.
+
+    var options = {
+        title: {
+            display: true,
+            text: 'Progress Report',
+            position: 'top'
+        },
+        rotation: -0.7 * Math.PI
+    };
+
+
+    // Chart declaration:
+    var myBarChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options
+    });
+
+</script>
+@*<script src="~/Scripts/index.js"></script>*@

@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Controllers\PageNotFoundController.cs" />
+    <Compile Include="Controllers\ProgressReportController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\RepositoryCapsuleModule.cs" />
@@ -758,8 +759,10 @@
     <Content Include="Content\assets\lib\iconsmind\iconsmindd41d.eot" />
     <Content Include="Content\assets\lib\jquery.mb.ytplayer\dist\css\font\ytp-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Custom\isotope-docs.min.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -965,6 +968,7 @@
     <Content Include="Views\Result\Details.cshtml" />
     <Content Include="Views\Result\Edit.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
+    <Content Include="Views\ProgressReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

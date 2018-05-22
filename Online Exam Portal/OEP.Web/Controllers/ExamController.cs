@@ -256,7 +256,7 @@ namespace OEP.Web.Controllers
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             result.UserId = userId;
             var passmark = _examservice.GetById(resultresource.ExamId).Passmark;
-            result.ResultStatus = passmark <= resultresource.Mark ? "Pass" : "Fail";
+            result.ResultStatus = passmark <= resultresource.Mark ? "Win" : "Fail";
             result.Status = true;
             _resultService.Add(result);
             _resultService.UnitOfWorkSaveChanges();

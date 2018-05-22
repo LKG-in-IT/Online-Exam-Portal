@@ -67,6 +67,7 @@
     <Compile Include="Admin\SubCategoryResource.cs" />
     <Compile Include="Admin\YearResource.cs" />
     <Compile Include="Common\HomePageResource.cs" />
+    <Compile Include="Common\ProgressReportResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
