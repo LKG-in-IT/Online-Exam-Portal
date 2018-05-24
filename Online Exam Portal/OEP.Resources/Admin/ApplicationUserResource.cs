@@ -14,6 +14,11 @@ namespace OEP.Resources.Admin
         [Display(Name = "Name")]
        
         public string Name { get; set; }
+        public string Address { get; set; }
+        public string Gender { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DatOfBirth { get; set; }
+        public string ProfilePicture { get; set; }
 
         [Required]
         [EmailAddress]
@@ -27,8 +32,8 @@ namespace OEP.Resources.Admin
         public string UserName { get; set; }
         public string Role { get; set; }
         public bool Status { get; set; }
-
-       public PackageResource Package { get; set; }
+        public int PackageId { get; set; }
+        public PackageResource Package { get; set; }
 
     }
 }

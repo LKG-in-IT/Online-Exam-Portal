@@ -13,8 +13,10 @@ using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using OEP.Core.DomainModels.EducationModels;
 using OEP.Core.DomainModels.Identity;
+using OEP.Core.DomainModels.PackageModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
+using OEP.Resources.Common;
 using OEP.Web.Helpers;
 using OEP.Web.Models;
 
@@ -28,13 +30,14 @@ namespace OEP.Web.Controllers
         private readonly IService<EducationType> _educationTypeService;
         private readonly IService<YearDetails> _YearDetailsService;
         private readonly IService<EducationDetails> _EducationDetailsService;
+        private readonly IPackageService _packageService;
 
-
-        public ManageController(IService<EducationType> educationTypeService, IService<YearDetails> YearDetailsService, IService<EducationDetails> EducationDetailsService)
+        public ManageController(IService<EducationType> educationTypeService, IPackageService packageService, IService<YearDetails> YearDetailsService, IService<EducationDetails> EducationDetailsService)
         {
             _educationTypeService = educationTypeService;
             _YearDetailsService = YearDetailsService;
             _EducationDetailsService = EducationDetailsService;
+            _packageService = packageService;
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -69,16 +72,16 @@ namespace OEP.Web.Controllers
         }
 
         // Add Education Details
-        public async Task<ActionResult> EducationDetails()
+        public PartialViewResult EducationDetails()
         {
-            var typelist = await _educationTypeService.GetAllAsync();
+            var typelist =  _educationTypeService.GetAll();
             ViewBag.EducationTypeId = new SelectList(typelist.Where(i => i.Status == true), "Id", "Name");
 
-            var yearlist = await _YearDetailsService.GetAllAsync();
+            var yearlist =  _YearDetailsService.GetAll();
             ViewBag.YearFromId = new SelectList(yearlist.Where(i => i.Status == true), "Id", "Year");
             var userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
-            return View();
+            return PartialView();
         }
 
         // Add Education Details post
@@ -200,11 +203,29 @@ namespace OEP.Web.Controllers
         }
        
 
-        public async Task<ActionResult> UserProfile()
+        public async Task<PartialViewResult> UserProfile()
         {
+            var resp = Mapper.Map<List<Package>, List<PackageResource>>(_packageService.FindBy(x => x.Status));
             var userId = User.Identity.GetUserId();
             var user = await UserManager.FindByIdAsync(userId);
-            return View(user);
+            var userResource = Mapper.Map<ApplicationUser, ApplicationUserResource>(user);
+            PackagePageResource packagePageResource = new PackagePageResource() { User = userResource };
+            if (resp != null)
+            {
+                userResource.Package = resp.FirstOrDefault(x => x.Id == user.PackageId);
+
+                if (userResource.Package != null)
+                {
+                    var startDate = user.StartDate;
+                    var duration = userResource.Package.Duration;
+                    var expiryDate = startDate.AddMonths(duration);
+                    packagePageResource.ExpiryDate = expiryDate;
+                    packagePageResource.Expired = DateTime.Now > expiryDate ? true : false;
+                }
+
+                packagePageResource.Packages = resp;
+            }
+            return PartialView(packagePageResource);
         }
         [HttpPost]
         public async Task<ActionResult> UserProfile(ApplicationUser applicationUser, HttpPostedFileBase file)

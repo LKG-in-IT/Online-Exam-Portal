@@ -16,11 +16,15 @@
 
     <div id="partialViewProfile" class="row">
 
-
+        @{
+        Html.RenderAction("UserProfile");
+        }
     </div>
 
     <div id="Educationdetailstable" class="row">
-
+        @{ 
+            Html.RenderAction("EducationDetails");
+        }
     </div>
     <div class="row pt-2 mb-2">
         <fieldset class="container">
@@ -43,8 +47,8 @@
 @section Scripts{
     <script type="text/jscript">
         $(document).ready(function () {
-            $("#partialViewProfile").load("/Manage/UserProfile/");
-            $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+           // $("#partialViewProfile").load("/Manage/UserProfile/");
+            //$("#Educationdetailstable").load("/Manage/Educationdetailstable");
         });
     </script>
     <script src="~/Scripts/Custom/UserProfile.js"></script>

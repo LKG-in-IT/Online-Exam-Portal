@@ -1,11 +1,11 @@
-﻿@model OEP.Core.DomainModels.Identity.ApplicationUser
+﻿@model OEP.Resources.Common.PackagePageResource
 
 @{
     Layout = "";
 
 }
 
-@using (Html.BeginForm("UserProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data",@class= "container pt-6 " }))
+@using (Html.BeginForm("UserProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", @class = "container pt-6 " }))
 {
     @Html.AntiForgeryToken()
 
@@ -15,51 +15,66 @@
             <legend class="text-uppercase fs-0 fs-md-1">Personal Information</legend>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.User.Id)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.User.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.User.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.User.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.User.Address, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.RadioButtonFor(model => model.Gender, "Male", new { htmlAttributes = new { @class = "form -control", @checked = true } })Male
-                    @Html.RadioButtonFor(model => model.Gender, "Female", new { htmlAttributes = new { @class = "form -control", @checked = true } })Female
+                    @Html.RadioButtonFor(model => model.User.Gender, "Male", new { htmlAttributes = new { @class = "form -control", @checked = true } })Male
+                    @Html.RadioButtonFor(model => model.User.Gender, "Female", new { htmlAttributes = new { @class = "form -control", @checked = true } })Female
 
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.User.Gender, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.DatOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.DatOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.DatOfBirth, String.Format("{0:d}", Model.DatOfBirth.ToShortDateString()), new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                    @Html.ValidationMessageFor(model => model.DatOfBirth, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.User.DatOfBirth, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.User.DatOfBirth, "", new { @class = "text-danger" })
                 </div>
             </div>
 
+            <div class="form-group">
+
+                <label class="control-label col-md-2">Current Package</label>
+
+                <div class="col-md-10">
+                    <input type="text" value="@Model.User.Package.Name" class="form-control" />
+
+                </div>
+                <div class="col-md-10">
+                    <p class="px-lg-4 mt-3">
+                        Your Current package will be expired on @(Model.ExpiryDate.ToString("D")).</p>
+
+                        <a href="/Packages" class="m-0 btn-default">Upgrade Packages</a>
+                </div>
+            </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <img src="@(!string.IsNullOrEmpty(Model.ProfilePicture) ? Model.ProfilePicture : "/Uploads/female-user-avatar.png")" class="img-profile" id="profil-picture"/>
+                    <img src="@(!string.IsNullOrEmpty(Model.User.ProfilePicture) ? Model.User.ProfilePicture : "/Uploads/female-user-avatar.png")" class="img-profile" id="profil-picture" />
                     <br /><br />
-                    @if (!string.IsNullOrEmpty(Model.ProfilePicture))
+                    @if (!string.IsNullOrEmpty(Model.User.ProfilePicture))
                     {
-                        
+
                         <input type="button" id="removeImage" class="btn btn-danger" style="margin: 10px 0 10px 0;" value="Remove" />
                     }
 
@@ -86,11 +101,12 @@
         height: 150px;
         border-radius: 75px;
     }
+
     .text-success {
-    color: #f9f9f9;
-    background: #74a57c;
-    padding: 12px;
-}
+        color: #f9f9f9;
+        background: #74a57c;
+        padding: 12px;
+    }
 </style>
 
 

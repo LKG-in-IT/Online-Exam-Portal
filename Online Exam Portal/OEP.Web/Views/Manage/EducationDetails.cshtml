@@ -7,99 +7,101 @@
 {
     @Html.AntiForgeryToken()
 
+<fieldset>
+    <legend class="text-uppercase fs-0 fs-md-1">Education Details</legend>
+    <hr />
+    <div class="row">
 
-<div class="row">
+
+
+        <div class="col-md-2">
+            @Html.DropDownList("EducationTypeId", (IEnumerable<SelectListItem>)ViewBag.EducationTypeId, "Select", htmlAttributes: new { @class = "< btn", @id = "EducationTypeId" })
+        </div>
+
+        <div class="col-md-2">
+            <input type="text" id="Institute" class="form-control" placeholder="Institute Name" />
+        </div>
 
 
 
-    <div class="col-md-2">
-        @Html.DropDownList("EducationTypeId", (IEnumerable<SelectListItem>)ViewBag.EducationTypeId, "Select", htmlAttributes: new { @class = "< btn", @id = "EducationTypeId" })
+        <div class="col-md-2">
+            @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "from" })
+
+        </div>
+
+
+        <div class="col-md-2">
+            @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "To", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "to" })
+
+        </div>
+
+
+
+        <div class="col-md-2">
+            <input type="button" name="0" id="btnadd" class="btn btn-success" value="Add" />
+        </div>
+        <div class="col-md-2">
+            <input type="button" name="0" id="btncancel" class="btn btn-danger" value="Cancel" />
+
+        </div>
+
     </div>
-
-    <div class="col-md-2">
-        <input type="text" id="Institute" class="form-control" placeholder="Institute Name" />
-    </div>
-
-
-
-    <div class="col-md-2">
-        @Html.DropDownList("YearFromId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "From", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "from" })
-
-    </div>
-
-
-    <div class="col-md-2">
-        @Html.DropDownList("YearToId", (IEnumerable<SelectListItem>)ViewBag.YearFromId, "To", htmlAttributes: new { @class = "btn btn-outline-primary", @id = "to" })
-
-    </div>
-
-
-
-    <div class="col-md-2">
-        <input type="button" name="0" id="btnadd" class="btn btn-success" value="Add" />
-    </div>
-    <div class="col-md-2">
-        <input type="button" name="0" id="btncancel" class="btn btn-danger" value="Cancel" />
-
-    </div>
-
-</div>
+</fieldset>
 
 
 
 
 
+}
 
-    }
- 
-    <script>
-
-
-        $('#partialViewEducationType').on('click', '#btncancel', function () {
-            debugger;
-            $('#partialViewEducationType').empty();
-            $("#btnaddnew").show();
-        });
-        $("#btnadd").click(function () {
+<script>
 
 
-            debugger;
+    $('#partialViewEducationType').on('click', '#btncancel', function () {
+        debugger;
+        $('#partialViewEducationType').empty();
+        $("#btnaddnew").show();
+    });
+    $("#btnadd").click(function () {
 
-            var educationType = $("#EducationTypeId").val();
-            var institute = $("#Institute").val();
-            var from = $("#from").val();
-            var eid = $("#btnadd").attr("name");
-            var to = $("#to").val();
-            var educationDetailsResource = {};
-            educationDetailsResource.id = eid;
-            educationDetailsResource.EducationTypeId = educationType;
-            educationDetailsResource.InstituteName = institute;
-            educationDetailsResource.YearFromId = from;
-            educationDetailsResource.YearToId = to;
 
-            var operation = $("#btnadd").val();
+        debugger;
 
-            if (operation == "Add") {
-                $.post("/Manage/AddEducationDetails/", { educationDetailsResource }, function (data) {
+        var educationType = $("#EducationTypeId").val();
+        var institute = $("#Institute").val();
+        var from = $("#from").val();
+        var eid = $("#btnadd").attr("name");
+        var to = $("#to").val();
+        var educationDetailsResource = {};
+        educationDetailsResource.id = eid;
+        educationDetailsResource.EducationTypeId = educationType;
+        educationDetailsResource.InstituteName = institute;
+        educationDetailsResource.YearFromId = from;
+        educationDetailsResource.YearToId = to;
 
-                    $("#Educationdetailstable").html('');
+        var operation = $("#btnadd").val();
 
-                    $("#partialViewEducationType").html('');
-                    $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-                    $("#partialViewEducationType").load("/Manage/EducationDetails/");
-                });
-            }
-            if (operation == "Update") {
-                $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
+        if (operation == "Add") {
+            $.post("/Manage/AddEducationDetails/", { educationDetailsResource }, function (data) {
 
-                    $("#Educationdetailstable").html('');
+                $("#Educationdetailstable").html('');
 
-                    $("#partialViewEducationType").html('');
-                    $("#Educationdetailstable").load("/Manage/Educationdetailstable");
-                    $("#partialViewEducationType").load("/Manage/EducationDetails/");
+                $("#partialViewEducationType").html('');
+                $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                $("#partialViewEducationType").load("/Manage/EducationDetails/");
+            });
+        }
+        if (operation == "Update") {
+            $.post("/Manage/EditEducationDetails/", { educationDetailsResource }, function (data) {
 
-                });
-            }
-        });
+                $("#Educationdetailstable").html('');
 
-    </script>
+                $("#partialViewEducationType").html('');
+                $("#Educationdetailstable").load("/Manage/Educationdetailstable");
+                $("#partialViewEducationType").load("/Manage/EducationDetails/");
+
+            });
+        }
+    });
+
+</script>
