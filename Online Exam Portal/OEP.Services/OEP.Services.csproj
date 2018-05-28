@@ -55,6 +55,7 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="QuestionService.cs" />
     <Compile Include="ResultService.cs" />
+    <Compile Include="StudyMaterialService.cs" />
     <Compile Include="SubCategoryService.cs" />
     <Compile Include="YearService.cs" />
   </ItemGroup>

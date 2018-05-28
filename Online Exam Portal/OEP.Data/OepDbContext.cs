@@ -69,7 +69,7 @@ namespace OEP.Data
             modelBuilder.Configurations.Add(new PackageSelectedConfig());
             modelBuilder.Configurations.Add(new QuestionsTypeConfig());
             modelBuilder.Configurations.Add(new ResultConfig());
-
+            modelBuilder.Configurations.Add(new StudyMaterialConfig());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -187,6 +187,6 @@ namespace OEP.Data
             base.Dispose(disposing);
         }
 
-     
+        
     }
 }

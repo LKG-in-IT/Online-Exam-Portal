@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OEP.Resources.Admin.StudyMaterialsResources>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery");
+<div class=container>
+    <div class="form-horizontal">
+
+        <div class="form-group">
+
+            <label class="control-label col-md-2">Select Category</label>
+            <div class="col-md-10">
+                @Html.DropDownList("subcategory", (IEnumerable<SelectListItem>)ViewBag.subcategory, "Category", new { @class = "btn form-control btn-outline-primary" })
+
+            </div>
+
+
+        </div>
+        <div id="loadmaterials" class="form-group">
+
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+    $("#subcategory").change(function () {
+
+        var subcategoryid = $("#subcategory").val();
+
+        $("#loadmaterials").load("/StudyMaterials/LoadStudyMaterials?subcategoryid=" + subcategoryid);
+
+    });
+</script>

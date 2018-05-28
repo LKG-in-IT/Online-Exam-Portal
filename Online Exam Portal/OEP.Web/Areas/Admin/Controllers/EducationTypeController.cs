@@ -159,6 +159,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                 exstEducationType.UpdatedDate = DateTime.Now;
                 var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 exstEducationType.UserId = userId;
+
                 await _educationTypeService.UpdateAsync(exstEducationType);
                 _educationTypeService.UnitOfWorkSaveChanges();
                 return RedirectToAction("Index");

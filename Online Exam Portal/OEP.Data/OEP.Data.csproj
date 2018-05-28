@@ -77,6 +77,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,6 +93,7 @@
     <Compile Include="Configuration\PackageConfig.cs" />
     <Compile Include="Configuration\QuestionsConfig.cs" />
     <Compile Include="Configuration\ResultConfig.cs" />
+    <Compile Include="Configuration\StudyMaterialConfig.cs" />
     <Compile Include="Configuration\SubCAtegoryConfig.cs" />
     <Compile Include="IEntitiesContext.cs" />
     <Compile Include="Migrations\201803231150481_InitialOne.cs" />
@@ -174,6 +176,10 @@
     <Compile Include="Migrations\201805141139176_AddedResult.Designer.cs">
       <DependentUpon>201805141139176_AddedResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805240926346_Studymaterials.cs" />
+    <Compile Include="Migrations\201805240926346_Studymaterials.Designer.cs">
+      <DependentUpon>201805240926346_Studymaterials.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -252,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805141139176_AddedResult.resx">
       <DependentUpon>201805141139176_AddedResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805240926346_Studymaterials.resx">
+      <DependentUpon>201805240926346_Studymaterials.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

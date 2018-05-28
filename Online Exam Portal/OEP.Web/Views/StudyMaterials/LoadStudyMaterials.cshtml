@@ -1,0 +1,26 @@
+﻿@model IEnumerable<OEP.Resources.Admin.StudyMaterialsResources>
+@{
+  
+    Layout = "";
+}
+@{
+
+
+    WebGrid grid = new WebGrid(Model, canPage: true, canSort: true, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.NextPrevious);
+    @grid.GetHtml(tableStyle: "mt-4  mb-4 table table-bordered table-hover table-striped table-responsive ",
+           headerStyle: "page-header",
+           columns:
+           grid.Columns(
+
+               grid.Column("subCategory.Name", "SubCategory"),
+               grid.Column("Name", "FileName"),
+               grid.Column("FilePath", "File", format: @<text><a href="@item.FilePath" download="">Download</a></text>)
+
+
+
+                        ))
+
+
+
+}

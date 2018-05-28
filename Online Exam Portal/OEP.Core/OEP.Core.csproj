@@ -77,6 +77,7 @@
     <Compile Include="DomainModels\QuestionModel\QuestionType.cs" />
     <Compile Include="DomainModels\ResultModel\Result.cs" />
     <Compile Include="DomainModels\RolesViewModel.cs" />
+    <Compile Include="DomainModels\StudyMaterialsModel\StudyMaterial.cs" />
     <Compile Include="DomainModels\SubCategoryModel\SubCategory.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Services\IResultService.cs" />
     <Compile Include="Services\IService%271.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IStudyMaterial.cs" />
     <Compile Include="Services\ISubCategoryService.cs" />
     <Compile Include="Services\IYearService.cs" />
   </ItemGroup>

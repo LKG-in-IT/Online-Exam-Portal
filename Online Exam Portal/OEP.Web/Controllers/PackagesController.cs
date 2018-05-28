@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OEP.Core.DomainModels.Identity;
 using OEP.Core.DomainModels.PackageModel;
+using OEP.Core.DomainModels.StudyMaterialsModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
 using OEP.Resources.Common;
@@ -21,8 +22,10 @@ namespace OEP.Web.Controllers
     public class PackagesController : Controller
     {
         private readonly IPackageService _packageService;
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private  ApplicationSignInManager _signInManager;
+        private  ApplicationUserManager _userManager;
+        private readonly IStudyMaterial _studyMaterial ;
+        private readonly ISubCategoryService _subCategoryService; 
         public ApplicationSignInManager SignInManager
         {
             get
@@ -55,9 +58,11 @@ namespace OEP.Web.Controllers
             }
         }
 
-        public PackagesController(IPackageService packageService)
+        public PackagesController(IPackageService packageService,IStudyMaterial studyMaterial, ISubCategoryService subCategoryService)
         {
             _packageService = packageService;
+            _studyMaterial = studyMaterial;
+            _subCategoryService = subCategoryService;
         }
 
         public PackagesController( ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -145,5 +150,12 @@ namespace OEP.Web.Controllers
             }
             return RedirectToAction("Upgrade",new {id=packageId});
         }
+
+
+
+
+      
+
+      
     }
 }

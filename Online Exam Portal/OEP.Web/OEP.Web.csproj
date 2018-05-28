@@ -206,6 +206,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuestionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StudyMaterialsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\YearController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Controllers\PageNotFoundController.cs" />
     <Compile Include="Controllers\ProgressReportController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
+    <Compile Include="Controllers\StudyMaterialsController.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\RepositoryCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\ServiceCapsuleModule.cs" />
@@ -301,6 +303,7 @@
     <Content Include="Areas\Admin\Assets\dist\js\custom\ExamTypeListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\PackageListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\QuestionListing.js" />
+    <Content Include="Areas\Admin\Assets\dist\js\custom\StudyMaterials.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\SubCategoriesListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\custom\YearListing.js" />
     <Content Include="Areas\Admin\Assets\dist\js\dataTables.bootstrap4.min.js" />
@@ -758,6 +761,11 @@
     <Content Include="Content\assets\lib\iconsmind\iconsmind.woff" />
     <Content Include="Content\assets\lib\iconsmind\iconsmindd41d.eot" />
     <Content Include="Content\assets\lib\jquery.mb.ytplayer\dist\css\font\ytp-regular.eot" />
+    <Content Include="Areas\Admin\Views\StudyMaterials\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\StudyMaterials\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\StudyMaterials\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\StudyMaterials\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StudyMaterials\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Custom\isotope-docs.min.js" />
@@ -969,11 +977,19 @@
     <Content Include="Views\Result\Edit.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\ProgressReport\Index.cshtml" />
+    <Content Include="Views\Packages\ViewStudyMaterials.cshtml" />
+    <Content Include="Views\StudyMaterials\Create.cshtml" />
+    <Content Include="Views\StudyMaterials\Delete.cshtml" />
+    <Content Include="Views\StudyMaterials\Details.cshtml" />
+    <Content Include="Views\StudyMaterials\Edit.cshtml" />
+    <Content Include="Views\StudyMaterials\Index.cshtml" />
+    <Content Include="Views\StudyMaterials\LoadStudyMaterials.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Uploads\ProfileImages\" />
+    <Folder Include="Uploads\StudyMaterialFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -13,6 +13,7 @@ using OEP.Core.DomainModels.ExamModels;
 using OEP.Core.DomainModels.PackageSelectedModels;
 using OEP.Core.DomainModels.Identity;
 using OEP.Core.DomainModels.ResultModel;
+using OEP.Core.DomainModels.StudyMaterialsModel;
 
 namespace OEP.Web.Mapping
 {
@@ -72,7 +73,8 @@ namespace OEP.Web.Mapping
                 .ForPath(x => x.options.c, z => z.MapFrom(u => u.OptionC))
                 .ForPath(x => x.options.d, z => z.MapFrom(u => u.OptionD));
 
-
+                m.CreateMap<StudyMaterial, StudyMaterialsResources>();
+                m.CreateMap<StudyMaterialsResources, StudyMaterial>();
 
             });
         }
