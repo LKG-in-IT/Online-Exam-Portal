@@ -8,15 +8,13 @@
 
 
     <li>
-        @Html.ActionLink("Hello " + nameOfUser + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+        @Html.ActionLink("Hello " + nameOfUser + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage",@class= "profile-name" })
     </li>
     <li>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
         {
              @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-
-       
         }
     </li>
 }
