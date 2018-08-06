@@ -11,9 +11,11 @@ using OEP.Data;
 using OEP.Resources.Common;
 using OEP.Core.Services;
 using Microsoft.AspNet.Identity;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Controllers
 {
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class ProgressReportController : Controller
     {
         IResultService _resultService;

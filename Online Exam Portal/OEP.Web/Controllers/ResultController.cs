@@ -13,9 +13,11 @@ using OEP.Core.Services;
 using AutoMapper;
 using OEP.Core.DomainModels.ResultModel;
 using Microsoft.AspNet.Identity;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Controllers
 {
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class ResultController : Controller
     {
         private readonly IResultService _resultService;

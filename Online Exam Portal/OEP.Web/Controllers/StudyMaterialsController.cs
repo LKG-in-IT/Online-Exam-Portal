@@ -12,9 +12,11 @@ using OEP.Resources.Admin;
 using OEP.Core.Services;
 using AutoMapper;
 using OEP.Core.DomainModels.StudyMaterialsModel;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Controllers
 {
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class StudyMaterialsController : Controller
     {
         private readonly IStudyMaterial _studyMaterial;

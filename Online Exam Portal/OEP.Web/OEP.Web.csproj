@@ -218,6 +218,8 @@
     <Compile Include="Controllers\ProgressReportController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\StudyMaterialsController.cs" />
+    <Compile Include="DependencyInjection\Modules\AttributeFilter\AutofacFilterAttributeFilterProvider.cs" />
+    <Compile Include="DependencyInjection\Modules\AttributeFilter\ContainerBuilderExtension.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\RepositoryCapsuleModule.cs" />
     <Compile Include="DependencyInjection\Modules\ServiceCapsuleModule.cs" />
@@ -228,6 +230,7 @@
     </Compile>
     <Compile Include="Helpers\AuthorizeUser.cs" />
     <Compile Include="Helpers\ResponseContent.cs" />
+    <Compile Include="Helpers\ValidatePackageStatus.cs" />
     <Compile Include="Helpers\ViewExtensions.cs" />
     <Compile Include="Mapping\MappingDefinitions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

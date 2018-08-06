@@ -9,6 +9,7 @@ using OEP.Core.DomainModels.QuestionModel;
 using OEP.Core.DomainModels.ResultModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
+using OEP.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,10 @@ using System.Web.Mvc;
 
 namespace OEP.Web.Controllers
 {
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
+    [ValidatePackageStatus]
     public class ExamController : Controller
     {
-
         private readonly ICategoryService _categoryService;
         private readonly ISubCategoryService _subCategoryService;
         private readonly IExamTypeService _examTypeService;
@@ -35,7 +37,8 @@ namespace OEP.Web.Controllers
         private ApplicationSignInManager _signInManager;
         ExamResource examresource;
 
-        public ExamController(ICategoryService categoryService, IResultService resultService, ISubCategoryService subCategoryService, IQuestionService questionService, IExamTypeService examTypeService, IExamQuestionService examQuestionService, IExamservice examservice, IPackageService packageService)
+        public ExamController(ICategoryService categoryService, IResultService resultService, ISubCategoryService subCategoryService, IQuestionService questionService,
+            IExamTypeService examTypeService, IExamQuestionService examQuestionService, IExamservice examservice, IPackageService packageService)
         {
             _resultService = resultService;
             _categoryService = categoryService;
@@ -131,7 +134,7 @@ namespace OEP.Web.Controllers
                         x => x.Name,
 
                         //filtering
-                        x => (examList.SubcategoryId != "0" && examList.SubcategoryId != null) ? x.SubcategoryId == sid : (examList.Examtypeid != "0" && examList.Examtypeid != null ? x.ExamtypeId == eid : (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status==true)),
+                        x => (examList.SubcategoryId != "0" && examList.SubcategoryId != null) ? x.SubcategoryId == sid : (examList.Examtypeid != "0" && examList.Examtypeid != null ? x.ExamtypeId == eid : (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status == true)),
 
                         //sort by
                         OrderBy.Descending
@@ -151,40 +154,13 @@ namespace OEP.Web.Controllers
         public ActionResult ViewExam(int ExamId)
         {
 
-            var userId = User.Identity.GetUserId();
-            var user = UserManager.FindById(userId);
-            int packageId;
-            if (user != null)
-            {
-                packageId = user.PackageId;
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
 
 
-            var package = _packageService.GetById(packageId);
-            ViewBag.packageId = packageId;
 
-            if (package != null)
-            {
 
-                var startDate = user.StartDate;
-                var duration = package.Duration;
-                var expiryDate = startDate.AddMonths(duration);
-                if (DateTime.Now < expiryDate)
-                {
-                    Exam examlist = _examservice.GetById(ExamId);
-                    examresource = Mapper.Map<Exam, ExamResource>(examlist);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Packages");
-                }
-
-            }
-            ViewBag.count = _examQuestionService.FindBy(i => i.ExamId == ExamId).Count();
+            Exam examlist = _examservice.GetById(ExamId);
+            examresource = Mapper.Map<Exam, ExamResource>(examlist);
+            //ViewBag.count = _examQuestionService.FindBy(i => i.ExamId == ExamId).Count();
             return View(examresource);
         }
 
@@ -253,7 +229,7 @@ namespace OEP.Web.Controllers
             var result = Mapper.Map<ResultResource, Result>(resultresource);
             result.CreatedDate = DateTime.Now;
             result.UpdatedDate = DateTime.Now;
-            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
             result.UserId = userId;
             var passmark = _examservice.GetById(resultresource.ExamId).Passmark;
             result.ResultStatus = passmark <= resultresource.Mark ? "Win" : "Fail";

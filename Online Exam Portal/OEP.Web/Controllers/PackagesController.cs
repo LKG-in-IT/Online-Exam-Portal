@@ -5,20 +5,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OEP.Core.DomainModels.Identity;
 using OEP.Core.DomainModels.PackageModel;
-using OEP.Core.DomainModels.StudyMaterialsModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
 using OEP.Resources.Common;
+using OEP.Web.Helpers;
 
 namespace OEP.Web.Controllers
 {
+    [AuthorizeUser(Roles = "User,Faculty,Admin")]
     public class PackagesController : Controller
     {
         private readonly IPackageService _packageService;
