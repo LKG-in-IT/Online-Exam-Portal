@@ -10,6 +10,7 @@ namespace OEP.Resources.Admin
     {
         public string Examtypeid { get; set; }
         public string SubcategoryId { get; set; }
+        public string CategoryId { get; set; }
         public string KeyWord { get; set; }
         public int skip { get; set; }
         public int pageSize { get; set; }

@@ -180,6 +180,10 @@
     <Compile Include="Migrations\201805240926346_Studymaterials.Designer.cs">
       <DependentUpon>201805240926346_Studymaterials.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808071229090_ExamDesc.cs" />
+    <Compile Include="Migrations\201808071229090_ExamDesc.Designer.cs">
+      <DependentUpon>201808071229090_ExamDesc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -261,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805240926346_Studymaterials.resx">
       <DependentUpon>201805240926346_Studymaterials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808071229090_ExamDesc.resx">
+      <DependentUpon>201808071229090_ExamDesc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

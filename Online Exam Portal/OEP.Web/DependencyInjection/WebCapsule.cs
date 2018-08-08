@@ -37,7 +37,8 @@ namespace OEP.Web.DependencyInjection
             1.public IPackageService _packageService { get; set; }
             2.We need to add services like this.
             3.add class inside OEP.Web.DependencyInjection.Modules.AttributeFilter folder -->AutofacFilterAttributeFilterProvider.cs
-            4.Add extension method for ContainerBuilder in the file ContainerBuilderExtension.cs*/
+            4.Add extension method for ContainerBuilder in the file ContainerBuilderExtension.cs
+            https://alexmg.com/posts/filterattribute-property-injection-in-autofac-mvc-3-integration */
             builder.RegisterFilter();
 
 

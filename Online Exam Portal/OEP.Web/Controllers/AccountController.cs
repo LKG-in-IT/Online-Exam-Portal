@@ -161,6 +161,7 @@ namespace OEP.Web.Controllers
                     Email = model.Email,
                     Name = model.Name,
                     PackageId = 1,
+                    StartDate=DateTime.Now
                    // Address = model.Address,
                     //DatOfBirth = Convert.ToDateTime(model.DatOfBirth),
                     //PhoneNumber = model.PhoneNumber

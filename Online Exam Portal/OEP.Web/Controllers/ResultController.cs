@@ -18,6 +18,7 @@ using OEP.Web.Helpers;
 namespace OEP.Web.Controllers
 {
     [AuthorizeUser(Roles = "User,Faculty,Admin")]
+    [ValidatePackageStatus]
     public class ResultController : Controller
     {
         private readonly IResultService _resultService;

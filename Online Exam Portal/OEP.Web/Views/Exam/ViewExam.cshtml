@@ -5,45 +5,81 @@
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 @Scripts.Render("~/bundles/jquery")
-<div class="container ">
-    @{
-        if (Model != null)
-        {
-            <table class="table mt-4 table-bordered table-condensed table-striped" border="1">
-                <tr>
-                    <td>Exam Name </td>
-                    <td>@Model.Name</td>
-                </tr>
-                <tr>
-                    <td>Duration</td>
-                    <td>@Model.Duration</td>
-                </tr>
-                <tr>
-                    <td>No Of Question</td>
-                    <td>
-                        @ViewBag.count
-                    </td>
-                </tr>
-                <tr>
-                    <td>Passmark:</td>
-                    <td>@Model.Passmark</td>
-                </tr>
-                <tr>
-                    <td>Allow ReAttempt:</td>
-                    <td>
-                        @{string allowreattempt = Model.AllowReAttempts ? "Yes" : "No";}
-                        @allowreattempt
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="/Exam/StartExam?ExamId=@Request.QueryString[0]" class="btn btn-primary">Start Exam</a>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-        }
-      
-    }
-</div>
+
+<section class="background-11 text-center" style="padding: 1em 0 3em 0;">
+    <div class="container">
+        <div class="row">
+
+            @if (ViewBag.NotFound)
+            {
+                <div class="col-sm-12 col-lg-12">
+                    <div class="background-white pb-4 h-100 radius-secondary">
+                        <div class="px-4" data-zanim-timeline="{}" data-zanim-trigger="scroll">
+                            <div class="overflow-hidden">
+                                <h5 data-zanim='{"delay":0}'>No Exams Found</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model != null)
+            {
+                <div class="col-sm-12 col-lg-12">
+                    <div class="background-white pb-4 h-100 radius-secondary">
+                        <div class="px-4" data-zanim-timeline="{}" data-zanim-trigger="scroll" style="padding-top: 1em;">
+
+                            <table class="table" border="0">
+                                <tr>
+                                    <td>Exam Name </td>
+                                    <td>@Model.Name</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>@Model.Duration</td>
+                                </tr>
+                                <tr>
+                                    <td>No Of Question</td>
+                                    <td>
+                                        @ViewBag.count
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Passmark:</td>
+                                    <td>@Model.Passmark</td>
+                                </tr>
+                                <tr>
+                                    <td>Allow ReAttempt:</td>
+                                    <td>
+                                        @{string allowreattempt = Model.AllowReAttempts ? "Yes" : "No";}
+                                        @allowreattempt
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.count > 0)
+                                        {
+                                            <a href="/Exam/StartExam?ExamId=@Request.QueryString[0]" class="btn btn-primary">Start Exam</a>
+                                        }
+                                        <a href="@Url.Action("Index","Exam")" class="btn btn-outline-danger">Back To List</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</section>
+
 

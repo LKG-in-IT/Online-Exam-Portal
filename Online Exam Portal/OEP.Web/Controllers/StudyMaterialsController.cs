@@ -17,6 +17,7 @@ using OEP.Web.Helpers;
 namespace OEP.Web.Controllers
 {
     [AuthorizeUser(Roles = "User,Faculty,Admin")]
+    [ValidatePackageStatus]
     public class StudyMaterialsController : Controller
     {
         private readonly IStudyMaterial _studyMaterial;

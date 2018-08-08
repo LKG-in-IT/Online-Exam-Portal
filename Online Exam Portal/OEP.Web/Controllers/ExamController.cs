@@ -113,14 +113,18 @@ namespace OEP.Web.Controllers
         public async Task<JsonResult> SearchExam(ExamList examList)
         {
 
-            int sid = 0, eid = 0;
+            int subCategoryId = 0, examtypeid = 0, categoryId=0;
+            if (examList.CategoryId != null && examList.CategoryId != "0")
+            {
+                categoryId = Convert.ToInt32(examList.CategoryId);
+            }
             if (examList.SubcategoryId != null && examList.SubcategoryId != "0")
             {
-                sid = Convert.ToInt32(examList.SubcategoryId);
+                subCategoryId = Convert.ToInt32(examList.SubcategoryId);
             }
             if (examList.Examtypeid != null)
             {
-                eid = Convert.ToInt32(examList.Examtypeid);
+                examtypeid = Convert.ToInt32(examList.Examtypeid);
 
             }
 
@@ -134,70 +138,48 @@ namespace OEP.Web.Controllers
                         x => x.Name,
 
                         //filtering
-                        x => (examList.SubcategoryId != "0" && examList.SubcategoryId != null) ? x.SubcategoryId == sid : (examList.Examtypeid != "0" && examList.Examtypeid != null ? x.ExamtypeId == eid : (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status == true)),
+                        x => (categoryId!=0?x.SubCategory.CategoryId==categoryId:x.Status)&&
+                             (subCategoryId != 0 ? x.SubcategoryId == subCategoryId : x.Status) &&
+                             (examtypeid != 0 ? x.ExamtypeId == examtypeid : x.Status) &&
+                             (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status),
 
                         //sort by
                         OrderBy.Descending
 
 
-                );
-
+                );            
 
             var recordsTotal = examlist.TotalCount;
             var totalItem = examlist.Count();
             var resp = Mapper.Map<List<Exam>, List<ExamResource>>(examlist);
             return Json(new { exam = resp, total = recordsTotal, totalItem = totalItem });
 
-        }
+        }        
 
         // GET: Start Exam
-        public ActionResult ViewExam(int ExamId)
+        public ActionResult ViewExam(int? ExamId)
         {
+            if (ExamId != null)
+            {
+                Exam examlist = _examservice.GetById(Convert.ToInt32(ExamId));
+                if (examlist != null)
+                {
+                    examresource = Mapper.Map<Exam, ExamResource>(examlist);
+                    ViewBag.count = _examQuestionService.FindBy(i => i.ExamId == ExamId).Count();
+                    ViewBag.NotFound = false;
+                    return View(examresource);
+                }   
+            }
+            ViewBag.NotFound = true;
+            return View();
 
-
-
-
-
-            Exam examlist = _examservice.GetById(ExamId);
-            examresource = Mapper.Map<Exam, ExamResource>(examlist);
-            //ViewBag.count = _examQuestionService.FindBy(i => i.ExamId == ExamId).Count();
-            return View(examresource);
         }
 
         public ActionResult StartExam(int ExamId)
         {
-            var userId = User.Identity.GetUserId();
-            var user = UserManager.FindById(userId);
-            int packageId;
-            if (user != null)
-            {
-                packageId = user.PackageId;
-            }
-            else
-            {
-
-                return RedirectToAction("Login", "Account");
-
-            }
-            var package = _packageService.GetById(packageId);
-            ViewBag.packageId = packageId;
-
-            if (package != null)
-            {
-                ViewBag.duration = _examservice.GetById(ExamId).Duration;
-                var startDate = user.StartDate;
-                var duration = package.Duration;
-                var expiryDate = startDate.AddMonths(duration);
-                if (DateTime.Now > expiryDate)
-                {
-                    return RedirectToAction("Index", "Packages");
-
-                }
-
-
-            }
             return View();
         }
+
         //  /Exam/GetQuestions
         public JsonResult GetQuestions(int ExamId)
         {

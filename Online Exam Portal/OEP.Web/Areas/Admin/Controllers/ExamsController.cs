@@ -159,7 +159,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-
+            
             var examResource = Mapper.Map<Exam, ExamResource>(exam);
             var examtype =await _examTypeService.GetAllAsync();
             var subcategory =await  _subCategoryService.GetAllAsync();
@@ -181,6 +181,8 @@ namespace OEP.Web.Areas.Admin.Controllers
                 var exstexam = await _examservice.GetByIdAsync(examResource.Id);
                 exstexam.UpdatedDate = DateTime.Now;
                 exstexam.Name = examResource.Name;
+                exstexam.Description = examResource.Description;
+
                 exstexam.ExamtypeId = examResource.Examtypeid;
                 exstexam.SubcategoryId = examResource.SubcategoryId;
 

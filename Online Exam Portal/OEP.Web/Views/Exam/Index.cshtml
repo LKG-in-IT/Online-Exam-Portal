@@ -6,42 +6,58 @@
 }
 @Scripts.Render("~/bundles/jquery")
 
+@section scripts{
+    <script src="~/Scripts/Custom/exams.js?V=@DateTime.Now.Ticks"></script>
+}
+
 <section class="background-11" style="padding: 3.5rem 0;">
     <div class="container">
-        <div class="row background-white">
-            <div class="col-md-3">
+        <h3>Exams</h3>
+        <div class="row background-white" style="min-height: 110px; padding-top: 35px;">
+            <div class="col-3">
                 @Html.DropDownList("Category", (IEnumerable<SelectListItem>)ViewBag.CategoryId, "Category", new { @class = "btn btn-outline-primary" })
             </div>
-            <div class="col-md-3">
+            <div class="col-3">
                 <select class="btn btn-outline-primary" id="SubCategory">
                     <option value="0">Sub Category</option>
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-3">
                 @Html.DropDownList("ExamType", (IEnumerable<SelectListItem>)ViewBag.ExamTypeId, "Exam Type", new { @class = "btn btn-outline-primary" })
 
 
-            </div>
-            <div class="col-md-3 ">
+            </div>          
+
+
+        </div>
+        <div class="row background-white" style="    min-height: 65px;">
+            
+            <div class="col-3">
                 <div class="input-group">
 
                     <input type="text" class="form-control" id="txtsearch" name="txtsearch" placeholder="Search">
-                    <span class="input-group-addon" id="search"><i class="fa fa-search"></i></span>
+                    @*<span class="input-group-addon" id="search"><i class="fa fa-search"></i></span>*@
                     <input type="hidden" id="hdnskip" value="0" />
                 </div>
             </div>
 
-
-        </div>
-
-        <div class="row  background-white mt-4 ">
-            <div class='grid isotope' id="examlist" style="width:100%;">
-
+            <div class="col-3">
+                <input type="button" id="search" value="Search" class="btn-primary btn  ml-0">
             </div>
+
+
         </div>
-        <div class="row background-white mt-4 " id="loadmoreDiv">
+
+        <div class='grid ' id="examlist" style="width:100%;min-height:200px">
+
         </div>
-      
+        <div class='col-md-4 pt-4 element-item transition ' style="min-height: 150px;" id="loading" data-category='transition'>
+            <span>Loading..</span>
+            <img src="/Content/assets/images/logo-dark.gif" alt="">
+        </div>
+        <div class="row mt-4 " id="loadmoreDiv">
+        </div>
+
 
     </div>
 </section>
@@ -113,145 +129,4 @@
         }
 </style>
 
-<script type="text/javascript">
 
-    $(document).ready(function () {
-
-        var pageSize = 6;
-        var skip = 0;
-        var total = 0;
-        var status = false;
-
-
-        $("#Category").change(function () {
-
-
-
-            var categoryId = $("#Category").val();
-
-            $.post("/Exam/SubCategory/", { categoryId: categoryId }, function (data) {
-
-                $("#SubCategory").empty();
-                $("#SubCategory").append("<option value='0'>Sub Category</option>");
-                for (var i = 0; i < data.length; i++) {
-                    $("#SubCategory").append("<option value=" + data[i].Id + ">" + data[i].Name + "</option>");
-                }
-            });
-        });
-        $("#SubCategory").change(function () {
-
-            skip = 0;
-            if (status == true) {
-                status = false;
-            }
-            $("#examlist").html('');
-            $("#btnloadmore").remove();
-            loadExam();
-
-        });
-
-        $("#ExamType").change(function () {
-
-            skip = 0;
-            if (status == true) {
-                status = false;
-            }
-            $("#examlist").html('');
-            $("#btnloadmore").remove();
-            loadExam();
-
-        });
-
-
-        $("#search").click(function () {
-            skip = 0;
-           
-            if (status == true) {
-                  status = false;
-            }
-            $("#examlist").empty();
-            $("#btnloadmore").remove();
-            loadExam();
-            return false;
-        });
-
-        $('#loadmoreDiv').on('click', '#btnloadmore', function () {
-
-            skip += pageSize;
-            if (status == true) {
-                status = false;
-            }
-            $("#btnloadmore").remove();
-            loadExam();
-            return false;
-        });
-
-
-
-        function loadExam() {
-
-            var subCatoryId = $("#SubCategory").val();
-            var ExamTypeId = $("#ExamType").val();
-            var KeyWord = $("#txtsearch").val();
-            var ExamResource = {};
-            ExamResource.ExamTypeId = ExamTypeId;
-            ExamResource.SubcategoryId = subCatoryId;
-            ExamResource.KeyWord = KeyWord;
-            ExamResource.skip = skip;
-            ExamResource.pageSize = pageSize;
-
-            $.post("/Exam/SearchExam/", ExamResource, function (data) {
-
-
-                for (var i = 0; i < data.exam.length; i++) {
-
-
-
-                    var $listItems = $("<div class='col-md-4 pt-4 element-item transition ' data-category='transition'>" +
-                        "<table> " +
-                        "<tr><td>SubCategory :</td>" +
-                        "<td>" + data.exam[i].SubCategory.Name + "</td></tr>" +
-                        " <tr><td>Exam Type :</td><td>" + data.exam[i].ExamType.Name + "</td></tr>"+
-                        "<tr> <td>Exam Name :</td> <td>" + data.exam[i].Name + "</td></tr>" +
-                        //" <tr><td>Pass Mark:</td><td>" + data.exam[i].Passmark + "</td></tr>" +
-                        //"<tr><td>Duration:</td><td>" + data.exam[i].Duration + "</td></tr>" +
-                       // " <tr><td><input type='button' id='btnstartexam' name='" + data.exam[i].Id + "' value='StartExam' OnClick='StartExam(" + data.exam[i].Id +")' class='btn-info btn  pt-1' /></td></tr>" +
-                        " <tr><td> <a href='/Exam/ViewExam?ExamId=" + data.exam[i].Id + "' class='btn btn-info pt-1'>View Exam</a></td></tr>" +
-
-                        "</table ></div > ");
-
-                    $(".grid").append($listItems).isotope('appended', $listItems);
-
-                }
-
-                if (status == false) {
-                    status = true;
-                    $('.grid').isotope({
-                        itemSelector: '.element-item',
-                        layoutMode: 'packery',
-                    });
-                   // $('.grid').isotope('shuffle');
-
-
-                }
-              
-              
-
-
-                if (data.totalItem >= pageSize) {
-
-                    $("#loadmoreDiv").append(" <input type='button' id='btnloadmore' value='ShowMore' class='btn-primary btn  ml-0' />");
-                }
-                else {
-
-                    $("#btnloadmore").remove();
-                }
-            });
-
-
-
-        }
-    });
-
-
-</script>

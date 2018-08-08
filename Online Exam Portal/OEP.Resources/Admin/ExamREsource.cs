@@ -15,6 +15,8 @@ namespace OEP.Resources.Admin
         [Display(Name = "Name")]
      
         public string Name { get; set; }
+        public string Description { get; set; }
+
         public int Examtypeid { get; set; }
         public int SubcategoryId { get; set; }
         public ExamType ExamType { get; set; }

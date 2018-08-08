@@ -229,6 +229,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthorizeUser.cs" />
+    <Compile Include="Helpers\ClaimManagement.cs" />
     <Compile Include="Helpers\ResponseContent.cs" />
     <Compile Include="Helpers\ValidatePackageStatus.cs" />
     <Compile Include="Helpers\ViewExtensions.cs" />
@@ -771,6 +772,7 @@
     <Content Include="Areas\Admin\Views\StudyMaterials\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Custom\exams.js" />
     <Content Include="Scripts\Custom\isotope-docs.min.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\index.js" />

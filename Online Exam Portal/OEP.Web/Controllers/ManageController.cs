@@ -23,6 +23,7 @@ using OEP.Web.Models;
 namespace OEP.Web.Controllers
 {
     [AuthorizeUser(Roles = "User,Faculty,Admin")]
+    [ValidatePackageStatus]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -277,19 +278,7 @@ namespace OEP.Web.Controllers
                 // create a new identity 
                 var identity = new ClaimsIdentity(User.Identity);
 
-                // Remove the existing claim value of current user from database
-                if(identity.FindFirst("NameOfUser")!=null)
-                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("NameOfUser"));
-                if (identity.FindFirst("ProfilePicture") != null)
-                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("ProfilePicture"));
-                if (identity.FindFirst("PackageId") != null)
-                    await UserManager.RemoveClaimAsync(userprofile.Id, identity.FindFirst("PackageId"));
-
-                // Update customized claim 
-                await UserManager.AddClaimAsync(userprofile.Id, new Claim("NameOfUser", userprofile.Name));
-                await UserManager.AddClaimAsync(userprofile.Id, new Claim("ProfilePicture", userprofile.ProfilePicture));
-                await UserManager.AddClaimAsync(userprofile.Id, new Claim("PackageId", userprofile.PackageId.ToString()));
-
+                await ClaimManagement.ManageClaimsAfterDbUpdate(userprofile, identity, UserManager);
 
                 // the claim has been updates, We need to change the cookie value for getting the updated claim
                 AuthenticationManager.SignOut(identity.AuthenticationType);
