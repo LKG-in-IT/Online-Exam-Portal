@@ -15,6 +15,7 @@ using OEP.Resources.Admin;
 using Microsoft.AspNet.Identity;
 using OEP.Core.Data;
 using OEP.Web.Helpers;
+using OEP.Core.DomainModels;
 
 namespace OEP.Web.Areas.Admin.Controllers
 {
@@ -23,10 +24,20 @@ namespace OEP.Web.Areas.Admin.Controllers
     {
         private readonly IQuestionService _questionService;
         private readonly IService<QuestionType> _questionTypeService;
-        public QuestionsController(IQuestionService questionService, IService<QuestionType> questionTypeService)
+
+        private readonly IService<QuestionsLocalized> _questionsLocalizedService;
+
+        private readonly IService<Language> _languageService;
+
+        public QuestionsController(IQuestionService questionService, IService<QuestionType> questionTypeService,
+            IService<QuestionsLocalized> questionsLocalizedService, IService<Language> languageService)
         {
             _questionService = questionService;
             _questionTypeService = questionTypeService;
+
+            _questionsLocalizedService=questionsLocalizedService;
+            _languageService = languageService;
+
         }
 
         // GET: Admin/Questions
@@ -128,6 +139,29 @@ namespace OEP.Web.Areas.Admin.Controllers
                 await _questionService.AddAsync(questions);
                 _questionService.UnitOfWorkSaveChanges();
 
+                //Get Current available languages 
+                var languages =await _languageService.FindByAsync(x => x.Status && !x.Default);
+                if (languages != null)
+                {
+                    // inserting default values to all langauges
+                    foreach(var lang in languages)
+                    {
+                        var QuestionsLocalized = new QuestionsLocalized() {
+                            Question= questions.Question,
+                            OptionA = questions.OptionA,
+                            OptionB = questions.OptionB,
+                            OptionC = questions.OptionC,
+                            OptionD = questions.OptionD,
+                            CreatedDate = DateTime.Now,
+                            UpdatedDate = DateTime.Now,
+                            LanguageId=lang.Id,
+                            QuestionsId=questions.Id,
+                            UserId =User.Identity.GetUserId()
+                        };
+                        await _questionsLocalizedService.AddAsync(QuestionsLocalized);
+                        _questionsLocalizedService.UnitOfWorkSaveChanges();
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
@@ -141,7 +175,7 @@ namespace OEP.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(id),x=>x.QuestionType);
+            Questions questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(id),x=>x.QuestionType , x=>x.QuestionsLocalized);
             if (questions == null)
             {
                 return HttpNotFound();
@@ -175,6 +209,26 @@ namespace OEP.Web.Areas.Admin.Controllers
 
                 await _questionService.UpdateAsync(exstQuestions);
                 _questionService.UnitOfWorkSaveChanges();
+
+                //Update Localized questions
+                if (questionsResource.QuestionsLocalized != null)
+                {
+                    foreach (var item in questionsResource.QuestionsLocalized)
+                    {
+                        var questionsLocalized = await _questionsLocalizedService.GetByIdAsync(item.Id);
+                        questionsLocalized.Question = item.Question;
+                        questionsLocalized.OptionA = questionsResource.OptionA;
+                        questionsLocalized.OptionB = questionsResource.OptionB;
+                        questionsLocalized.OptionC = questionsResource.OptionC;
+                        questionsLocalized.OptionD = questionsResource.OptionD;
+                        questionsLocalized.UserId = User.Identity.GetUserId();                        
+                        questionsLocalized.UpdatedDate = DateTime.Now;
+
+                        await _questionsLocalizedService.UpdateAsync(questionsLocalized);
+                        _questionsLocalizedService.UnitOfWorkSaveChanges();
+                    }
+                }
+
               
                 return RedirectToAction("Index");
             }

@@ -41,6 +41,9 @@ namespace OEP.Web.Mapping
                 m.CreateMap<QuestionsResource, Questions>();
                 m.CreateMap<Questions, QuestionsResource>();
 
+                m.CreateMap<QuestionsLocalizedResource, QuestionsLocalized>();
+                m.CreateMap<QuestionsLocalized, QuestionsLocalizedResource>();
+
                 m.CreateMap<ExamTypeResource, ExamType>();
                 m.CreateMap<ExamType, ExamTypeResource>();
 

@@ -15,77 +15,149 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-       
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.QuestionTypeId, "Question Type", htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.DropDownList("QuestionTypeId", null, htmlAttributes: new {@class = "form-control"})
-                @Html.ValidationMessageFor(model => model.QuestionTypeId, "", new {@class = "text-danger"})
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OptionA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OptionA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OptionA, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="tab-wrapper">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OptionB, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OptionB, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OptionB, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <ul class="tab-menu">
+                <li class="active">Default</li>
+                @if (Model.QuestionsLocalized != null)
+                {
+                    foreach (var item in Model.QuestionsLocalized)
+                    {
+                        <li>@(item.Language.Name)</li>
+                    }
+                }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OptionC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OptionC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OptionC, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </ul>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OptionD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OptionD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OptionD, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="tab-content">
+                <div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.QuestionTypeId, "Question Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("QuestionTypeId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.QuestionTypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Answer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Answer, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Status)
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OptionA, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OptionA, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OptionA, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OptionB, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OptionB, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OptionB, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OptionC, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OptionC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OptionC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OptionD, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OptionD, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OptionD, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Answer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Answer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Status)
+                                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                @if (Model.QuestionsLocalized != null)
+                {
+                    for (var i = 0; i < Model.QuestionsLocalized.Count(); i++)
+                    {
+                        <div>
+                            @Html.HiddenFor(x => Model.QuestionsLocalized[i].Id)
+                            @Html.HiddenFor(x => Model.QuestionsLocalized[i].LanguageId)
+                            <div class="form-group">
+                                @Html.LabelFor(modelItem => Model.QuestionsLocalized[i].Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(modelItem => Model.QuestionsLocalized[i].Question, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => Model.QuestionsLocalized[i].Question, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(modelItem => Model.QuestionsLocalized[i].OptionA, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(modelItem => Model.QuestionsLocalized[i].OptionA, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => Model.QuestionsLocalized[i].OptionA, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-      
+                            <div class="form-group">
+                                @Html.LabelFor(modelItem => Model.QuestionsLocalized[i].OptionB, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(modelItem => Model.QuestionsLocalized[i].OptionB, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => Model.QuestionsLocalized[i].OptionB, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(modelItem => Model.QuestionsLocalized[i].OptionC, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(modelItem => Model.QuestionsLocalized[i].OptionC, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => Model.QuestionsLocalized[i].OptionC, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(modelItem => Model.QuestionsLocalized[i].OptionD, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(modelItem => Model.QuestionsLocalized[i].OptionD, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => Model.QuestionsLocalized[i].OptionD, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div><!-- //tab-content -->
+
+        </div><!-- //tab-wrapper -->
+
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -101,4 +173,88 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            var $wrapper = $('.tab-wrapper'),
+                $allTabs = $wrapper.find('.tab-content > div'),
+                $tabMenu = $wrapper.find('.tab-menu li'),
+                $line = $('<div class="line"></div>').appendTo($tabMenu);
+
+            $allTabs.not(':first-of-type').hide();
+            $tabMenu.filter(':first-of-type').find(':first').width('100%')
+
+            $tabMenu.each(function (i) {
+                $(this).attr('data-tab', 'tab' + i);
+            });
+
+            $allTabs.each(function (i) {
+                $(this).attr('data-tab', 'tab' + i);
+            });
+
+            $tabMenu.on('click', function () {
+
+                var dataTab = $(this).data('tab'),
+                    $getWrapper = $(this).closest($wrapper);
+
+                $getWrapper.find($tabMenu).removeClass('active');
+                $(this).addClass('active');
+
+                $getWrapper.find('.line').width(0);
+                $(this).find($line).animate({ 'width': '100%' }, 'fast');
+                $getWrapper.find($allTabs).hide();
+                $getWrapper.find($allTabs).filter('[data-tab=' + dataTab + ']').show();
+            });
+
+        });//end ready
+    </script>
 }
+
+<style type="text/css">
+    .tab-wrapper {
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    .tab-menu li {
+        position: relative;
+        background-color: #fff;
+        color: #bcbcbc;
+        display: inline-block;
+        padding: 20px 40px;
+        opacity: 0.8;
+        cursor: pointer;
+        z-index: 0;
+    }
+
+        .tab-menu li:hover {
+            color: #464646;
+        }
+
+        .tab-menu li.active {
+            color: #464646;
+            opacity: 1;
+        }
+
+            .tab-menu li.active:hover {
+                color: #464646;
+            }
+
+    .tab-content > div {
+        background-color: #fff;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 50px;
+        min-height: 200px;
+    }
+
+    .line {
+        position: absolute;
+        width: 0;
+        height: 7px;
+        background-color: aqua;
+        top: 0;
+        left: 0;
+    }
+</style>

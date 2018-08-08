@@ -70,6 +70,9 @@ namespace OEP.Data
             modelBuilder.Configurations.Add(new QuestionsTypeConfig());
             modelBuilder.Configurations.Add(new ResultConfig());
             modelBuilder.Configurations.Add(new StudyMaterialConfig());
+            modelBuilder.Configurations.Add(new QuestionsLocalizedConfig());
+            modelBuilder.Configurations.Add(new LanguageConfig());
+            
             base.OnModelCreating(modelBuilder);
         }
 

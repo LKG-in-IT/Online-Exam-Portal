@@ -184,6 +184,34 @@
     <Compile Include="Migrations\201808071229090_ExamDesc.Designer.cs">
       <DependentUpon>201808071229090_ExamDesc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808080726110_MultiLanguage.cs" />
+    <Compile Include="Migrations\201808080726110_MultiLanguage.Designer.cs">
+      <DependentUpon>201808080726110_MultiLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081002510_QuestionToLocalizedItemsMapping.cs" />
+    <Compile Include="Migrations\201808081002510_QuestionToLocalizedItemsMapping.Designer.cs">
+      <DependentUpon>201808081002510_QuestionToLocalizedItemsMapping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081034542_AnswerChangedtoInt.cs" />
+    <Compile Include="Migrations\201808081034542_AnswerChangedtoInt.Designer.cs">
+      <DependentUpon>201808081034542_AnswerChangedtoInt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081232263_removePublishedFieldFromLanguageTable.cs" />
+    <Compile Include="Migrations\201808081232263_removePublishedFieldFromLanguageTable.Designer.cs">
+      <DependentUpon>201808081232263_removePublishedFieldFromLanguageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081259345_AddedDefaultFieldInLanguageTableMaditUnique.cs" />
+    <Compile Include="Migrations\201808081259345_AddedDefaultFieldInLanguageTableMaditUnique.Designer.cs">
+      <DependentUpon>201808081259345_AddedDefaultFieldInLanguageTableMaditUnique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081306243_RemoveDefaultFieldUniqueInLanguageTable.cs" />
+    <Compile Include="Migrations\201808081306243_RemoveDefaultFieldUniqueInLanguageTable.Designer.cs">
+      <DependentUpon>201808081306243_RemoveDefaultFieldUniqueInLanguageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808081308568_MakeNameUnique_LanguageTable.cs" />
+    <Compile Include="Migrations\201808081308568_MakeNameUnique_LanguageTable.Designer.cs">
+      <DependentUpon>201808081308568_MakeNameUnique_LanguageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -268,6 +296,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808071229090_ExamDesc.resx">
       <DependentUpon>201808071229090_ExamDesc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808080726110_MultiLanguage.resx">
+      <DependentUpon>201808080726110_MultiLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081002510_QuestionToLocalizedItemsMapping.resx">
+      <DependentUpon>201808081002510_QuestionToLocalizedItemsMapping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081034542_AnswerChangedtoInt.resx">
+      <DependentUpon>201808081034542_AnswerChangedtoInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081232263_removePublishedFieldFromLanguageTable.resx">
+      <DependentUpon>201808081232263_removePublishedFieldFromLanguageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081259345_AddedDefaultFieldInLanguageTableMaditUnique.resx">
+      <DependentUpon>201808081259345_AddedDefaultFieldInLanguageTableMaditUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081306243_RemoveDefaultFieldUniqueInLanguageTable.resx">
+      <DependentUpon>201808081306243_RemoveDefaultFieldUniqueInLanguageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808081308568_MakeNameUnique_LanguageTable.resx">
+      <DependentUpon>201808081308568_MakeNameUnique_LanguageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
