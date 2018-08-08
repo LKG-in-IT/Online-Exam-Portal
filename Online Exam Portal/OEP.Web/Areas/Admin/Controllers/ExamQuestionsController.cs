@@ -93,8 +93,7 @@ namespace OEP.Web.Areas.Admin.Controllers
                         x => sortColumn == "Question" ? x.Questions.Question : null,
 
                         //filtering
-                        x => x.ExamId == id &&
-                        searchValue != "" ? x.Questions.Question.Contains(searchValue) : x.Id != 0,
+                        x => (x.ExamId == id) && (searchValue != "" ? x.Questions.Question.Contains(searchValue) : x.Id != 0),
 
                         //sort by
                         (sortColumnDir == "desc" ? OrderBy.Descending : OrderBy.Ascending),
