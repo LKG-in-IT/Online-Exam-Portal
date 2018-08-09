@@ -113,7 +113,7 @@ namespace OEP.Web.Controllers
         public async Task<JsonResult> SearchExam(ExamList examList)
         {
 
-            int subCategoryId = 0, examtypeid = 0, categoryId=0;
+            int subCategoryId = 0, examtypeid = 0, categoryId = 0;
             if (examList.CategoryId != null && examList.CategoryId != "0")
             {
                 categoryId = Convert.ToInt32(examList.CategoryId);
@@ -138,7 +138,7 @@ namespace OEP.Web.Controllers
                         x => x.Name,
 
                         //filtering
-                        x => (categoryId!=0?x.SubCategory.CategoryId==categoryId:x.Status)&&
+                        x => (categoryId != 0 ? x.SubCategory.CategoryId == categoryId : x.Status) &&
                              (subCategoryId != 0 ? x.SubcategoryId == subCategoryId : x.Status) &&
                              (examtypeid != 0 ? x.ExamtypeId == examtypeid : x.Status) &&
                              (examList.KeyWord != null ? x.Name.Contains(examList.KeyWord) : x.Status),
@@ -147,14 +147,14 @@ namespace OEP.Web.Controllers
                         OrderBy.Descending
 
 
-                );            
+                );
 
             var recordsTotal = examlist.TotalCount;
             var totalItem = examlist.Count();
             var resp = Mapper.Map<List<Exam>, List<ExamResource>>(examlist);
             return Json(new { exam = resp, total = recordsTotal, totalItem = totalItem });
 
-        }        
+        }
 
         // GET: Start Exam
         public ActionResult ViewExam(int? ExamId)
@@ -168,27 +168,43 @@ namespace OEP.Web.Controllers
                     ViewBag.count = _examQuestionService.FindBy(i => i.ExamId == ExamId).Count();
                     ViewBag.NotFound = false;
                     return View(examresource);
-                }   
+                }
             }
             ViewBag.NotFound = true;
             return View();
 
         }
 
-        public ActionResult StartExam(int ExamId)
+        public async Task<ActionResult> StartExam(int ExamId)
         {
+            if (ExamId != 0)
+            {
+                var examStartResource = new ExamStartResource();
+                List<QuestionsResource> questionlist = new List<QuestionsResource>();
+
+                var exam = await _examservice.GetByIdAsync(ExamId);
+                examStartResource.ExamResource = Mapper.Map<Exam, ExamResource>(exam);
+                var examQuestions = _examQuestionService.FindBy(i => i.ExamId == ExamId);
+
+                foreach (var eq in examQuestions)
+                {
+                    var questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(eq.QuestionId), x => x.QuestionType, x => x.QuestionsLocalized);
+                    if (questions != null)
+                    {
+                        questionlist.Add(Mapper.Map<Questions, QuestionsResource>(questions));
+                    }
+                }
+                examStartResource.QuestionsResource = questionlist;
+
+                return View(examStartResource);
+            }
             return View();
         }
 
-        //  /Exam/GetQuestions
-        public JsonResult GetQuestions(int ExamId)
+        [HttpPost]
+        public async Task<ActionResult> StartExam(ExamStartResource examStartResource)
         {
-
-            var questiolist = _examQuestionService.FindBy(i => i.ExamId == ExamId).Select(x => x.Questions).ToList();
-            var examresource = Mapper.Map<List<Questions>, List<QuestionsViewResource>>(questiolist);
-            var jsonObj = JsonConvert.SerializeObject(examresource);
-            return Json(jsonObj, JsonRequestBehavior.AllowGet);
-
+            return Json("");
         }
         // get /Exam/GetAnswer
         public JsonResult GetAnswer(int Qid)

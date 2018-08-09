@@ -1,0 +1,326 @@
+﻿@model OEP.Resources.Admin.ExamResource
+@{
+    ViewBag.Title = "StartExam";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+<section class="background-11" style="padding: 3.5rem 0;">
+    <div class="content">
+        <div class="container">
+            <input type="hidden" id="hdntime" />
+            <h3 class="ml-3" id="timer"></h3>
+            <div class="row ml-3" id="total">
+            </div>
+            <div class="row ml-3">
+                <div class="col-sm-12">
+                    <div id="result" class="quiz-body">
+                        <form name="quizForm" onSubmit="">
+                            <fieldset class="form-group">
+                                <h4><span id="qid">1.</span> <span id="question"></span></h4>
+
+                                <div class="option-block-container" id="question-options">
+
+                                </div> <!-- End of option block -->
+                            </fieldset>
+                            <button name="previous" id="previous" class="btn btn-success">Previous</button>
+                            &nbsp;
+                            <button name="next" id="next" class="btn btn-success">Next</button>
+                        </form>
+                    </div>
+                </div> <!-- End of col-sm-12 -->
+
+            </div> <!-- End of row -->
+        </div> <!-- ENd of container fluid -->
+    </div> <!-- End of content -->
+</section>
+    <style>
+
+        .content {
+            margin-top: 54px;
+        }
+
+        .header {
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        .left-title {
+            width: 80px;
+            color: #FFF;
+            font-size: 18px;
+            float: left;
+        }
+
+        .right-title {
+            width: 150px;
+            text-align: right;
+            float: right;
+            color: #FFF;
+        }
+
+        .quiz-body {
+            margin-top: 15px;
+            padding-bottom: 50px;
+        }
+
+        .option-block-container {
+            margin-top: 20px;
+            max-width: 420px;
+        }
+
+        .option-block {
+            padding: 10px;
+            background: aliceblue;
+            border: 1px solid #84c5fe;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .option-block-selected {
+            padding: 10px;
+            background-color: red;
+            border: 1px solid #84c5fe;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .option-block-answer {
+            padding: 10px;
+            background-color: green;
+            border: 1px solid #84c5fe;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .result-question {
+            font-weight: bold;
+        }
+
+        .c-wrong {
+            margin-left: 20px;
+            color: #FF0000;
+        }
+
+        .c-correct {
+            margin-left: 20px;
+            color: green;
+        }
+
+        .last-row {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        .res-header {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+        }
+    </style>
+    <script>
+
+    var quiz;
+    var interval;
+    var selectedopt;
+
+    var quizApp = function () {
+
+        // Get Questions
+        $.ajaxSetup({ async: false });
+        $.getJSON("/Exam/GetQuestions/", { ExamId:@Request.QueryString[0]}, function (data) {
+            quiz = JSON.parse(data);
+        });
+
+        this.score = 0;
+        this.qno = 1;
+        this.currentque = 0;
+        var totalque = quiz != undefined?quiz.length:0;
+
+        this.displayQuiz = function (cque) {
+            this.currentque = cque;
+            if (this.currentque < totalque) {
+                $("#tque").html(totalque);
+                $("#previous").attr("disabled", false);
+                $("#next").attr("disabled", false);
+                $("#qid").html((cque+1) + '.');
+                $("#question").html(quiz [this.currentque].Question);
+                $("#question-options").html("");
+                var arr = Object.keys(quiz [cque].options).map(function (key) { return quiz [cque].options[key]; });
+                for (var key in arr) {
+                    if (arr.hasOwnProperty(key)) {
+                        $("#question-options").append("<div class='form-check option-block'>" +
+                            "<label class='form-check-label'>" +
+                            "<input type='radio' class='form-check-input' name='option'   id='q" + key + "' value='" + arr[key] + "'><span id='optionval'>" +
+                            arr[key] +"</span></label>"
+                        );
+                    }
+                }
+            }
+            if (this.currentque <= 0) {
+                $("#previous").attr("disabled", true);
+            }
+            if (this.currentque >= totalque) {
+                return this.showResult();
+            }
+        }
+        this.showResult = function () {
+            clearInterval(interval);
+            $("#timer").html('');
+            var scr = 0;
+            $("#result").empty();
+            $("#result").addClass('result');
+            for (var j = 0; j < totalque; j++) {
+                var qid = quiz[j].id;
+                var res = "";
+                var fulldata = '<div class="result-question"><span>Q ' + parseInt(j + 1) + '</span> &nbsp;' + quiz[j].Question + '</div><div class="option-block-container" id="question-options"> ';
+                $.ajaxSetup({ async: false });
+                $.get("/Exam/GetAnswer", { Qid: qid }, function (answer) {
+                    var answer = answer;
+                    var arr = Object.keys(quiz[j].options).map(function (key) { return quiz[j].options[key]; });
+
+                    for (var i = 0; i < arr.length; i++) {
+
+                        var ans = "";
+                        var selans = "";
+                        var opt = "";
+                        if (arr[i] == answer) {
+
+                            if (answer == quiz[j].answerselected) {
+
+                                ans = '<div class="form-check option-block-answer">' + arr[i] + '</div>';
+                                scr = scr + 1;
+                                res = '<span class="correct">Correct</span><i class="fa fa-check c-correct"></i>';
+
+                            } else {
+
+                                ans = '<div class="form-check option-block-answer">' + arr[i] + '</div>';
+                                res = '<span class="wrong">Wrong</span><i class="fa fa-remove c-wrong"></i>';
+
+                            }
+                        }
+                      else  if (arr[i] == quiz[j].answerselected) {
+
+                            selans = '<div class="form-check option-block-selected">' + arr[i]  + '</div>'
+                        }
+                        else {
+
+                            opt = '<div class="form-check option-block">' + arr[i]  + '</div>'
+                        }
+
+                        fulldata = fulldata + opt + selans + ans;
+
+                    }
+
+
+
+
+
+                })
+                $("#result").append(
+
+                    fulldata + '<div class="last-row">' + res +
+
+                    '</div>' );
+
+            }
+
+
+            $("#total").html("<h4 class='res-header'>Total Score: &nbsp;" + scr + '/' + totalque + "</h4>");
+            var resultresource = {};
+            resultresource.ExamId =@Request.QueryString[0];
+            resultresource.Mark = scr;
+            resultresource.timetaken = parseInt(@Model.Duration- $("#hdntime").val());
+
+
+            $.post("/Exam/AddResult/", resultresource, function (data) {
+
+
+                $("#timer").html(data);
+
+
+            });
+
+
+        }
+        this.checkAnswer = function (option) {
+
+            quiz[this.currentque].answerselected = option;
+
+        }
+        this.changeQuestion = function (cque) {
+
+            this.currentque = this.currentque + cque;
+            this.displayQuiz(this.currentque);
+        }
+
+    }
+
+
+    var jsq = new quizApp();
+    $(document).ready(function () {
+
+        // Timer
+
+        startTimer();
+
+        jsq.displayQuiz(0);
+
+        $('#question-options').on('change', 'input[type=radio][name=option]', function (e) {
+
+
+            $(this).prop("checked", true);
+            selectedopt = $(this).val();
+        });
+    });
+
+    $('#next').click(function (e) {
+
+        e.preventDefault();
+        if (selectedopt) {
+            jsq.checkAnswer(selectedopt);
+        }
+        jsq.changeQuestion(1);
+    });
+
+    $('#previous').click(function (e) {
+
+        e.preventDefault();
+        if (selectedopt) {
+            jsq.checkAnswer(selectedopt);
+        }
+        jsq.changeQuestion(-1);
+    });
+
+
+    function startTimer() {
+
+
+        var timer = parseInt(@Model.Duration *60), minutes, seconds;
+         interval=     setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            $("#hdntime").val( minutes);
+       $("#timer").html( minutes + ":" + seconds);
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                $("#timer").html('');
+                alert("Time Expired");
+                jsq.showResult();
+
+
+            }
+        }, 1000);
+    }
+
+
+    </script>

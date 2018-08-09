@@ -11,6 +11,11 @@ namespace OEP.Resources.Admin
 {
    public class ExamResource : BaseResource
     {
+        public ExamResource()
+        {
+            ExamType = new ExamType();
+            SubCategory = new SubCategory();
+        }
         [Required]
         [Display(Name = "Name")]
      
@@ -29,5 +34,16 @@ namespace OEP.Resources.Admin
         public int Duration { get; set; }
 
         public bool AllowReAttempts { get; set; }
+    }
+
+    public class ExamStartResource : BaseResource
+    {
+        public ExamStartResource()
+        {
+            ExamResource = new ExamResource();
+            QuestionsResource = new List<QuestionsResource>();
+        }
+        public ExamResource ExamResource { get; set; }
+        public List<QuestionsResource> QuestionsResource { get; set; }
     }
 }

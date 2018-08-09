@@ -989,6 +989,7 @@
     <Content Include="Views\StudyMaterials\Edit.cshtml" />
     <Content Include="Views\StudyMaterials\Index.cshtml" />
     <Content Include="Views\StudyMaterials\LoadStudyMaterials.cshtml" />
+    <Content Include="Views\Exam\StartExam - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
