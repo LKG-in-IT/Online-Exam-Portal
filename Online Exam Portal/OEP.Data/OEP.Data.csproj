@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201808081308568_MakeNameUnique_LanguageTable.Designer.cs">
       <DependentUpon>201808081308568_MakeNameUnique_LanguageTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809201006552_ResultTableAdditionalFields.cs" />
+    <Compile Include="Migrations\201809201006552_ResultTableAdditionalFields.Designer.cs">
+      <DependentUpon>201809201006552_ResultTableAdditionalFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OepDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -317,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808081308568_MakeNameUnique_LanguageTable.resx">
       <DependentUpon>201808081308568_MakeNameUnique_LanguageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809201006552_ResultTableAdditionalFields.resx">
+      <DependentUpon>201809201006552_ResultTableAdditionalFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

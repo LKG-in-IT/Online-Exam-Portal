@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace OEP.Resources.Admin
 {
-    public class ResultResource:BaseResource
+    public class ResultResource : BaseResource
     {
         public int ExamId { get; set; }
-    
-        public ExamResource Exam { get; set; }
 
+        public ExamResource Exam { get; set; }
+        public int TotalQuestions { get; set; }
+
+        public int TotalQuestionsAttended { get; set; }
         public int Mark { get; set; }
 
         public string ResultStatus { get; set; }

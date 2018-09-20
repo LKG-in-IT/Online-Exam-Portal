@@ -67,8 +67,10 @@
     <Compile Include="Admin\StudyMaterialsResources.cs" />
     <Compile Include="Admin\SubCategoryResource.cs" />
     <Compile Include="Admin\YearResource.cs" />
+    <Compile Include="Common\ExamAnswersResource.cs" />
     <Compile Include="Common\HomePageResource.cs" />
     <Compile Include="Common\ProgressReportResource.cs" />
+    <Compile Include="Common\ExamResultResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

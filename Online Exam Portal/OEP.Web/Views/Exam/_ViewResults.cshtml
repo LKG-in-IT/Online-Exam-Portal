@@ -1,0 +1,138 @@
+﻿@model List<OEP.Resources.Common.ExamResultResource>
+
+
+<div class="result-display-container">
+    <table>
+        <tr>
+            <td><p>Total Questions :</p></td>
+            <td><p>@ViewBag.TotalQuestions</p></td>
+        </tr>
+        <tr>
+            <td> <p>Attended :</p></td>
+            <td><p>@ViewBag.TotalQuestionsAttended</p></td>
+        </tr>
+        <tr>
+            <td><p>Unattended :</p></td>
+            <td><p>@ViewBag.TotalQuestionsUnAttended</p></td>
+        </tr>
+        <tr>
+            <td><p>To No Of Correct Answers :</p></td>
+            <td><p>@ViewBag.TotalCorrectAnswered</p></td>
+        </tr>
+        <tr>
+            <td><p>To No Of Incorrect Answers :</p></td>
+            <td><p>@ViewBag.TotalInCorrectAnswers</p></td>
+        </tr>
+        <tr>
+            <td> <p>Pass Mark :</p></td>
+            <td><p>@ViewBag.Passmark</p></td>
+        </tr>
+        <tr>
+            <td> <p>Status :</p></td>
+            <td><p>@ViewBag.ResultStatus</p></td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="tab-wrapper">
+
+    <ul class="tab-menu">
+        <li class="active tab-header" data-tab-head="0">
+            Default
+            <div class="line" style="width: 100%;"></div>
+        </li>
+        @if (Model.Any() && Model[0].QuestionsResource != null && Model[0].QuestionsResource.QuestionsLocalized != null)
+        {
+            for (int i = 0; i < Model[0].QuestionsResource.QuestionsLocalized.Count(); i++)
+            {
+                <li class="tab-header" data-tab-head="@(i+1)">@(Model[0].QuestionsResource.QuestionsLocalized[i].Language.Name)</li>
+            }
+        }
+
+    </ul>
+    @if (Model.Any())
+    {
+        for (int i = 0; i < Model.Count(); i++)
+        {
+            var resultItem = Model[i];
+            <div data-tab-content="@i" class="tab-content @(i==0?"active":"")" style="border-bottom: 1px solid #ebebeb;">
+                <div data-tab-sub="0">
+                    @{
+
+                        var questionDefault = resultItem.QuestionsResource;
+                        @Html.HiddenFor(x => questionDefault.Id)
+                        <div class="form-group">
+                            @Html.DisplayTextFor(modelItem => questionDefault.Question)
+                        </div>
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">1) @questionDefault.OptionA</div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">2) @questionDefault.OptionB</div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">3) @questionDefault.OptionC</div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">4) @questionDefault.OptionD</div>
+
+                            </div>
+                        </div>
+                        if (resultItem.SeletecdAnswer == 0)
+                        {
+                            <span style="color: #ffc7c7;">Unattended Question</span>
+                        }
+                    }
+                </div>
+
+                @{
+                    if (resultItem.QuestionsResource != null)
+                    {
+                        for (int j = 0; j < resultItem.QuestionsResource.QuestionsLocalized.Count(); j++)
+                        {
+                            <div data-tab-sub="@(j+1)" style="display:none;">
+                                @{
+
+                                    var questionLocalized = resultItem.QuestionsResource.QuestionsLocalized[j];
+                                    @Html.HiddenFor(x => questionLocalized.Id)
+                                    <div class="form-group">
+                                        @Html.DisplayTextFor(modelItem => questionLocalized.Question)
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-4">1) @questionLocalized.OptionA</div>
+                                            <div class="col-sm-12 col-md-6 col-lg-4">2) @questionLocalized.OptionB</div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-4">3) @questionLocalized.OptionC</div>
+                                            <div class="col-sm-12 col-md-6 col-lg-4">4) @questionLocalized.OptionD</div>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                }
+
+                @{
+                    var selectedAnswer = resultItem.SeletecdAnswer;
+                    var correctAnswer = resultItem.QuestionsResource.Answer;
+                    var result = selectedAnswer == correctAnswer;
+
+                }
+
+                <div data-question-id="@resultItem.QuestionsResource.Id" class="btn-group d-none d-md-flex options-container" role="group" aria-label="..." style="min-height:75px;padding:10px">
+                    <button class="btn btn-capsule btn-secondary @(result&&selectedAnswer==1?"background-success":(!result&&selectedAnswer==1?"background-danger":(!result&&correctAnswer==1?"background-success":"background-white"))) options" type="button" data-option="1"><span class="color-primary">1</span></button>
+                    <button class="btn btn-capsule btn-secondary @(result&&selectedAnswer==2?"background-success":(!result&&selectedAnswer==2?"background-danger":(!result&&correctAnswer==2?"background-success":"background-white"))) options" type="button" data-option="2"><span class="color-primary">2</span></button>
+                    <button class="btn btn-capsule btn-secondary @(result&&selectedAnswer==3?"background-success":(!result&&selectedAnswer==3?"background-danger":(!result&&correctAnswer==3?"background-success":"background-white"))) options" type="button" data-option="3"><span class="color-primary">3</span></button>
+                    <button class="btn btn-capsule btn-secondary @(result&&selectedAnswer==4?"background-success":(!result&&selectedAnswer==4?"background-danger":(!result&&correctAnswer==4?"background-success":"background-white"))) options" type="button" data-option="4"><span class="color-primary">4</span></button>
+                </div>
+
+
+            </div>
+        }
+    }
+
+</div>

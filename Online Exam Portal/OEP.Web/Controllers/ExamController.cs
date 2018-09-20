@@ -9,6 +9,7 @@ using OEP.Core.DomainModels.QuestionModel;
 using OEP.Core.DomainModels.ResultModel;
 using OEP.Core.Services;
 using OEP.Resources.Admin;
+using OEP.Resources.Common;
 using OEP.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -175,14 +176,15 @@ namespace OEP.Web.Controllers
 
         }
 
-        public async Task<ActionResult> StartExam(int ExamId)
+        public async Task<ActionResult> StartExam(int? ExamId)
         {
-            if (ExamId != 0)
+            if (ExamId!=null && ExamId != 0)
             {
+                var examId = Convert.ToInt32(ExamId);
                 var examStartResource = new ExamStartResource();
                 List<QuestionsResource> questionlist = new List<QuestionsResource>();
 
-                var exam = await _examservice.GetByIdAsync(ExamId);
+                var exam = await _examservice.GetByIdAsync(examId);
                 examStartResource.ExamResource = Mapper.Map<Exam, ExamResource>(exam);
                 var examQuestions = _examQuestionService.FindBy(i => i.ExamId == ExamId);
 
@@ -198,13 +200,91 @@ namespace OEP.Web.Controllers
 
                 return View(examStartResource);
             }
-            return View();
+            return Redirect("/");
         }
 
         [HttpPost]
-        public async Task<ActionResult> StartExam(ExamStartResource examStartResource)
+        public async Task<ActionResult> StartExam(ExamAnswersResourceCollection questWithAnswers)
         {
-            return Json("");
+            var examResultResource = new List<ExamResultResource>();
+            if (questWithAnswers.ExamAnswersResourceList.Any())
+            {
+
+                var exam = await _examservice.GetByIdAsync(questWithAnswers.ExamId);
+                if (exam != null)
+                {
+                    var examQuestions = _examQuestionService.FindBy(i => i.ExamId == exam.Id);
+                    foreach (var eq in examQuestions)
+                    {
+                        var questions = await _questionService.GetSingleIncludingAsync(Convert.ToInt32(eq.QuestionId), x => x.QuestionType, x => x.QuestionsLocalized);
+                        if (questions != null)
+                        {
+                            examResultResource.Add(
+                                    new ExamResultResource()
+                                    {
+                                        QuestionsResource = Mapper.Map<Questions, QuestionsResource>(questions),
+                                        SeletecdAnswer = questWithAnswers.ExamAnswersResourceList.FirstOrDefault(x => x.QuestionId == questions.Id)!=null? questWithAnswers.ExamAnswersResourceList.FirstOrDefault(x => x.QuestionId == questions.Id).Answer:0
+                                    }
+                                );
+                        }
+                    }
+
+                    var TotalQuestions = examResultResource.Count;
+                    var TotalQuestionsAttended = examResultResource.Count(x=>x.SeletecdAnswer!=0);
+                    var TotalCorrectAnswered = 0;
+                    var TotalInCorrectAnswers = 0;
+                    //Status of Exam
+                    foreach (var result in examResultResource)
+                    {
+                        if (result.QuestionsResource.Answer == result.SeletecdAnswer)
+                        {
+                            TotalCorrectAnswered++;
+                        }
+                        else
+                        {
+                            TotalInCorrectAnswers++;
+                        }
+                    }
+
+                   
+
+                    //Insert Result
+                    var resultEntity = new Result();
+                    resultEntity.CreatedDate = DateTime.Now;
+                    resultEntity.UpdatedDate = DateTime.Now;
+                    var userId = User.Identity.GetUserId();
+                    resultEntity.UserId = userId;
+                    var passmark = _examservice.GetById(exam.Id).Passmark;
+                    resultEntity.ResultStatus = passmark <= TotalCorrectAnswered ? "Win" : "Fail";
+                    resultEntity.Status = true;
+                    resultEntity.TotalQuestions = TotalQuestions;
+                    resultEntity.TotalQuestionsAttended = TotalQuestionsAttended;
+                    resultEntity.Mark = TotalCorrectAnswered;
+                    resultEntity.ExamId = exam.Id;
+                    _resultService.Add(resultEntity);
+                    _resultService.UnitOfWorkSaveChanges();
+
+                    ViewBag.Passmark = passmark;
+                    ViewBag.TotalQuestions = TotalQuestions;
+                    ViewBag.TotalQuestionsAttended = TotalQuestionsAttended;
+                    ViewBag.TotalQuestionsUnAttended = TotalQuestions - TotalQuestionsAttended;
+                    ViewBag.TotalCorrectAnswered = TotalCorrectAnswered;
+                    ViewBag.TotalInCorrectAnswers = TotalInCorrectAnswers;
+                    ViewBag.ResultStatus = resultEntity.ResultStatus;
+
+                    return Json(new
+                    {
+                        success = true,
+                        result = ViewExtensions.RenderToString(PartialView("_ViewResults", examResultResource))
+                    });
+                }
+
+                
+            }
+            return Json(new
+            {
+                success = false
+            });
         }
         // get /Exam/GetAnswer
         public JsonResult GetAnswer(int Qid)

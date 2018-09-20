@@ -15,6 +15,7 @@
             <div class="row ml-3">
                 <div class="col-sm-12">
                     <div id="result" class="quiz-body">
+                        
                         @using (Html.BeginForm())
                         {
                             @Html.AntiForgeryToken()
@@ -22,7 +23,7 @@
                             <div class="tab-wrapper">
 
                                 <ul class="tab-menu">
-                                    <li class="active" data-tab-head="0">
+                                    <li class="active tab-header" data-tab-head="0">
                                         Default
                                         <div class="line" style="width: 100%;"></div>
                                     </li>
@@ -30,7 +31,7 @@
                                     {
                                         for (int i = 0; i < Model.QuestionsResource[0].QuestionsLocalized.Count(); i++)
                                         {
-                                            <li data-tab-head="@(i+1)">@(Model.QuestionsResource[0].QuestionsLocalized[i].Language.Name)</li>
+                                            <li class="tab-header" data-tab-head="@(i+1)">@(Model.QuestionsResource[0].QuestionsLocalized[i].Language.Name)</li>
                                         }
                                     }
 
@@ -114,6 +115,7 @@
                                 }
 
                                 <input type="submit" style="display:none;" id="finishExam" value="Finish" class="btn btn-success" />
+                                <img src="http://i59.tinypic.com/mm6691.gif" id="img-load" style="display:none;" />
 
                             </div><!-- //tab-wrapper -->
                         }
@@ -125,117 +127,24 @@
     </div> <!-- End of content -->
 </section>
 
+<input type="hidden" value="@Model.QuestionsResource.Count()" id="questionCount" />
+<input type="hidden" value="@Model.ExamResource.Id" id="ExamId" />
+
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-
-            var $wrapper = $('.tab-wrapper'),
-                $allTabs = $wrapper.find('.tab-content'),
-                $activeTabcontent = $wrapper.find('.tab-content.active'),
-                $tabMenu = $wrapper.find('.tab-menu li'),
-                $line = $('<div class="line"></div>').appendTo($tabMenu),
-                $nextButton = $('#next'),
-                $prevButton = $('#previous'),
-                currentQuestion = 0,
-                totalQuestions =@Model.QuestionsResource.Count(),
-                $finishButton = $('#finishExam'),
-                $options = $('.options'),
-                Answers = [];
-
-            $options.on('click', function () {
-                var $optionsContainer = $(this).closest($('.options-container'));
-                var questionId = $optionsContainer.attr('data-question-id');
-                var selectedOptionNumber = $(this).attr('data-option');
-                $optionsContainer.find('.options').removeClass('active');
-                $(this).addClass('active');
-                var found = false;
-                for (var i = 0; i < Answers.length; i++) {
-                    if (Answers[i].QuestionId == questionId) {
-                        Answers[i].Answer = selectedOptionNumber;
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    Answers.push({ "QuestionId": questionId, "Answer": selectedOptionNumber });
-                }
-
-                console.log(Answers);
-            });
-
-            $nextButton.on('click', function () {
-                currentQuestion++;
-                var $getWrapper = $(this).closest($wrapper);
-                $activeTabcontent = $('.tab-content.active');
-                var $activeTabDivs = $('.tab-content.active > div'),
-                    $dataTabContent = $getWrapper.find($allTabs).filter('[data-tab-content=' + currentQuestion + ']');
-
-                $activeTabcontent.hide().removeClass('active');
-
-                $dataTabContent.addClass('active').show();
-
-                //hide / show next and prev buttons
-                if (currentQuestion > 0) {
-                    $prevButton.show();
-                }
-                if (currentQuestion === totalQuestions - 1) {
-                    $finishButton.show();
-                    $nextButton.hide();
-                }
-
-                //set tab to 0
-                $tabMenu.removeClass('active');
-                $getWrapper.find('.line').width(0);
-                $getWrapper.find('[data-tab-head=0]').addClass('active').find($line).animate({ 'width': '100%' }, 'fast');
-                $getWrapper.find($activeTabDivs).hide();
-                $getWrapper.find($activeTabDivs).filter('[data-tab-sub=' + 0 + ']').show();
-                return false;
-            });
-            $prevButton.on('click', function () {
-                currentQuestion--;
-                var $getWrapper = $(this).closest($wrapper);
-                $activeTabcontent = $('.tab-content.active');
-                var $activeTabDivs = $('.tab-content.active > div'),
-                    $dataTabContent = $getWrapper.find($allTabs).filter('[data-tab-content=' + currentQuestion + ']');
-
-                $activeTabcontent.hide().removeClass('active');
-                $dataTabContent.addClass('active');
-                $dataTabContent.show();
-                if (currentQuestion == 0) {
-                    $prevButton.hide();
-                }
-                if (currentQuestion < totalQuestions - 1) {
-                    $nextButton.show();
-                    $finishButton.hide();
-                }
-                //set tab to 0
-                $tabMenu.removeClass('active');
-                $getWrapper.find('.line').width(0);
-                $getWrapper.find('[data-tab-head=0]').addClass('active').find($line).animate({ 'width': '100%' }, 'fast');
-
-                $getWrapper.find($activeTabDivs).hide();
-                $getWrapper.find($activeTabDivs).filter('[data-tab-sub=' + 0 + ']').show();
-                return false;
-            });
-
-            $tabMenu.on('click', function () {
-                var dataTab = $(this).data('tab-head'),
-                    $getWrapper = $(this).closest($wrapper);
-
-                $getWrapper.find($tabMenu).removeClass('active');
-                $(this).addClass('active');
-
-                $getWrapper.find('.line').width(0);
-                $(this).find($line).animate({ 'width': '100%' }, 'fast');
-                $getWrapper.find($('.tab-content.active > div')).hide();
-                $getWrapper.find($('.tab-content.active > div')).filter('[data-tab-sub=' + dataTab + ']').show();
-            });
-
-        });//end ready
-    </script>
+    <script src="~/Scripts/Custom/manage-exam-flow.js?V=12"></script>
 }
 
 <style type="text/css">
+
+    .result-display-container {
+        background: #2a3855;
+        padding: 20px 0 15px 30px;
+    }
+
+        .result-display-container p {
+            color: #fff;
+        }
+
     .tab-wrapper {
         margin: 10px auto;
         width: 100%;
@@ -246,7 +155,7 @@
         background-color: #fff;
         color: #bcbcbc;
         display: inline-block;
-        padding: 20px 40px;
+        padding: 10px 30px;
         opacity: 0.8;
         cursor: pointer;
         z-index: 0;
@@ -282,3 +191,4 @@
         left: 0;
     }
 </style>
+

@@ -16,6 +16,10 @@ namespace OEP.Core.DomainModels.ResultModel
 
         public  int Mark { get; set; }
 
+        public int TotalQuestions { get; set; }
+
+        public int TotalQuestionsAttended { get; set; }
+
         public string ResultStatus { get; set; }
 
         public string TimeTaken { get; set; }

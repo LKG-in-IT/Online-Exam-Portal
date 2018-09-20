@@ -774,6 +774,7 @@
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Custom\exams.js" />
     <Content Include="Scripts\Custom\isotope-docs.min.js" />
+    <Content Include="Scripts\Custom\manage-exam-flow.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -990,6 +991,7 @@
     <Content Include="Views\StudyMaterials\Index.cshtml" />
     <Content Include="Views\StudyMaterials\LoadStudyMaterials.cshtml" />
     <Content Include="Views\Exam\StartExam - Copy.cshtml" />
+    <Content Include="Views\Exam\_ViewResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
