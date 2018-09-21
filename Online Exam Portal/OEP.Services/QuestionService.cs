@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 
 namespace OEP.Services
 {
-  public  class QuestionService:BaseService<Questions>,IQuestionService
+    public class QuestionService : BaseService<Questions>, IQuestionService
     {
-        public QuestionService(IUnitOfWork unitOfWork):base(unitOfWork)
-        {
+        IRepository<Questions> _questionsrepository;
 
+        public QuestionService(IUnitOfWork unitOfWork, IRepository<Questions> questionsrepository) : base(unitOfWork)
+        {
+            _questionsrepository = questionsrepository;
+        }
+        
+
+        public int GetAllCount()
+        {
+           return _questionsrepository.Table.Count();
         }
     }
 }

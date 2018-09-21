@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace OEP.Core.Services
 {
-   public  interface IQuestionService:IService<Questions>
+    public interface IQuestionService : IService<Questions>
     {
-
+       int GetAllCount();
     }
 }

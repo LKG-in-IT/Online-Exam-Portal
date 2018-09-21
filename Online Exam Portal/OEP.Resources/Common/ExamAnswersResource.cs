@@ -16,6 +16,16 @@ namespace OEP.Resources.Common
         public int ExamId { get; set; }
     }
 
+    public class TrialExamAnswersResourceCollection
+    {
+        public TrialExamAnswersResourceCollection()
+        {
+            ExamAnswersResourceList = new List<ExamAnswersResource>();
+        }
+        public List<ExamAnswersResource> ExamAnswersResourceList { get; set; }
+        public int QuestionType { get; set; }
+    }
+
     public class ExamAnswersResource
     {        
         public int Answer { get; set; }

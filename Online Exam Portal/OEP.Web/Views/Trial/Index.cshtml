@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Exam";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+}
+
+<section class="background-11" style="padding: 3.5rem 0;">
+    <div class="container">
+        <h3>Exams</h3>
+        @using (Html.BeginForm())
+        {
+
+            @Html.AntiForgeryToken()
+
+            <div class="row background-white" style="min-height: 110px; padding-top: 35px;">
+                <div class="col-3">
+                    @Html.DropDownList("QuestionType", (IEnumerable<SelectListItem>)ViewBag.QuestionType, "QuestionType", new { @class = "btn btn-outline-primary" })
+                </div>
+
+                <div class="col-3">
+                    <input name="NoOfQuestions" id="NoOfQuestions" class="form-control text-box single-line" placeholder="No Of Questions(Max 100)" type="number" />
+                    <span class="max-error" style="display:none;color: #ed9c9c;font-size: 11px;">Maximum 100 number of questions allowed</span>
+                </div>
+                <div class="col-3">
+                    <input type="submit" id="submit" value="Start Exam" class="btn-primary btn  ml-0">
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+<script>
+    $(document).on("input", "#NoOfQuestions", function () {
+        $('.max-error').hide();
+        this.value = this.value.replace(/\D/g, '');
+        if (this.value > 100) {
+            this.value = 100;
+            $('.max-error').show();
+            setTimeout(function () {
+                $('.max-error').hide();
+            }, 1000);
+        }
+    });
+</script>
+}
+
+

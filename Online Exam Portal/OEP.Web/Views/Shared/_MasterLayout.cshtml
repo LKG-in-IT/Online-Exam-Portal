@@ -40,6 +40,7 @@
     <!-- Main stylesheet and color file-->
     <link href="/Content/assets/css/style.css" rel="stylesheet">
     <link href="/Content/assets/css/custom.css" rel="stylesheet">
+    @RenderSection("css", required: false)
 </head>
 <body data-spy="scroll" data-target=".inner-link" data-offset="60">
     <main>
@@ -86,7 +87,7 @@
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav fs-0 fw-700">
                             <li>
-                                <a href="#">Home</a>
+                                <a href="@Url.Action("Index","Trial")">Trial</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","Exam")">Exams</a>

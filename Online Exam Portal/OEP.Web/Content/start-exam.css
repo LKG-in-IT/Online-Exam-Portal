@@ -1,0 +1,64 @@
+﻿.timer-start {
+    color: #91ba3b;
+}
+
+.timer-danger {
+    color: #f32d2d;
+}
+
+
+
+.result-display-container {
+    background: #2a3855;
+    padding: 20px 0 15px 30px;
+}
+
+    .result-display-container p {
+        color: #fff;
+    }
+
+.tab-wrapper {
+    margin: 10px auto;
+    width: 100%;
+}
+
+.tab-menu li {
+    position: relative;
+    background-color: #fff;
+    color: #bcbcbc;
+    display: inline-block;
+    padding: 10px 30px;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 0;
+}
+
+    .tab-menu li:hover {
+        color: #464646;
+    }
+
+    .tab-menu li.active {
+        color: #464646;
+        opacity: 1;
+    }
+
+        .tab-menu li.active:hover {
+            color: #464646;
+        }
+
+.tab-content > div {
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 50px;
+    min-height: 200px;
+}
+
+.line {
+    position: absolute;
+    width: 0;
+    height: 7px;
+    background-color: aqua;
+    top: 0;
+    left: 0;
+}

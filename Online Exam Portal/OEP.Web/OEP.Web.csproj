@@ -218,6 +218,7 @@
     <Compile Include="Controllers\ProgressReportController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\StudyMaterialsController.cs" />
+    <Compile Include="Controllers\TrialController.cs" />
     <Compile Include="DependencyInjection\Modules\AttributeFilter\AutofacFilterAttributeFilterProvider.cs" />
     <Compile Include="DependencyInjection\Modules\AttributeFilter\ContainerBuilderExtension.cs" />
     <Compile Include="DependencyInjection\Modules\ControllerCapsuleModule.cs" />
@@ -622,6 +623,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\start-exam.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -774,6 +776,7 @@
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Custom\exams.js" />
     <Content Include="Scripts\Custom\isotope-docs.min.js" />
+    <Content Include="Scripts\Custom\manage-exam-flow-trial.js" />
     <Content Include="Scripts\Custom\manage-exam-flow.js" />
     <Content Include="Scripts\Custom\UserProfile.js" />
     <Content Include="Scripts\index.js" />
@@ -992,6 +995,9 @@
     <Content Include="Views\StudyMaterials\LoadStudyMaterials.cshtml" />
     <Content Include="Views\Exam\StartExam - Copy.cshtml" />
     <Content Include="Views\Exam\_ViewResults.cshtml" />
+    <Content Include="Views\Trial\Index.cshtml" />
+    <Content Include="Views\Trial\Start.cshtml" />
+    <Content Include="Views\Trial\_ViewResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

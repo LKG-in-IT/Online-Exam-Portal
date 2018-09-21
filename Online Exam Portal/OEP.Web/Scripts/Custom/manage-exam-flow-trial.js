@@ -130,16 +130,16 @@
     $finishButton.on('click', function (e) {
         e.preventDefault();
         sendDatatoServer();
-    });
+    });   
 
     function sendDatatoServer(){
         if (Answers.length > 0) {
-            data = { ExamAnswersResourceList: Answers, ExamId: $('#ExamId').val() }
+            data = { ExamAnswersResourceList: Answers, QuestionType: $('#QuestionType').val() }
             $finishButton.hide(); $nextButton.hide(); $prevButton.hide();
             $('#img-load').show();
             $.ajax({
                 type: "POST",
-                url: "/Exam/StartExam",
+                url: "/Trial/SubmitAnswers",
                 data: JSON.stringify(data),
                 success: function (data) {
                     $('#img-load').hide();
@@ -147,10 +147,11 @@
                         examFinished = true;
                         $('#result').html(data.result);
                         clearInterval(interval);
+                        $("#timer").html('');
                         $("#timer").removeClass('timer-danger');
                         $("#timer").addClass('timer-start');
                         $("#timer").html("You have successfully completed the session.");
-                        setTimeout(function () { $("#timer").html(''); }, 2000);
+                        setTimeout(function () { $("#timer").html('');}, 2000);
                     }
                 },
                 dataType: 'json',

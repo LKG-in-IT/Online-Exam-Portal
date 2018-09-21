@@ -269,7 +269,7 @@ namespace OEP.Web.Controllers
                     ViewBag.TotalQuestionsAttended = TotalQuestionsAttended;
                     ViewBag.TotalQuestionsUnAttended = TotalQuestions - TotalQuestionsAttended;
                     ViewBag.TotalCorrectAnswered = TotalCorrectAnswered;
-                    ViewBag.TotalInCorrectAnswers = TotalInCorrectAnswers;
+                    ViewBag.TotalInCorrectAnswers = TotalInCorrectAnswers - (TotalQuestions - TotalQuestionsAttended);
                     ViewBag.ResultStatus = resultEntity.ResultStatus;
 
                     return Json(new

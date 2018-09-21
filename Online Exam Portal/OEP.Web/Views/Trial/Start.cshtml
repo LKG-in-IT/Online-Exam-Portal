@@ -1,4 +1,4 @@
-﻿@model OEP.Resources.Admin.ExamStartResource
+﻿@model List<OEP.Resources.Admin.QuestionsResource>
 @{
     ViewBag.Title = "StartExam";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
@@ -27,24 +27,24 @@
                                         Default
                                         <div class="line" style="width: 100%;"></div>
                                     </li>
-                                    @if (Model.QuestionsResource != null && Model.QuestionsResource[0].QuestionsLocalized != null)
+                                    @if (Model != null && Model[0].QuestionsLocalized != null)
                                     {
-                                        for (int i = 0; i < Model.QuestionsResource[0].QuestionsLocalized.Count(); i++)
+                                        for (int i = 0; i < Model[0].QuestionsLocalized.Count(); i++)
                                         {
-                                            <li class="tab-header" data-tab-head="@(i+1)">@(Model.QuestionsResource[0].QuestionsLocalized[i].Language.Name)</li>
+                                            <li class="tab-header" data-tab-head="@(i+1)">@(Model[0].QuestionsLocalized[i].Language.Name)</li>
                                         }
                                     }
 
                                 </ul>
-                                @if (Model.QuestionsResource != null)
+                                @if (Model != null)
                                 {
-                                    for (int i = 0; i < Model.QuestionsResource.Count(); i++)
+                                    for (int i = 0; i < Model.Count(); i++)
                                     {
                                         <div data-tab-content="@i" style="@(i==0?"display:block":"display:none")" class="tab-content @(i==0?"active":"")">
                                             <div data-tab-sub="0">
                                                 @{
 
-                                                    var questionDefault = Model.QuestionsResource[i];
+                                                    var questionDefault = Model[i];
                                                     @Html.HiddenFor(x => questionDefault.Id)
                                                     <div class="form-group">
                                                         @Html.DisplayTextFor(modelItem => questionDefault.Question)
@@ -66,14 +66,14 @@
                                             </div>
 
                                             @{
-                                                if (Model.QuestionsResource[i] != null)
+                                                if (questionDefault != null)
                                                 {
-                                                    for (int j = 0; j < Model.QuestionsResource[i].QuestionsLocalized.Count(); j++)
+                                                    for (int j = 0; j < questionDefault.QuestionsLocalized.Count(); j++)
                                                     {
                                                         <div data-tab-sub="@(j+1)" style="display:none;">
                                                             @{
 
-                                                                var questionLocalized = Model.QuestionsResource[i].QuestionsLocalized[j];
+                                                                var questionLocalized = questionDefault.QuestionsLocalized[j];
                                                                 @Html.HiddenFor(x => questionLocalized.Id)
                                                                 <div class="form-group">
                                                                     @Html.DisplayTextFor(modelItem => questionLocalized.Question)
@@ -97,7 +97,7 @@
                                             }
 
 
-                                            <div data-question-id="@Model.QuestionsResource[i].Id" class="btn-group d-none d-md-flex options-container" role="group" aria-label="..." style="min-height:75px;padding:10px">
+                                            <div data-question-id="@questionDefault.Id" class="btn-group d-none d-md-flex options-container" role="group" aria-label="..." style="min-height:75px;padding:10px">
                                                 <button class="btn btn-capsule btn-secondary background-white options" type="button" data-option="1"><span class="color-primary">1</span></button>
                                                 <button class="btn btn-capsule btn-secondary background-white options" type="button" data-option="2"><span class="color-primary">2</span></button>
                                                 <button class="btn btn-capsule btn-secondary background-white options" type="button" data-option="3"><span class="color-primary">3</span></button>
@@ -108,7 +108,7 @@
                                         </div>
                                     }
                                 }
-                                @if (Model.QuestionsResource != null && Model.QuestionsResource.Any())
+                                @if (Model != null && Model.Any())
                                 {
                                     <button name="previous" id="previous" style="display:none;" class="btn btn-success">Previous</button>
                                     <button name="next" id="next" class="btn btn-success">Next</button>
@@ -127,15 +127,17 @@
     </div> <!-- End of content -->
 </section>
 
-<input type="hidden" value="@Model.QuestionsResource.Count()" id="questionCount" />
-<input type="hidden" value="@Model.ExamResource.Id" id="ExamId" />
-<input type="hidden" value="@Model.ExamResource.Duration" id="duration" />
+<input type="hidden" value="@ViewBag.QuestionType" id="QuestionType" />
+<input type="hidden" value="@Model.Count()" id="questionCount" />
+<input type="hidden" value="@(Model.Count()/2)" id="duration" />
 
 @section Scripts {
-    <script src="~/Scripts/Custom/manage-exam-flow.js?V=12"></script>
+    <script src="~/Scripts/Custom/manage-exam-flow-trial.js?V=12"></script>
 }
 @section css {
     <link href="~/Content/start-exam.css" rel="stylesheet">
 }
+
+
 
 
