@@ -29,15 +29,21 @@ namespace OEP.Web.Controllers
         }
 
         // GET: Result
-        public ActionResult Index()
+        public async Task<ActionResult> Index(int? page)
         {
 
             if (User.Identity.IsAuthenticated)
             {
+                var pageSize = 3;
+                page = page != null && page != 0 ? (page-1)*pageSize: 0;
+                ResultListResource _resultListResource = new ResultListResource();
                 var userId = User.Identity.GetUserId();
-                var resultlist = _resultService.FindBy(i => i.UserId == userId).ToList();
-            var resultResourcelist = Mapper.Map<List< Result>,List< ResultResource>>(resultlist);
-            return View(resultResourcelist);
+                var resultlist = await _resultService.GetAllAsync(Convert.ToInt32(page), pageSize, x => x.CreatedDate.ToString(), x => x.UserId == userId, Core.Data.OrderBy.Descending, x=>x.Exam);
+                _resultListResource.ResultResourceList = Mapper.Map<List<Result>, List<ResultResource>>(resultlist);
+                _resultListResource.TotalPages = resultlist.TotalPageCount;
+                _resultListResource.PageIndex = resultlist.PageIndex;
+                _resultListResource.PageSize = resultlist.PageSize;
+                return View(_resultListResource);
             }
             else
 
@@ -46,6 +52,6 @@ namespace OEP.Web.Controllers
             }
         }
 
-     
+
     }
 }

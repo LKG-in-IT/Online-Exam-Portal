@@ -9,7 +9,8 @@
         </tr>
         <tr>
             <td> <p>Attended :</p></td>
-            <td><p>@ViewBag.TotalQuestionsAttended</p></td>
+            <td><p>@ViewBag.TotalQuestionsAttended</p>
+            </td>
         </tr>
         <tr>
             <td><p>Unattended :</p></td>
@@ -17,15 +18,19 @@
         </tr>
         <tr>
             <td><p>Total No Of Correct Answers :</p></td>
-            <td><p>@ViewBag.TotalCorrectAnswered</p></td>
+            <td><p>@ViewBag.TotalCorrectAnswered</p>
+                <input type="hidden" id="TotalCorrectAnswered" value="@ViewBag.TotalCorrectAnswered" /></td>
         </tr>
         <tr>
             <td><p>Total No Of Incorrect Answers :</p></td>
-            <td><p>@ViewBag.TotalInCorrectAnswers</p></td>
+            <td><p>@ViewBag.TotalInCorrectAnswers</p>
+                <input type="hidden" id="TotalInCorrectAnswers" value="@ViewBag.TotalInCorrectAnswers" /></td>
         </tr>
 
     </table>
 </div>
+
+<canvas id="cnResultChart" width="400" height="400"></canvas>
 
 <div class="tab-wrapper">
 

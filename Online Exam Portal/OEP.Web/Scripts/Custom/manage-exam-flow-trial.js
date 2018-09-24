@@ -13,10 +13,13 @@
         $options = $('.options'),
         Answers = [],
         examFinished = false,
-        interval=false;
+        interval = false;
 
     startTimer();
 
+    /**
+     * Timer will be start on page load
+     */
     function startTimer() {
         var duration = $('#duration').val();
         var timer = parseInt(duration * 60), minutes, seconds;
@@ -45,6 +48,9 @@
         }, 1000);
     }
 
+    /*
+     * Options -- multiple choices click event
+     */
     $options.on('click', function () {
         var $optionsContainer = $(this).closest($('.options-container'));
         var questionId = $optionsContainer.attr('data-question-id');
@@ -130,9 +136,12 @@
     $finishButton.on('click', function (e) {
         e.preventDefault();
         sendDatatoServer();
-    });   
+    });
 
-    function sendDatatoServer(){
+    /**
+     * Send data to server if user click finish button of if the timout expired. It won't send data if user doesn't answer any questions.
+     */
+    function sendDatatoServer() {
         if (Answers.length > 0) {
             data = { ExamAnswersResourceList: Answers, QuestionType: $('#QuestionType').val() }
             $finishButton.hide(); $nextButton.hide(); $prevButton.hide();
@@ -151,7 +160,9 @@
                         $("#timer").removeClass('timer-danger');
                         $("#timer").addClass('timer-start');
                         $("#timer").html("You have successfully completed the session.");
-                        setTimeout(function () { $("#timer").html('');}, 2000);
+                        setTimeout(function () { $("#timer").html(''); }, 2000);
+
+                        showChart();
                     }
                 },
                 dataType: 'json',
@@ -160,7 +171,8 @@
         }
     }
 
-
+    /*The tab container will load initially and it will recreate after the exam. So, dynamic tab click won't work.
+      * we need to handle both in a single click event. we are using a flag to handle this  */
     $('#result').on('click', $tabMenu, function (event) {
         var _this = $(event.target);
         if (!_this.hasClass('tab-header')) {
@@ -193,5 +205,51 @@
             $getWrapper.find($('.tab-content > div')).filter('[data-tab-sub=' + dataTab + ']').show();
         }
     });
+
+
+    //Show result in chart after user completed the exam
+    function showChart() {
+        var canvas = document.getElementById("cnResultChart");
+        var ctx = canvas.getContext('2d');       
+
+        // Global Options:
+        Chart.defaults.global.defaultFontColor = 'black';
+        Chart.defaults.global.defaultFontSize = 16;
+
+        var data = {
+            labels: ["Correct Answer", "InCorrect Answer"],
+            datasets: [
+                {
+                    fill: true,
+                    backgroundColor: [
+                        "#427b01",
+                        "#ff1100"],
+                    data: [$('#TotalCorrectAnswered').val(), $('#TotalInCorrectAnswers').val()],
+                    // Notice the borderColor 
+                    borderColor: ['black', 'black'],
+                    borderWidth: [1,1 ]
+                }
+            ]
+        };
+
+        // Notice the rotation from the documentation.
+
+        var options = {
+            title: {
+                display: true,
+                text: 'Report',
+                position: 'top'
+            },
+            rotation: -0.7 * Math.PI,
+            responsive: false,
+        };      
+
+        // Chart declaration:
+        var myBarChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    }
 
 });//end ready

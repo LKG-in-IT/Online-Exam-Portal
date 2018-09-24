@@ -23,4 +23,21 @@ namespace OEP.Resources.Admin
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0: d}")]
         public DateTime CreatedDate { get; set; }
     }
+
+    public class ResultListResource
+    {
+        public ResultListResource()
+        {
+            ResultResourceList = new List<ResultResource>();
+        }
+        public List<ResultResource> ResultResourceList { get; set; }
+
+        public int TotalPages { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+
+    }
 }

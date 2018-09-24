@@ -1,107 +1,64 @@
-﻿@model IEnumerable<OEP.Resources.Admin.ResultResource>
+﻿@model OEP.Resources.Admin.ResultListResource
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    var i = 0;
+    var currentPage = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
 }
-<style>
-    .cardhieght {
-        padding: 5px;
-        box-shadow: 1px 1px 8px #000000;
-        border-radius: 15px;
-        margin: 15px;
-    }
-   
-        .cardhieght img {
-            margin-top: .5rem;
-        }
 
-    .webGrid tr {
-        width: 100%;
-        float: left;
-    }
-
-    @@media (min-width: 575px) {
-        .webGrid tr {
-            width: 50%;
-        }
-    }
-
-    @@media (min-width: 768px) {
-        .webGrid tr {
-            width: 33.333333%;
-        }
-    }
-</style>
-<div class="container">
+<div class="container" style="padding: 3.5rem 0;">
 
 
     @{
 
+        <div class="row">
 
-        var grid = new WebGrid(Model, canPage: true, canSort: true, rowsPerPage: 6);
+            @foreach (var item in Model.ResultResourceList)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
 
-        @grid.GetHtml(tableStyle: "webGrid", headerStyle: "header", alternatingRowStyle: "alt",
-                                         columns: grid.Columns(
-                                         grid.Column(header: "", format: @<text>
-                                            @{
-
-                                                <div class="cardhieght">
-                                                  
-                                                        <div class="row mt-2">
-
-                                                            <label class="ml-2 mt-2 col-md-4">ExamName </label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" readonly value="@item.Exam.Name" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row  mt-2 ">
-
-                                                            <label class="mt-2 ml-2 col-md-4">PassMark</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" readonly value="@item.Exam.Passmark" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row  mt-2">
-
-                                                            <label class="mt-2 ml-2 col-md-4">Attended On </label>
-                                                            <div class="col-md-7">
-
-                                                                <input type="text" readonly value="@item.CreatedDate" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row  mt-2">
-
-                                                            <label class="mt-2 ml-2 col-md-4">Mark Scored</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" readonly value="@item.Mark" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row  mt-2">
-
-                                                            <label class="mt-2 ml-2 col-md-4">Time Taken</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" readonly value="@item.TimeTaken" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row  mt-2">
-
-                                                            <label class="mt-2 ml-2 col-md-4">Result</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" readonly value="@item.ResultStatus" class="form-control" />
-                                                            </div>
-                                                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title"> @item.Exam.Name</h4>
+                            <p class="card-text">PassMark : @item.Exam.Passmark</p>
+                            <p class="card-text">Attended On : @item.CreatedDate</p>
+                            <p class="card-text">Mark : @item.Mark</p>
+                            <p class="card-text">Total Questions : @item.TotalQuestions</p>
+                            <p class="card-text">Attended : @item.TotalQuestionsAttended</p>
+                            <p class="card-text @(item.ResultStatus.ToLower()=="fail"?"fail":"success")">Result : @item.ResultStatus</p>
+                        </div>
+                    </div>
+                </div>
+            }
 
 
-                                                    </div>
-                                              
+        </div>
 
-                                            }
-                                        </text>)
-                                             ));
-      
+        <nav data-pagination>
+            @if (Model.PageIndex != 0)
+            {
+                <a href="@Url.Action("Index", new { page = (currentPage - 1) })"><i class=ion-chevron-left></i></a>
+            }
+            <ul>
+                @for (i = 0; i < Model.TotalPages; i++)
+                {
+                    <li class=@(Model.PageIndex==(i* Model.PageSize)?"current":"")>
+                        <a href="@Url.Action("Index", new { page=(i+1) })">@(i + 1)</a>
+                    </li>
+                }
 
+            </ul>
+            @if (currentPage < Model.TotalPages)
+            {
+                <a href="@Url.Action("Index", new { page=(currentPage+1) })"><i class=ion-chevron-right></i></a>
+            }
+        </nav>
     }
-  
+
 
 </div>
+
+@section css{
+    <link href="~/Content/result-page.css" rel="stylesheet">
+}
